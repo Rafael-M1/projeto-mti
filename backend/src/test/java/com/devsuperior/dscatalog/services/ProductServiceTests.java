@@ -21,12 +21,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.devsuperior.dscatalog.dto.ProductDTO;
-import com.devsuperior.dscatalog.entities.Product;
-import com.devsuperior.dscatalog.repositories.ProductRepository;
-import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
-import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 import com.devsuperior.dscatalog.tests.Factory;
+
+import br.com.ficdev.apigoc.dto.ProductDTO;
+import br.com.ficdev.apigoc.entities.Product;
+import br.com.ficdev.apigoc.repositories.ProductRepository;
+import br.com.ficdev.apigoc.services.ProductService;
+import br.com.ficdev.apigoc.services.exceptions.DatabaseException;
+import br.com.ficdev.apigoc.services.exceptions.ResourceNotFoundException;
 
 @ExtendWith(SpringExtension.class)
 public class ProductServiceTests {

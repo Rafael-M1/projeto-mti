@@ -25,13 +25,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import com.devsuperior.dscatalog.dto.ProductDTO;
-import com.devsuperior.dscatalog.services.ProductService;
-import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
-import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 import com.devsuperior.dscatalog.tests.Factory;
 import com.devsuperior.dscatalog.tests.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.com.ficdev.apigoc.dto.ProductDTO;
+import br.com.ficdev.apigoc.services.ProductService;
+import br.com.ficdev.apigoc.services.exceptions.DatabaseException;
+import br.com.ficdev.apigoc.services.exceptions.ResourceNotFoundException;
 
 @SpringBootTest
 @AutoConfigureMockMvc

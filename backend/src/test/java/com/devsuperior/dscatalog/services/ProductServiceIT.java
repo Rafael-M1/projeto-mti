@@ -10,9 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.devsuperior.dscatalog.dto.ProductDTO;
-import com.devsuperior.dscatalog.repositories.ProductRepository;
-import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
+import br.com.ficdev.apigoc.dto.ProductDTO;
+import br.com.ficdev.apigoc.repositories.ProductRepository;
+import br.com.ficdev.apigoc.services.ProductService;
+import br.com.ficdev.apigoc.services.exceptions.ResourceNotFoundException;
 
 @SpringBootTest
 @Transactional

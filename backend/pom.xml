@@ -9,11 +9,11 @@
 		<version>2.4.4</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.devsuperior</groupId>
-	<artifactId>dscatalog</artifactId>
+	<groupId>br.com.ficdev</groupId>
+	<artifactId>apigoc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>dscatalog</name>
-	<description>DSCatalog Bootcamp DevSuperior</description>
+	<name>apigoc</name>
+	<description>API de Gestao de Ocorrencias Criminais</description>
 
 	<properties>
 		<java.version>11</java.version>

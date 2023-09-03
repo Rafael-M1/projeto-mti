@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import com.devsuperior.dscatalog.entities.Product;
 import com.devsuperior.dscatalog.tests.Factory;
+
+import br.com.ficdev.apigoc.entities.Product;
+import br.com.ficdev.apigoc.repositories.ProductRepository;
 
 @DataJpaTest
 public class ProductRepositoryTests {

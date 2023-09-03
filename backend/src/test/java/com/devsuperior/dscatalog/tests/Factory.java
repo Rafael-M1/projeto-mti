@@ -2,9 +2,9 @@ package com.devsuperior.dscatalog.tests;
 
 import java.time.Instant;
 
-import com.devsuperior.dscatalog.dto.ProductDTO;
-import com.devsuperior.dscatalog.entities.Category;
-import com.devsuperior.dscatalog.entities.Product;
+import br.com.ficdev.apigoc.dto.ProductDTO;
+import br.com.ficdev.apigoc.entities.Category;
+import br.com.ficdev.apigoc.entities.Product;
 
 public class Factory {
 	
