@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Component;
 
-import br.com.ficdev.apigoc.entities.User;
+import br.com.ficdev.apigoc.entities.Usuario;
 import br.com.ficdev.apigoc.repositories.UserRepository;
 
 @Component
@@ -21,12 +21,11 @@ public class JwtTokenEnhancer implements TokenEnhancer {
 	
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-
-		User user = userRepository.findByEmail(authentication.getName());
+		Usuario user = userRepository.findByCpf(authentication.getName());
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("userFirstName", user.getFirstName());
-		map.put("userId", user.getId());
+		map.put("userFullName", user.getPessoa().getNome());
+		map.put("userId", user.getIdUser());
 
 		DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
 		token.setAdditionalInformation(map);

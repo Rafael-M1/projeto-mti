@@ -67,4 +67,9 @@ public class Role implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", authority=" + authority + "]";
+	}
 }

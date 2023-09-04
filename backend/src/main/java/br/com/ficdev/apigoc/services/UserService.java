@@ -23,7 +23,7 @@ import br.com.ficdev.apigoc.dto.UserDTO;
 import br.com.ficdev.apigoc.dto.UserInsertDTO;
 import br.com.ficdev.apigoc.dto.UserUpdateDTO;
 import br.com.ficdev.apigoc.entities.Role;
-import br.com.ficdev.apigoc.entities.User;
+import br.com.ficdev.apigoc.entities.Usuario;
 import br.com.ficdev.apigoc.repositories.RoleRepository;
 import br.com.ficdev.apigoc.repositories.UserRepository;
 import br.com.ficdev.apigoc.services.exceptions.DatabaseException;
@@ -41,26 +41,26 @@ public class UserService implements UserDetailsService {
 	private UserRepository repository;
 	
 	@Autowired
-	private RoleRepository roleRepository;
+	private RoleRepository roleRepository; 
 	
 	@Transactional(readOnly = true)
 	public Page<UserDTO> findAllPaged(Pageable pageable) {
-		Page<User> list = repository.findAll(pageable);
-		return list.map(x -> new UserDTO(x));
+		Page<Usuario> list = repository.findAll(pageable);
+		return list.map(usuario -> new UserDTO(usuario));
 	}
 
 	@Transactional(readOnly = true)
 	public UserDTO findById(Long id) {
-		Optional<User> obj = repository.findById(id);
-		User entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+		Optional<Usuario> obj = repository.findById(id);
+		Usuario entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
 		return new UserDTO(entity);
 	}
 
 	@Transactional
 	public UserDTO insert(UserInsertDTO dto) {
-		User entity = new User();
+		Usuario entity = new Usuario();
 		copyDtoToEntity(dto, entity);
-		entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+		entity.setSenha(passwordEncoder.encode(dto.getPassword()));
 		entity = repository.save(entity);
 		return new UserDTO(entity);
 	}
@@ -68,7 +68,7 @@ public class UserService implements UserDetailsService {
 	@Transactional
 	public UserDTO update(Long id, UserUpdateDTO dto) {
 		try {
-			User entity = repository.getOne(id);
+			Usuario entity = repository.getOne(id);
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
 			return new UserDTO(entity);
@@ -90,11 +90,9 @@ public class UserService implements UserDetailsService {
 		}
 	}
 	
-	private void copyDtoToEntity(UserDTO dto, User entity) {
-
-		entity.setFirstName(dto.getFirstName());
-		entity.setLastName(dto.getLastName());
-		entity.setEmail(dto.getEmail());
+	private void copyDtoToEntity(UserDTO dto, Usuario entity) {
+		entity.getPessoa().setNome(dto.getNome());
+		entity.getPessoa().setEmail(dto.getEmail());
 		
 		entity.getRoles().clear();
 		for (RoleDTO roleDto : dto.getRoles()) {
@@ -104,14 +102,14 @@ public class UserService implements UserDetailsService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
 		
-		User user = repository.findByEmail(username);
-		if (user == null) {
-			logger.error("User not found: " + username);
-			throw new UsernameNotFoundException("Email not found");
+		Usuario usuario = repository.findByCpf(cpf);
+		if (usuario == null) {
+			logger.error("User not found.");
+			throw new UsernameNotFoundException("CPF not found");
 		}
-		logger.info("User found: " + username);
-		return user;
+		logger.info("User found: " + usuario.getUsername());
+		return usuario;
 	}
 }
