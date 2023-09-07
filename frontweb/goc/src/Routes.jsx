@@ -6,6 +6,8 @@ import ProductDetails from "./pages/ProductDetails";
 import Auth from "./pages/Admin/Auth";
 import React from "react";
 import Navbar from "./components/Navbar";
+import PainelServicos from "./pages/Admin/PainelServicos";
+import AdministracaoPage from "./pages/Admin/Administracao";
 
 const RoutesConfig = () => (
   <>
@@ -13,9 +15,9 @@ const RoutesConfig = () => (
       <Route path="/" element={<Navbar />}>
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Admin />} >
-          <Route path="" element={<h2>Página Inicial</h2>} />
+          <Route path="" element={<PainelServicos />} />
           <Route path="dashboard" element={<h2>Dashboard</h2>} />
-          <Route path="administracao" element={<h2>Administração</h2>} />
+          <Route path="administracao" element={<AdministracaoPage />} />
           <Route path="configuracoes" element={<h2>Configurações</h2>} />
         </Route>
         <Route path="/admin/auth" element={<Auth />} />

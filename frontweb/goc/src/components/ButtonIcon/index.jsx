@@ -2,9 +2,17 @@ import "./styles.css";
 
 import { ReactComponent as ArrowIcon } from "./../../assets/images/arrow.svg";
 
-const ButtonIcon = ({ text, onClick }) => {
+const ButtonIcon = ({ text, onClick, widthPixels, heightPixels }) => {
   return (
-    <div className="btn-container" onClick={onClick}>
+    <div
+      className="btn-container"
+      onClick={onClick}
+      style={{
+        width: widthPixels,
+        height: heightPixels ?? "auto",
+        margin: "auto",
+      }}
+    >
       <button className="btn btn-dark">
         <h6>{text}</h6>
       </button>

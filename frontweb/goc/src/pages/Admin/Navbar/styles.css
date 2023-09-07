@@ -87,6 +87,10 @@ ul {
         padding-left: 40px;
     }
 
+    .admin-nav-item:hover {
+        border: 2px solid #E1E1E1;
+    }
+
     .admin-nav-item-bottom {
         border-radius: 0;
         font-size: 18px;
@@ -95,5 +99,9 @@ ul {
         border: 1px solid #E1E1E1;
         justify-content: flex-start;
         padding-left: 40px;
+    }
+
+    .admin-nav-item-bottom:hover {
+        border: 2px solid #E1E1E1;
     }
 }
