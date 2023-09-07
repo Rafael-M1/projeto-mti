@@ -1,5 +1,5 @@
-import ButtonIcon from "../../../../components/ButtonIcon";
-import { ReactComponent as FolderOpenedIcon } from "./../../../../assets/images/icon-folder-opened.svg";
+import ButtonIcon from "../ButtonIcon";
+import { ReactComponent as FolderOpenedIcon } from "./../../assets/images/icon-folder-opened.svg";
 
 const ServicoCard = ({ tituloImagem, subTitulo, descricaoServico, onClickButton }) => {
   return (

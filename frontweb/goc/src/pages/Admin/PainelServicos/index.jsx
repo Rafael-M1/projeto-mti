@@ -1,4 +1,4 @@
-import ServicoCard from "./ServicoCard";
+import ServicoCard from "../../../components/ServicoCard";
 
 const PainelServicos = () => {
   return (

@@ -1,6 +1,8 @@
-import ServicoCard from "./ServicoCard";
+import { useNavigate } from "react-router-dom";
+import ServicoCard from "../../../components/ServicoCard";
 
 const AdministracaoPage = () => {
+  const navigate = useNavigate();
   return (
     <div
       class="card"
@@ -20,17 +22,15 @@ const AdministracaoPage = () => {
             "Descrição: Tipos de crimes que estão envolvidos em uma ocorrência criminal."
           }
           onClickButton={() => {
-            console.log("aa");
+            navigate("/admin/administracao/tipocrime");
           }}
         />
         <ServicoCard
           tituloImagem={"Ocorrências Criminais"}
           subTitulo={"Gestão das Ocorrências Criminais"}
-          descricaoServico={
-            "Descrição: ."
-          }
+          descricaoServico={"Descrição: ."}
           onClickButton={() => {
-            console.log("aa");
+            navigate("/admin/administracao/ocorrencias");
           }}
         />
         <ServicoCard
@@ -40,7 +40,7 @@ const AdministracaoPage = () => {
             "Descrição: Pessoas que estão envolvidas em ocorrências criminais, podendo ser vítimas, acusados ou operadores do Sistema de Ocorrências Criminais."
           }
           onClickButton={() => {
-            console.log("aa");
+            navigate("/admin/administracao/pessoas");
           }}
         />
       </div>
