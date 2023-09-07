@@ -59,14 +59,14 @@ const Navbar = () => {
                 className="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#dscatalog-navbar"
-                aria-controls="dscatalog-navbar"
+                data-bs-target="#goc-navbar"
+                aria-controls="goc-navbar"
                 aria-expanded="false"
                 aria-label="Toggle navigation"
               >
                 <span className="navbar-toggler-icon"></span>
               </button>
-              <div className="collapse navbar-collapse" id="dscatalog-navbar">
+              <div className="collapse navbar-collapse" id="goc-navbar">
                 <ul className="navbar-nav offset-md-2 main-menu">
                   <li>
                     <Link to={"/"} activeClassName="active">
