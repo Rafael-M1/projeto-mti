@@ -12,9 +12,12 @@ const RoutesConfig = () => (
     <Routes>
       <Route path="/" element={<Navbar />}>
         <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/produtos" element={<Catalog />} />
-        <Route path="/produtos/:productId" element={<ProductDetails />} />
+        <Route path="/admin" element={<Admin />} >
+          <Route path="" element={<h2>Página Inicial</h2>} />
+          <Route path="dashboard" element={<h2>Dashboard</h2>} />
+          <Route path="administracao" element={<h2>Administração</h2>} />
+          <Route path="configuracoes" element={<h2>Configurações</h2>} />
+        </Route>
         <Route path="/admin/auth" element={<Auth />} />
       </Route>
     </Routes>

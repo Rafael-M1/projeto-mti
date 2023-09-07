@@ -1,6 +1,7 @@
 import Navbar from "./Navbar";
 import Users from "./User";
 import PrivateRoute from "./../../components/PrivateRoute";
+import { Outlet } from "react-router-dom";
 
 import "./styles.css";
 
@@ -18,6 +19,7 @@ const Admin = () => {
         <PrivateRoute path="/admin/users" roles={['ROLE_ADMIN']}>
           <Users />
         </PrivateRoute> */}
+        <Outlet/>
       </div>
     </div>
   );

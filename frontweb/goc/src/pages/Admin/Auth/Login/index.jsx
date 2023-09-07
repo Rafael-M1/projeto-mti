@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { requestBackendLogin } from "../../../../util/requests";
 import toast, { Toaster } from "react-hot-toast";
+import { saveAuthData } from "../../../../util/storage";
 
 import "./styles.css";
 
@@ -23,20 +24,20 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const onSubmit = (formData) => {
     requestBackendLogin(formData)
       .then((response) => {
         console.log(response);
-        // saveAuthData(response.data);
+        saveAuthData(response.data);
         setHasError(false);
         // setAuthContextData({
         //   authenticated: true,
         //   tokenData: getTokenData(),
         // });
         setHasError(false);
-        // redirect("/admin");
+        navigate("/admin");
       })
       .catch((error) => {
         toast.error("Credenciais inválidas");
@@ -57,21 +58,21 @@ const Login = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <p>
-            <b>E-mail</b>
+            <b>CPF</b>
           </p>
           <input
             {...register("username", {
               required: "Campo obrigatório",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Email inválido",
-              },
+              // pattern: {
+              //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              //   message: "Email inválido",
+              // },
             })}
             type="text"
             className={`form-control base-input ${
               errors.username ? "is-invalid" : ""
             }`}
-            placeholder="Digite seu E-mail"
+            placeholder="Digite seu CPF"
             name="username"
           />
           <div className="invalid-feedback d-block">

@@ -48,8 +48,8 @@ const Navbar = () => {
                   flexDirection: "column",
                 }}
               >
-                Título Projeto
-                {/* Polícia Judiciária Civil do Estado de Mato Grosso */}
+                {/* Título Projeto */}
+                Polícia Judiciária Civil do Estado de Mato Grosso
               </h4>
             </div>
           </Link>
