@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { ReactComponent as EditIcon } from "./../../../../assets/images/icon-edit.svg";
+import { EditIcon } from "../../../../assets/images/icon-edit";
+import { DeleteIcon } from "../../../../assets/images/icon-delete";
 import ButtonIconSmall from "../../../../components/ButtonIconSmall";
 import { requestBackend } from "../../../../util/requests";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -48,7 +49,13 @@ const TipoCrime = () => {
       setTipoCrime(response.data.content);
     });
   };
+  const onClickExcluir = (idCrime) => {
+    console.log("idCrime excluir clicado " + idCrime);
+  };
 
+  const onClickEditar = (idCrime) => {
+    console.log("idCrime editar clicado " + idCrime);
+  };
   const onClickAdicionar = () => {
     navigate("/admin/administracao/tipocrime/form");
   };
@@ -107,12 +114,18 @@ const TipoCrime = () => {
                   <th scope="row">{tipoCrime.idCrime}</th>
                   <td>{tipoCrime.descricao}</td>
                   <td>
-                    <div style={{display: "flex"}}>
-                      <div style={{ cursor: "pointer" }}>
+                    <div style={{ display: "flex" }}>
+                      <div
+                        style={{ cursor: "pointer" }}
+                        onClick={() => onClickEditar(tipoCrime.idCrime)}
+                      >
                         <EditIcon />
                       </div>
-                      <div style={{ cursor: "pointer", marginLeft: "10px" }}>
-                        <EditIcon />
+                      <div
+                        style={{ cursor: "pointer", marginLeft: "10px" }}
+                        onClick={() => onClickExcluir(tipoCrime.idCrime)}
+                      >
+                        <DeleteIcon />
                       </div>
                     </div>
                   </td>

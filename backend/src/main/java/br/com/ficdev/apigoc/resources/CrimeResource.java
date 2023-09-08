@@ -40,7 +40,6 @@ public class CrimeResource {
 	
 	@PostMapping
 	public ResponseEntity<Crime> insert(@RequestBody Crime crime) {
-		System.out.println(crime.toString());
 		crime = service.insert(crime);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idCrime}")
 				.buildAndExpand(crime.getIdCrime()).toUri();
