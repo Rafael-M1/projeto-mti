@@ -6,9 +6,11 @@ import { requestBackend } from "../../../../util/requests";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
+import Pagination from "../../../../components/Pagination";
+import ReactPaginate from "react-paginate";
 
 const TipoCrime = () => {
-  const [listaTipoCrime, setListaTipoCrime] = useState([]);
+  const [page, setPage] = useState();
   const [filtroTipoCrime, setFiltroTipoCrime] = useState("");
   const [showModalExcluir, setShowModalExcluir] = useState(false);
   const [tipoCrimeSelecionado, setTipoCrimeSelecionado] = useState(null);
@@ -22,18 +24,23 @@ const TipoCrime = () => {
         navigate(location.pathname, { replace: true });
       }
     }
+    getListaTipoCrime(0);
+  }, []);
+
+  const getListaTipoCrime = (pageNumber) => {
     const params = {
       url: "/crime",
       withCredentials: true,
       params: {
-        page: 0,
+        page: pageNumber ?? 0,
         size: 12,
       },
     };
     requestBackend(params).then((response) => {
-      setListaTipoCrime(response.data.content);
+      setPage(response.data);
     });
-  }, []);
+  };
+
   const handleClose = () => setShowModalExcluir(false);
   const onClickFiltrar = () => {
     const params = {
@@ -49,7 +56,7 @@ const TipoCrime = () => {
       },
     };
     requestBackend(params).then((response) => {
-      setListaTipoCrime(response.data.content);
+      setPage(response.data);
     });
   };
   const onClickExcluir = (tipoCrime) => {
@@ -120,40 +127,51 @@ const TipoCrime = () => {
               </tr>
             </thead>
             <tbody>
-              {listaTipoCrime.map((tipoCrime) => (
-                <tr key={tipoCrime.idCrime}>
-                  <th scope="row">{tipoCrime.idCrime}</th>
-                  <td>{tipoCrime.descricao}</td>
-                  <td>
-                    <div style={{ display: "flex" }}>
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={<Tooltip id="tooltip-top">Editar</Tooltip>}
-                      >
-                        <div
-                          style={{ cursor: "pointer" }}
-                          onClick={() => onClickEditar(tipoCrime)}
+              {page &&
+                page.content &&
+                page.content.map((tipoCrime) => (
+                  <tr key={tipoCrime.idCrime}>
+                    <th scope="row">{tipoCrime.idCrime}</th>
+                    <td>{tipoCrime.descricao}</td>
+                    <td>
+                      <div style={{ display: "flex" }}>
+                        <OverlayTrigger
+                          placement="top"
+                          delay={{ show: 250, hide: 100 }}
+                          overlay={<Tooltip id="tooltip-top">Editar</Tooltip>}
                         >
-                          <EditIcon />
-                        </div>
-                      </OverlayTrigger>
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={<Tooltip id="tooltip-top">Excluir</Tooltip>}
-                      >
-                        <div
-                          style={{ cursor: "pointer", marginLeft: "10px" }}
-                          onClick={() => onClickExcluir(tipoCrime)}
+                          <div
+                            style={{ cursor: "pointer" }}
+                            onClick={() => onClickEditar(tipoCrime)}
+                          >
+                            <EditIcon />
+                          </div>
+                        </OverlayTrigger>
+                        <OverlayTrigger
+                          placement="top"
+                          delay={{ show: 250, hide: 100 }}
+                          overlay={<Tooltip id="tooltip-top">Excluir</Tooltip>}
                         >
-                          <DeleteIcon />
-                        </div>
-                      </OverlayTrigger>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                          <div
+                            style={{ cursor: "pointer", marginLeft: "10px" }}
+                            onClick={() => onClickExcluir(tipoCrime)}
+                          >
+                            <DeleteIcon />
+                          </div>
+                        </OverlayTrigger>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
+          <div style={{ display: "flex" }} className="mt-4">
+            <Pagination
+              pageCount={page && page.totalPages ? page.totalPages : 10}
+              range={3}
+              onChange={getListaTipoCrime}
+            />
+          </div>
         </div>
       </div>
       <Modal show={showModalExcluir} onHide={handleClose} centered>
@@ -192,7 +210,7 @@ const TipoCrime = () => {
                     },
                   })
                     .then((response) => {
-                      setListaTipoCrime(response.data.content);
+                      setPage(response.data);
                     })
                     .catch((error) => {
                       console.log(error);
