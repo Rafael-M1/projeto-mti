@@ -68,4 +68,10 @@ public class CrimeService {
 			throw new DatabaseException("Integrity violation");
 		}
 	}
+
+	@Transactional(readOnly = true)
+	public Page<Crime> findAllPagedByDescricao(String descricao, Pageable pageable) {
+		Page<Crime> list = repository.findAllByDescricao(descricao.toUpperCase(), pageable);
+		return list;
+	}
 }

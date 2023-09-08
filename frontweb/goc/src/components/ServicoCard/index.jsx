@@ -4,7 +4,7 @@ import { ReactComponent as FolderOpenedIcon } from "./../../assets/images/icon-f
 const ServicoCard = ({ tituloImagem, subTitulo, descricaoServico, onClickButton }) => {
   return (
     <div
-      class="card"
+      className="card"
       style={{
         // boxShadow: "3px 4px 19px -1px rgba(0,0,0,0.75)",
         background: "#d9d9d9",
@@ -12,10 +12,10 @@ const ServicoCard = ({ tituloImagem, subTitulo, descricaoServico, onClickButton 
         margin: "25px 25px",
       }}
     >
-      <div class="card-body">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-2 d-flex flex-column">
+      <div className="card-body">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-2 d-flex flex-column">
               <div
                 style={{
                   background: "#000",
@@ -30,11 +30,11 @@ const ServicoCard = ({ tituloImagem, subTitulo, descricaoServico, onClickButton 
                 <b>{tituloImagem}</b>
               </p>
             </div>
-            <div class="col-lg-6 d-flex flex-column">
+            <div className="col-lg-6 d-flex flex-column">
               <h5>{subTitulo}</h5>
               <p>{descricaoServico}</p>
             </div>
-            <div class="col-lg-4 d-flex flex-column" style={{ margin: "auto" }}>
+            <div className="col-lg-4 d-flex flex-column" style={{ margin: "auto" }}>
               <ButtonIcon text="Acessar" widthPixels={220} onClick={onClickButton} />
             </div>
           </div>

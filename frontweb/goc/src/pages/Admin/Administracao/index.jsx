@@ -5,7 +5,7 @@ const AdministracaoPage = () => {
   const navigate = useNavigate();
   return (
     <div
-      class="card"
+      className="card"
       style={{
         boxShadow: "3px 4px 19px -1px rgba(0,0,0,0.75)",
         background: "#fff",
@@ -13,8 +13,8 @@ const AdministracaoPage = () => {
         margin: "5px 25px",
       }}
     >
-      <div class="card-body">
-        <h2 class="card-title text-center">Administração</h2>
+      <div className="card-body">
+        <h2 className="card-title text-center">Administração</h2>
         <ServicoCard
           tituloImagem={"Tipo Crime"}
           subTitulo={"Gestão dos Tipos de Crime"}

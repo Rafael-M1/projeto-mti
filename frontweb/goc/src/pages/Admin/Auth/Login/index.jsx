@@ -36,7 +36,6 @@ const Login = () => {
         //   authenticated: true,
         //   tokenData: getTokenData(),
         // });
-        setHasError(false);
         navigate("/admin");
       })
       .catch((error) => {

@@ -1,6 +1,6 @@
 import "./styles.css";
 
-import { ReactComponent as ArrowIcon } from "./../../assets/images/arrow.svg";
+import { ArrowIcon } from "../../assets/images/arrow";
 
 const ButtonIcon = ({ text, onClick, widthPixels, heightPixels }) => {
   return (
@@ -17,7 +17,7 @@ const ButtonIcon = ({ text, onClick, widthPixels, heightPixels }) => {
         <h6>{text}</h6>
       </button>
       <div className="btn-icon-container">
-        <ArrowIcon />
+        <ArrowIcon colour={"#fff"} width={"14"} height={"24"}/>
       </div>
     </div>
   );

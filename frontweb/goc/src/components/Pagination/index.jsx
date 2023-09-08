@@ -1,5 +1,5 @@
 // import { ReactComponent as ArrowIconPrevious } from "./../../assets/images/arrow.svg";
-import { ReactComponent as ArrowIcon } from "./../../assets/images/arrow.svg";
+import { ArrowIcon } from "../../assets/images/arrow";
 import ReactPaginate from "react-paginate";
 import "./styles.css";
 

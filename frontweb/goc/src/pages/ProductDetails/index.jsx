@@ -1,4 +1,4 @@
-import { ReactComponent as ArrowIcon } from "./../../assets/images/arrow.svg";
+import { ArrowIcon } from "../../assets/images/arrow";
 import axios from "axios";
 import ProductPrice from "./../../components/ProductPrice";
 import { useState, useEffect } from "react";
