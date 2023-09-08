@@ -5,10 +5,13 @@ import ButtonIconSmall from "../../../../components/ButtonIconSmall";
 import { requestBackend } from "../../../../util/requests";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
 
 const TipoCrime = () => {
-  const [tipoCrime, setTipoCrime] = useState([]);
+  const [listaTipoCrime, setListaTipoCrime] = useState([]);
   const [filtroTipoCrime, setFiltroTipoCrime] = useState("");
+  const [showModalExcluir, setShowModalExcluir] = useState(false);
+  const [tipoCrimeSelecionado, setTipoCrimeSelecionado] = useState(null);
   const navigate = useNavigate();
   const { state } = useLocation();
 
@@ -28,10 +31,10 @@ const TipoCrime = () => {
       },
     };
     requestBackend(params).then((response) => {
-      setTipoCrime(response.data.content);
+      setListaTipoCrime(response.data.content);
     });
   }, []);
-
+  const handleClose = () => setShowModalExcluir(false);
   const onClickFiltrar = () => {
     const params = {
       method: "POST",
@@ -49,8 +52,9 @@ const TipoCrime = () => {
       setTipoCrime(response.data.content);
     });
   };
-  const onClickExcluir = (idCrime) => {
-    console.log("idCrime excluir clicado " + idCrime);
+  const onClickExcluir = (tipoCrime) => {
+    setTipoCrimeSelecionado(tipoCrime);
+    setShowModalExcluir(true);
   };
 
   const onClickEditar = (idCrime) => {
@@ -109,24 +113,34 @@ const TipoCrime = () => {
               </tr>
             </thead>
             <tbody>
-              {tipoCrime.map((tipoCrime) => (
+              {listaTipoCrime.map((tipoCrime) => (
                 <tr key={tipoCrime.idCrime}>
                   <th scope="row">{tipoCrime.idCrime}</th>
                   <td>{tipoCrime.descricao}</td>
                   <td>
                     <div style={{ display: "flex" }}>
-                      <div
-                        style={{ cursor: "pointer" }}
-                        onClick={() => onClickEditar(tipoCrime.idCrime)}
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={<Tooltip id="tooltip-top">Editar</Tooltip>}
                       >
-                        <EditIcon />
-                      </div>
-                      <div
-                        style={{ cursor: "pointer", marginLeft: "10px" }}
-                        onClick={() => onClickExcluir(tipoCrime.idCrime)}
+                        <div
+                          style={{ cursor: "pointer" }}
+                          onClick={() => onClickEditar(tipoCrime.idCrime)}
+                        >
+                          <EditIcon />
+                        </div>
+                      </OverlayTrigger>
+                      <OverlayTrigger
+                        placement="top"
+                        overlay={<Tooltip id="tooltip-top">Excluir</Tooltip>}
                       >
-                        <DeleteIcon />
-                      </div>
+                        <div
+                          style={{ cursor: "pointer", marginLeft: "10px" }}
+                          onClick={() => onClickExcluir(tipoCrime)}
+                        >
+                          <DeleteIcon />
+                        </div>
+                      </OverlayTrigger>
                     </div>
                   </td>
                 </tr>
@@ -135,6 +149,54 @@ const TipoCrime = () => {
           </table>
         </div>
       </div>
+      <Modal show={showModalExcluir} onHide={handleClose} centered>
+        <Modal.Header>
+          <Modal.Title>
+            <h6>Deseja realmente excluir o Tipo de Crime?</h6>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{`Nome: ${tipoCrimeSelecionado?.descricao}`}</Modal.Body>
+        <Modal.Footer>
+          <ButtonIconSmall
+            text="Cancelar"
+            widthPixels={220}
+            heightPixels={40}
+            onClick={() => setShowModalExcluir(false)}
+            icon={false}
+          />
+          <ButtonIconSmall
+            text="Confirmar"
+            widthPixels={220}
+            heightPixels={40}
+            onClick={() => {
+              const params = {
+                method: "DELETE",
+                url: `/crime/${tipoCrimeSelecionado.idCrime}`,
+                withCredentials: true,
+              };
+              requestBackend(params)
+                .then((response) => {
+                  requestBackend({
+                    url: "/crime",
+                    withCredentials: true,
+                    params: {
+                      page: 0,
+                      size: 12,
+                    },
+                  })
+                    .then((response) => {
+                      setListaTipoCrime(response.data.content);
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                })
+                .finally(handleClose());
+            }}
+            icon={true}
+          />
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
