@@ -49,7 +49,7 @@ const TipoCrime = () => {
       },
     };
     requestBackend(params).then((response) => {
-      setTipoCrime(response.data.content);
+      setListaTipoCrime(response.data.content);
     });
   };
   const onClickExcluir = (tipoCrime) => {
@@ -57,8 +57,15 @@ const TipoCrime = () => {
     setShowModalExcluir(true);
   };
 
-  const onClickEditar = (idCrime) => {
-    console.log("idCrime editar clicado " + idCrime);
+  const onClickEditar = (tipoCrimeParam) => {
+    navigate("/admin/administracao/tipocrime/form", {
+      state: {
+        tipoCrime: {
+          idCrime: tipoCrimeParam.idCrime,
+          descricao: tipoCrimeParam.descricao,
+        },
+      },
+    });
   };
   const onClickAdicionar = () => {
     navigate("/admin/administracao/tipocrime/form");
@@ -125,7 +132,7 @@ const TipoCrime = () => {
                       >
                         <div
                           style={{ cursor: "pointer" }}
-                          onClick={() => onClickEditar(tipoCrime.idCrime)}
+                          onClick={() => onClickEditar(tipoCrime)}
                         >
                           <EditIcon />
                         </div>
