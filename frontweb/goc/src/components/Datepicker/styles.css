@@ -1,0 +1,8 @@
+.react-datepicker__navigation {
+    background: none !important;
+}
+
+.btn-date-picker {
+    background: #F2F2F2 !important;
+    /* width: 200px; */
+}
