@@ -7,15 +7,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
 import Pagination from "../../../../components/Pagination";
-import ReactPaginate from "react-paginate";
+import CardLoader from "../../../Catalog/CardLoader";
 
 const TipoCrime = () => {
   const [page, setPage] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [filtroTipoCrimeTexto, setFiltroTipoCrimeTexto] = useState("");
   const [filtroTipoCrime, setFiltroTipoCrime] = useState("");
   const [showModalExcluir, setShowModalExcluir] = useState(false);
   const [tipoCrimeSelecionado, setTipoCrimeSelecionado] = useState(null);
   const navigate = useNavigate();
   const { state } = useLocation();
+  const handleClose = () => {
+    setTipoCrimeSelecionado(null);
+    setShowModalExcluir(false);
+  };
 
   useEffect(() => {
     if (state != null && state.mensagem != null) {
@@ -24,40 +30,62 @@ const TipoCrime = () => {
         navigate(location.pathname, { replace: true });
       }
     }
-    getListaTipoCrime(0);
+    setIsLoading(true);
+    serviceTipoCrimePromise({})
+      .then((response) => setPage(response.data))
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
-  const getListaTipoCrime = (pageNumber) => {
-    const params = {
-      url: "/crime",
-      withCredentials: true,
-      params: {
-        page: pageNumber ?? 0,
-        size: 12,
-      },
-    };
-    requestBackend(params).then((response) => {
-      setPage(response.data);
+  const serviceTipoCrimePromise = ({
+    pageNumberParam,
+    methodParam = "GET",
+    urlParam = "/crime",
+    dataParam,
+  }) =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        let params = {
+          url: urlParam,
+          method: methodParam,
+          withCredentials: true,
+          params: {
+            page: pageNumberParam ?? 0,
+            size: 12,
+          },
+        };
+        if (dataParam) {
+          params.data = dataParam;
+        }
+        requestBackend(params)
+          .then((response) => resolve(response))
+          .catch((error) => reject(error));
+      }, 0);
     });
-  };
 
-  const handleClose = () => setShowModalExcluir(false);
   const onClickFiltrar = () => {
-    const params = {
-      method: "POST",
-      url: "/crime/descricao",
-      withCredentials: true,
-      data: {
-        descricao: filtroTipoCrime,
-      },
-      params: {
-        page: 0,
-        size: 12,
-      },
-    };
-    requestBackend(params).then((response) => {
-      setPage(response.data);
-    });
+    if (filtroTipoCrimeTexto.trim() != "") {
+      setIsLoading(true);
+      setFiltroTipoCrime(filtroTipoCrimeTexto);
+      serviceTipoCrimePromise({
+        methodParam: "POST",
+        urlParam: "/crime/descricao",
+        dataParam: { descricao: filtroTipoCrimeTexto },
+      })
+        .then((response) => setPage(response.data))
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      setIsLoading(true);
+      setFiltroTipoCrime(filtroTipoCrimeTexto);
+      serviceTipoCrimePromise({})
+        .then((response) => setPage(response.data))
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   };
   const onClickExcluir = (tipoCrime) => {
     setTipoCrimeSelecionado(tipoCrime);
@@ -107,7 +135,7 @@ const TipoCrime = () => {
                 className="form-control"
                 style={{ height: "50px", width: "400px", marginLeft: "10px" }}
                 placeholder="Filtrar pelo nome do Tipo de Crime"
-                onChange={(e) => setFiltroTipoCrime(e.target.value)}
+                onChange={(e) => setFiltroTipoCrimeTexto(e.target.value)}
               />
             </div>
             <ButtonIconSmall
@@ -118,58 +146,91 @@ const TipoCrime = () => {
               icon={true}
             />
           </div>
-          <table className="table table-light table-hover mt-4">
-            <thead>
-              <tr>
-                <th scope="col">Código</th>
-                <th scope="col">Tipo de Crime</th>
-                <th scope="col">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {page &&
-                page.content &&
-                page.content.map((tipoCrime) => (
-                  <tr key={tipoCrime.idCrime}>
-                    <th scope="row">{tipoCrime.idCrime}</th>
-                    <td>{tipoCrime.descricao}</td>
-                    <td>
-                      <div style={{ display: "flex" }}>
-                        <OverlayTrigger
-                          placement="top"
-                          delay={{ show: 250, hide: 100 }}
-                          overlay={<Tooltip id="tooltip-top">Editar</Tooltip>}
-                        >
-                          <div
-                            style={{ cursor: "pointer" }}
-                            onClick={() => onClickEditar(tipoCrime)}
-                          >
-                            <EditIcon />
-                          </div>
-                        </OverlayTrigger>
-                        <OverlayTrigger
-                          placement="top"
-                          delay={{ show: 250, hide: 100 }}
-                          overlay={<Tooltip id="tooltip-top">Excluir</Tooltip>}
-                        >
-                          <div
-                            style={{ cursor: "pointer", marginLeft: "10px" }}
-                            onClick={() => onClickExcluir(tipoCrime)}
-                          >
-                            <DeleteIcon />
-                          </div>
-                        </OverlayTrigger>
-                      </div>
-                    </td>
+          {isLoading ? (
+            <CardLoader speed={0.9} width={1120} height={580} />
+          ) : (
+            <>
+              {filtroTipoCrime && (
+                <p className="mt-3">Busca por: {filtroTipoCrime}</p>
+              )}
+              <table className="table table-light table-hover mt-4">
+                <thead>
+                  <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Tipo de Crime</th>
+                    <th scope="col">Ações</th>
                   </tr>
-                ))}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {page &&
+                    page.content &&
+                    page.content.map((tipoCrime) => (
+                      <tr key={tipoCrime.idCrime}>
+                        <th scope="row">{tipoCrime.idCrime}</th>
+                        <td>{tipoCrime.descricao}</td>
+                        <td>
+                          <div style={{ display: "flex" }}>
+                            <OverlayTrigger
+                              placement="top"
+                              delay={{ show: 250, hide: 100 }}
+                              overlay={
+                                <Tooltip id="tooltip-top">Editar</Tooltip>
+                              }
+                            >
+                              <div
+                                style={{ cursor: "pointer" }}
+                                onClick={() => onClickEditar(tipoCrime)}
+                              >
+                                <EditIcon />
+                              </div>
+                            </OverlayTrigger>
+                            <OverlayTrigger
+                              placement="top"
+                              delay={{ show: 250, hide: 100 }}
+                              overlay={
+                                <Tooltip id="tooltip-top">Excluir</Tooltip>
+                              }
+                            >
+                              <div
+                                style={{
+                                  cursor: "pointer",
+                                  marginLeft: "10px",
+                                }}
+                                onClick={() => onClickExcluir(tipoCrime)}
+                              >
+                                <DeleteIcon />
+                              </div>
+                            </OverlayTrigger>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </>
+          )}
           <div style={{ display: "flex" }} className="mt-4">
             <Pagination
-              pageCount={page && page.totalPages ? page.totalPages : 10}
+              pageCount={page && page.totalPages ? page.totalPages : 0}
               range={3}
-              onChange={getListaTipoCrime}
+              onChange={(pageNumber) => {
+                if (filtroTipoCrime == "") {
+                  serviceTipoCrimePromise({ pageNumberParam: pageNumber })
+                    .then((response) => setPage(response.data))
+                    .finally(() => setIsLoading(false));
+                } else {
+                  serviceTipoCrimePromise({
+                    pageNumberParam: pageNumber,
+                    methodParam: "POST",
+                    urlParam: "/crime/descricao",
+                    dataParam: {
+                      descricao: filtroTipoCrime,
+                    },
+                  })
+                    .then((response) => setPage(response.data))
+                    .finally(() => setIsLoading(false));
+                }
+              }}
             />
           </div>
         </div>
@@ -194,29 +255,17 @@ const TipoCrime = () => {
             widthPixels={220}
             heightPixels={40}
             onClick={() => {
-              const params = {
-                method: "DELETE",
-                url: `/crime/${tipoCrimeSelecionado.idCrime}`,
-                withCredentials: true,
-              };
-              requestBackend(params)
+              serviceTipoCrimePromise({
+                methodParam: "DELETE",
+                urlParam: `/crime/${tipoCrimeSelecionado.idCrime}`,
+              })
                 .then((response) => {
-                  requestBackend({
-                    url: "/crime",
-                    withCredentials: true,
-                    params: {
-                      page: 0,
-                      size: 12,
-                    },
-                  })
-                    .then((response) => {
-                      setPage(response.data);
-                    })
-                    .catch((error) => {
-                      console.log(error);
-                    });
+                  setIsLoading(true);
+                  serviceTipoCrimePromise({})
+                    .then((response) => setPage(response.data))
+                    .finally(() => setIsLoading(false));
                 })
-                .finally(handleClose());
+                .finally(() => handleClose());
             }}
             icon={true}
           />
