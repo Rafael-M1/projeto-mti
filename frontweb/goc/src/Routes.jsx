@@ -10,6 +10,7 @@ import PainelServicos from "./pages/Admin/PainelServicos";
 import AdministracaoPage from "./pages/Admin/Administracao";
 import TipoCrime from "./pages/Admin/Administracao/TipoCrime";
 import TipoCrimeForm from "./pages/Admin/Administracao/TipoCrime/Form";
+import OcorrenciaCriminalForm from "./pages/Admin/PainelServicos/OcorrenciaCriminal";
 
 const RoutesConfig = () => (
   <>
@@ -21,6 +22,7 @@ const RoutesConfig = () => (
           <Route path="dashboard" element={<h2>Dashboard</h2>}>
             {/* a */}
           </Route>
+          <Route path="ocorrencia" element={<OcorrenciaCriminalForm />}></Route>
           <Route path="administracao" element={<AdministracaoPage />}></Route>
           <Route
             path="administracao/tipocrime"

@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import ServicoCard from "../../../components/ServicoCard";
 
 const PainelServicos = () => {
+  const navigate = useNavigate();
   return (
     <div
       className="card"
@@ -19,9 +21,7 @@ const PainelServicos = () => {
           descricaoServico={
             "Descrição: Serviço de registro de ocorrência policial, permitindo a comunicação de crimes e fatos atípicos pela unidade de polícia competente."
           }
-          onClickButton={() => {
-            console.log("aa");
-          }}
+          onClickButton={() => navigate("/admin/ocorrencia")}
         />
       </div>
     </div>
