@@ -88,9 +88,10 @@ const OcorrenciaCriminalForm = () => {
                 <h6>Descrição Geral</h6>
                 <div className="mt-3">
                   <textarea
+									
                     className="form-control"
                     placeholder="Descrição Geral da Ocorrência"
-                    style={{ width: "100%", height: "150px" }}
+                    style={{ width: "100%", height: "150px", resize: "none" }}
                   />
                 </div>
               </div>
