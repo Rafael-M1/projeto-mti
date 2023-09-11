@@ -6,7 +6,7 @@ import Login from "./Login";
 import "./styles.css";
 import React from "react";
 
-const Auth = () => {
+const Auth = ({ toggleAuth }) => {
   return (
     <div className="auth-container">
       <div className="auth-banner-container">
@@ -15,7 +15,7 @@ const Auth = () => {
         {/* <img className="login-image" src={loginImage}></img> */}
       </div>
       <div className="auth-form-container">
-        <Login />
+        <Login toggleAuth={toggleAuth} />
       </div>
     </div>
   );

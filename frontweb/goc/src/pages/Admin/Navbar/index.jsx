@@ -3,9 +3,10 @@ import { hasAnyRoles } from "./../../../util/auth";
 import { removeAuthData } from "../../../util/storage";
 import "./styles.css";
 
-const Navbar = () => {
+const Navbar = ({ toggleAuth }) => {
   const navigate = useNavigate();
   const onClickSairSistema = () => {
+    toggleAuth();
     navigate("/admin/auth");
     removeAuthData();
   };

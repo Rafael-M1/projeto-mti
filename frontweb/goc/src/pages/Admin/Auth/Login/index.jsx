@@ -8,7 +8,7 @@ import { saveAuthData } from "../../../../util/storage";
 
 import "./styles.css";
 
-const Login = () => {
+const Login = ({ toggleAuth }) => {
   const location = useLocation();
 
   const { from } = location.state || { from: { pathname: "/admin" } };
@@ -36,6 +36,7 @@ const Login = () => {
         //   authenticated: true,
         //   tokenData: getTokenData(),
         // });
+        toggleAuth();
         navigate("/admin");
       })
       .catch((error) => {

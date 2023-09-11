@@ -4,15 +4,14 @@ import MediaQuery, { useMediaQuery } from "react-responsive";
 import { Link, Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 // import { AuthContext } from 'AuthContext';
-import { getTokenData, isAuthenticated } from "./../../util/auth";
+import { getTokenData } from "./../../util/auth";
 import { removeAuthData } from "./../../util/storage";
 import pjcBrasao from "./../../assets/images/brasao-pjc-mt.png";
 
-const Navbar = () => {
-  const { isAuthenticated, setIsAuthenticated } = useState(true);
+const Navbar = ({ isAuthenticated }) => {
+  // const { isAuthenticated, setIsAuthenticated } = useState(true);
   let username = "Username";
   // const { authContextData, setAuthContextData } = useContext(AuthContext);
-
   // useEffect(() => {
   //   if (isAuthenticated()) {
   //     setAuthContextData({
@@ -53,7 +52,7 @@ const Navbar = () => {
               </h4>
             </div>
           </Link>
-          {is768pxOrLesser ? (
+          {is768pxOrLesser && isAuthenticated == false && (
             <>
               <button
                 className="navbar-toggler"
@@ -81,7 +80,8 @@ const Navbar = () => {
                 </ul>
               </div>
             </>
-          ) : (
+          )}
+          {!is768pxOrLesser && isAuthenticated == false && (
             <>
               <div style={{ display: "flex" }}>
                 <Link to={"/"} className="nav-logo-text">
@@ -93,7 +93,6 @@ const Navbar = () => {
               </div>
             </>
           )}
-
           {/* <div className="nav-login-logout">
             {isAuthenticated ? (
               <>

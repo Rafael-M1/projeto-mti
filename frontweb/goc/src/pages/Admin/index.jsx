@@ -5,10 +5,10 @@ import { Outlet } from "react-router-dom";
 
 import "./styles.css";
 
-const Admin = () => {
+const Admin = ({ toggleAuth }) => {
   return (
     <div className="admin-container">
-      <Navbar />
+      <Navbar toggleAuth={toggleAuth} />
       <div className="admin-content">
         {/* <PrivateRoute path="/admin/products">
           <h1>Product CRUD</h1>
@@ -19,7 +19,7 @@ const Admin = () => {
         <PrivateRoute path="/admin/users" roles={['ROLE_ADMIN']}>
           <Users />
         </PrivateRoute> */}
-        <Outlet/>
+        <Outlet />
       </div>
     </div>
   );
