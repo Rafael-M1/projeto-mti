@@ -5,3 +5,7 @@
 .btn-date-picker {
     background: #F2F2F2 !important;
 }
+
+.react-datepicker-wrapper {
+    width: 100%;
+}

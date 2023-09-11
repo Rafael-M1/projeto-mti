@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./styles.css";
 import { CalendarIcon } from "../../assets/images/icon-calendar";
 
-const DatePickerComponent = ({ onChangeDate, width = "200px" }) => {
+const DatePickerComponent = ({ onChangeDate }) => {
   // const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedDateComponent, setSelectedDateComponent] = useState(null);
   return (
@@ -14,11 +14,11 @@ const DatePickerComponent = ({ onChangeDate, width = "200px" }) => {
       selected={selectedDateComponent}
       onChange={(date) => {
         setSelectedDateComponent(date);
-				onChangeDate(date);
+        onChangeDate(date);
       }}
       maxDate={new Date()}
       customInput={
-        <div style={{ width: width }}>
+        <div style={{ width: "100%", display: "flex" }}>
           <p
             className="btn-date-picker form-control d-flex justify-content-between"
             style={{ cursor: "pointer" }}
