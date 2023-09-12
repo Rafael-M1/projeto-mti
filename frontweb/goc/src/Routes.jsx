@@ -12,6 +12,7 @@ import TipoCrime from "./pages/Admin/Administracao/TipoCrime";
 import TipoCrimeForm from "./pages/Admin/Administracao/TipoCrime/Form";
 import OcorrenciaCriminalForm from "./pages/Admin/PainelServicos/OcorrenciaCriminal";
 import { isUserAuthenticated } from "./util/auth";
+import OcorrenciaAdministracao from "./pages/Admin/Administracao/Ocorrencia";
 
 const RoutesConfig = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -51,6 +52,10 @@ const RoutesConfig = () => {
             <Route
               path="administracao/tipocrime/form"
               element={<TipoCrimeForm />}
+            ></Route>
+            <Route
+              path="administracao/ocorrencia"
+              element={<OcorrenciaAdministracao />}
             ></Route>
             <Route path="configuracoes" element={<h2>Configurações</h2>} />
           </Route>

@@ -26,8 +26,10 @@ const AdministracaoPage = () => {
         <ServicoCard
           tituloImagem={"Ocorrências Criminais"}
           subTitulo={"Gestão das Ocorrências Criminais"}
-          descricaoServico={"Descrição: Ocorrências criminais que podem ser registradas pelo cidadão ou operadores."}
-          onClickButton={() => navigate("/admin/administracao/ocorrencias")}
+          descricaoServico={
+            "Descrição: Ocorrências criminais que podem ser registradas pelo cidadão ou operadores."
+          }
+          onClickButton={() => navigate("/admin/administracao/ocorrencia")}
         />
         <ServicoCard
           tituloImagem={"Pessoas"}
