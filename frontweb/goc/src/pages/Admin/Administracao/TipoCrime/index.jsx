@@ -178,12 +178,22 @@ const TipoCrime = () => {
                               }
                             >
                               <div
-                                style={{ cursor: "pointer" }}
+                                style={{
+                                  cursor: "pointer",
+                                  borderStyle: "hidden",
+                                  margin: "4px",
+                                  padding: "4px",
+                                }}
                                 onClick={() => onClickEditar(tipoCrime)}
                               >
                                 <EditIcon />
                               </div>
                             </OverlayTrigger>
+                            <div
+                              style={{
+                                width: "10px",
+                              }}
+                            ></div>
                             <OverlayTrigger
                               placement="top"
                               delay={{ show: 250, hide: 100 }}
@@ -194,7 +204,9 @@ const TipoCrime = () => {
                               <div
                                 style={{
                                   cursor: "pointer",
-                                  marginLeft: "10px",
+                                  borderStyle: "hidden",
+                                  margin: "4px",
+                                  padding: "4px",
                                 }}
                                 onClick={() => onClickExcluir(tipoCrime)}
                               >
