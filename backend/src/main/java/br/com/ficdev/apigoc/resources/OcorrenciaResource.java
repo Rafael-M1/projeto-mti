@@ -34,8 +34,8 @@ public class OcorrenciaResource {
 	}
 
 	@GetMapping(value = "/{idOcorrencia}")
-	public ResponseEntity<Ocorrencia> findById(@PathVariable Long idOcorrencia) {
-		Ocorrencia ocorrencia = service.findById(idOcorrencia);
+	public ResponseEntity<OcorrenciaDTO> findById(@PathVariable Long idOcorrencia) {
+		OcorrenciaDTO ocorrencia = service.findById(idOcorrencia);
 		return ResponseEntity.ok().body(ocorrencia);
 	}
 	

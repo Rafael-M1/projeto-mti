@@ -33,10 +33,11 @@ public class OcorrenciaService {
 	}
 
 	@Transactional(readOnly = true)
-	public Ocorrencia findById(Long idOcorrencia) {
+	public OcorrenciaDTO findById(Long idOcorrencia) {
 		Optional<Ocorrencia> obj = repository.findById(idOcorrencia);
 		Ocorrencia entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
-		return entity;
+		OcorrenciaDTO ocorrenciaDTO = new OcorrenciaDTO(entity);
+		return ocorrenciaDTO;
 	}
 
 	@Transactional
