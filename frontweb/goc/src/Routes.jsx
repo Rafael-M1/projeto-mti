@@ -4,13 +4,14 @@ import Catalog from "./pages/Catalog";
 import Admin from "./pages/Admin";
 import ProductDetails from "./pages/ProductDetails";
 import Auth from "./pages/Admin/Auth";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import PainelServicos from "./pages/Admin/PainelServicos";
 import AdministracaoPage from "./pages/Admin/Administracao";
 import TipoCrime from "./pages/Admin/Administracao/TipoCrime";
 import TipoCrimeForm from "./pages/Admin/Administracao/TipoCrime/Form";
 import OcorrenciaCriminalForm from "./pages/Admin/PainelServicos/OcorrenciaCriminal";
+import { isUserAuthenticated } from "./util/auth";
 
 const RoutesConfig = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -20,6 +21,11 @@ const RoutesConfig = () => {
       return currentStatus;
     });
   };
+  useEffect(() => {
+    isUserAuthenticated()
+      ? setIsAuthenticated(true)
+      : setIsAuthenticated(false);
+  }, []);
   return (
     <>
       <Routes>

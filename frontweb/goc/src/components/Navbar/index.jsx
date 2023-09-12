@@ -11,6 +11,7 @@ import pjcBrasao from "./../../assets/images/brasao-pjc-mt.png";
 const Navbar = ({ isAuthenticated }) => {
   // const { isAuthenticated, setIsAuthenticated } = useState(true);
   let username = "Username";
+  console.log(isAuthenticated);
   // const { authContextData, setAuthContextData } = useContext(AuthContext);
   // useEffect(() => {
   //   if (isAuthenticated()) {

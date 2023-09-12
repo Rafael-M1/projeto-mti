@@ -1,4 +1,4 @@
-import { Route, Navigate } from 'react-router-dom';
+/*import { Route, Navigate } from 'react-router-dom';
 import { hasAnyRoles, isAuthenticated } from './../../util/auth';
 
 const PrivateRoute = ({ children, path, roles = [] }) => {
@@ -34,4 +34,4 @@ const isAuthorizedV2 = (requiredRoles) => {
   return true;
 };
 
-export default PrivateRoute;
+export default PrivateRoute;*/

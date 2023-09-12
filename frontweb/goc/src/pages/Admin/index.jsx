@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import Users from "./User";
-import PrivateRoute from "./../../components/PrivateRoute";
+//import PrivateRoute from "./../../components/PrivateRoute";
 import { Outlet } from "react-router-dom";
 
 import "./styles.css";

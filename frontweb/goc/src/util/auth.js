@@ -1,5 +1,5 @@
-import jwtDecode from 'jwt-decode';
-import { getAuthData } from './storage';
+import jwtDecode from "jwt-decode";
+import { getAuthData } from "./storage";
 
 export const getTokenData = () => {
   try {
@@ -9,7 +9,7 @@ export const getTokenData = () => {
   }
 };
 
-export const isAuthenticated = () => {
+export const isUserAuthenticated = () => {
   let tokenData = getTokenData();
   return tokenData && tokenData.exp * 1000 > Date.now() ? true : false;
 };
