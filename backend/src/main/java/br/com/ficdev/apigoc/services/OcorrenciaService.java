@@ -36,19 +36,19 @@ public class OcorrenciaService {
 
 	@Autowired
 	private OcorrenciaRepository repository;
-	
+
 	@Autowired
 	private OcorrenciaCrimeRepository ocorrenciaCrimeRepository;
-	
+
 	@Autowired
 	private EnvolvidoRepository envolvidoRepository;
-	
+
 	@Autowired
 	private PessoaRepository pessoaRepository;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private CrimeService crimeService;
 
@@ -74,7 +74,7 @@ public class OcorrenciaService {
 		ocorrencia = repository.save(ocorrencia);
 		return ocorrencia;
 	}
-	
+
 	@Transactional
 	public Ocorrencia insert(OcorrenciaInsertDTO ocorrenciaInsertDTO) {
 		Ocorrencia ocorrencia = new Ocorrencia();
@@ -89,9 +89,9 @@ public class OcorrenciaService {
 		Usuario operador = userService.findUsuarioById(ocorrenciaInsertDTO.getIdOperador());
 		ocorrencia.setOperador(operador);
 		ocorrencia.setStatus(true);
-		
-		//Verifica se vitima ja existe no DB
-		/*Optional<Pessoa> vitimaOptional = pessoaRepository.findById(ocorrenciaInsertDTO.getVitima().getIdPessoa());
+
+		// Verifica se Pessoa vitima ja existe no DB
+		Optional<Pessoa> vitimaOptional = pessoaRepository.findPessoaByCPF(ocorrenciaInsertDTO.getVitima().getCpf());
 		if (vitimaOptional.isPresent()) {
 			ocorrencia.setVitima(vitimaOptional.get());
 		} else {
@@ -99,20 +99,19 @@ public class OcorrenciaService {
 			vitima = pessoaRepository.save(vitima);
 			ocorrencia.setVitima(vitima);
 		}
-		*/
+
 		ocorrencia = repository.save(ocorrencia);
 		for (OcorrenciaCrimeDTO ocorrenciaCrimeDTO : ocorrenciaInsertDTO.getCrimesEnvolvidos()) {
 			OcorrenciaCrime oc1 = new OcorrenciaCrime();
 			Crime crime = crimeService.findById(ocorrenciaCrimeDTO.getIdCrime());
-			OcorrenciaCrimeId oci1 = new OcorrenciaCrimeId(ocorrencia.getIdOcorrencia(),
-					crime.getIdCrime());
+			OcorrenciaCrimeId oci1 = new OcorrenciaCrimeId(ocorrencia.getIdOcorrencia(), crime.getIdCrime());
 			oc1.setIdOcorrenciaCrime(oci1);
 			oc1.setCrime(crime);
 			oc1.setOcorrencia(ocorrencia);
 			oc1.setDescricaoCrimeOcorrencia(ocorrenciaCrimeDTO.getDescricaoCrimeOcorrencia());
 			ocorrenciaCrimeRepository.save(oc1);
 			ocorrencia.addOcorrenciaCrime(oc1);
-			
+
 		}
 		for (EnvolvidoDTO envolvidoDTO : ocorrenciaInsertDTO.getPessoasEnvolvidas()) {
 			Envolvido envolvido = new Envolvido();
@@ -129,25 +128,22 @@ public class OcorrenciaService {
 	public Ocorrencia update(Long idOcorrencia, Ocorrencia ocorrencia) {
 		try {
 			Ocorrencia ocorrenciaSaved = repository.getOne(idOcorrencia);
-			//TODO acrescentar todos atributos para ser atualizados;
+			// TODO acrescentar todos atributos para ser atualizados;
 			ocorrenciaSaved.setBairro(ocorrencia.getBairro());
 			ocorrenciaSaved.setStatus(ocorrencia.isStatus());
 			ocorrenciaSaved = repository.save(ocorrenciaSaved);
 			return ocorrenciaSaved;
-		}
-		catch (EntityNotFoundException e) {
+		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + idOcorrencia);
-		}		
+		}
 	}
 
 	public void delete(Long idOcorrencia) {
 		try {
 			repository.deleteById(idOcorrencia);
-		}
-		catch (EmptyResultDataAccessException e) {
+		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("Id not found " + idOcorrencia);
-		}
-		catch (DataIntegrityViolationException e) {
+		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException("Integrity violation");
 		}
 	}

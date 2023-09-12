@@ -2,6 +2,8 @@ package br.com.ficdev.apigoc.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +43,7 @@ public class OcorrenciaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<OcorrenciaDTO> insert(@RequestBody OcorrenciaInsertDTO ocorrenciaInsertDTO) {
+	public ResponseEntity<OcorrenciaDTO> insert(@RequestBody @Valid OcorrenciaInsertDTO ocorrenciaInsertDTO) {
 		OcorrenciaDTO ocorrenciaDTO = new OcorrenciaDTO(service.insert(ocorrenciaInsertDTO));
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idOcorrencia}")
 				.buildAndExpand(ocorrenciaDTO.getIdOcorrencia()).toUri();

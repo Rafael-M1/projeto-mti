@@ -5,6 +5,10 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+
 import br.com.ficdev.apigoc.entities.Pessoa;
 
 public class OcorrenciaInsertDTO implements Serializable {
@@ -17,14 +21,16 @@ public class OcorrenciaInsertDTO implements Serializable {
 	private String complemento;
 	
 	private LocalDateTime dataCriado;
+	@PastOrPresent
 	private LocalDateTime dataOcorrencia;
 	private String descricaoGeral;
 	private boolean status;
-	
+	@NotNull
 	private Pessoa vitima;
+	@NotNull
 	private Long idOperador;
-	
 	private Set<EnvolvidoDTO> pessoasEnvolvidas = new HashSet<>();
+	@NotEmpty
 	private Set<OcorrenciaCrimeDTO> crimesEnvolvidos = new HashSet<>();
 
 	public OcorrenciaInsertDTO() {
