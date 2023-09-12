@@ -16,6 +16,11 @@ public class OcorrenciaCrimeId implements Serializable {
 	
 	public OcorrenciaCrimeId() {
 	}
+	
+	public OcorrenciaCrimeId(Long idOcorrencia, Long idCrime) {
+		this.idOcorrencia = idOcorrencia;
+		this.idCrime = idCrime;
+	}
 
 	public Long getIdOcorrencia() {
 		return idOcorrencia;

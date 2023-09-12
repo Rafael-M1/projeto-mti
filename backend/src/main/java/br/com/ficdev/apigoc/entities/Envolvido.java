@@ -31,6 +31,13 @@ public class Envolvido implements Serializable {
 
 	public Envolvido() {
 	}
+	
+	public Envolvido(Long idEnvolvido, String descricao, Pessoa pessoa, Ocorrencia ocorrencia) {
+		this.idEnvolvido = idEnvolvido;
+		this.descricao = descricao;
+		this.pessoa = pessoa;
+		this.ocorrencia = ocorrencia;
+	}
 
 	public Long getIdEnvolvido() {
 		return idEnvolvido;

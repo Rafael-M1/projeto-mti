@@ -2,6 +2,8 @@ package br.com.ficdev.apigoc.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -44,6 +47,30 @@ public class Ocorrencia implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_operador")
 	private Usuario operador;
+	@OneToMany(mappedBy = "ocorrencia")
+	private Set<OcorrenciaCrime> listaOcorrenciaCrime = new HashSet<>();
+	@OneToMany(mappedBy = "ocorrencia")
+	private Set<Envolvido> listaEnvolvidos = new HashSet<>();
+	
+	public Ocorrencia() {
+	}
+
+	public Ocorrencia(Long idOcorrencia, String cidade, String bairro, String endereco, String numero,
+			String complemento, LocalDateTime dataCriado, LocalDateTime dataOcorrencia, String descricaoGeral,
+			boolean status, Pessoa vitima, Usuario operador) {
+		this.idOcorrencia = idOcorrencia;
+		this.cidade = cidade;
+		this.bairro = bairro;
+		this.endereco = endereco;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.dataCriado = dataCriado;
+		this.dataOcorrencia = dataOcorrencia;
+		this.descricaoGeral = descricaoGeral;
+		this.status = status;
+		this.vitima = vitima;
+		this.operador = operador;
+	}
 
 	public Long getIdOcorrencia() {
 		return idOcorrencia;
@@ -139,6 +166,22 @@ public class Ocorrencia implements Serializable {
 
 	public void setOperador(Usuario operador) {
 		this.operador = operador;
+	}
+
+	public Set<OcorrenciaCrime> getListaOcorrenciaCrime() {
+		return listaOcorrenciaCrime;
+	}
+	
+	public void addOcorrenciaCrime(OcorrenciaCrime ocorrenciaCrime) {
+		this.listaOcorrenciaCrime.add(ocorrenciaCrime);
+	}
+
+	public Set<Envolvido> getListaEnvolvidos() {
+		return listaEnvolvidos;
+	}
+	
+	public void addEnvolvido(Envolvido envolvido) {
+		this.listaEnvolvidos.add(envolvido);
 	}
 
 	@Override
