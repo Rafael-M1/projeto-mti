@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.ficdev.apigoc.dto.OcorrenciaDTO;
+import br.com.ficdev.apigoc.dto.OcorrenciaInsertDTO;
 import br.com.ficdev.apigoc.entities.Ocorrencia;
 import br.com.ficdev.apigoc.services.OcorrenciaService;
 
@@ -40,11 +41,11 @@ public class OcorrenciaResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Ocorrencia> insert(@RequestBody Ocorrencia ocorrencia) {
-		ocorrencia = service.insert(ocorrencia);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idCrime}")
-				.buildAndExpand(ocorrencia.getIdOcorrencia()).toUri();
-		return ResponseEntity.created(uri).body(ocorrencia);
+	public ResponseEntity<OcorrenciaDTO> insert(@RequestBody OcorrenciaInsertDTO ocorrenciaInsertDTO) {
+		OcorrenciaDTO ocorrenciaDTO = new OcorrenciaDTO(service.insert(ocorrenciaInsertDTO));
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{idOcorrencia}")
+				.buildAndExpand(ocorrenciaDTO.getIdOcorrencia()).toUri();
+		return ResponseEntity.created(uri).body(ocorrenciaDTO);
 	}
 	
 	@PutMapping(value = "/{idOcorrencia}")

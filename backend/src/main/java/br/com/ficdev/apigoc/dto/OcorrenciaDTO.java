@@ -27,8 +27,8 @@ public class OcorrenciaDTO implements Serializable {
 	private Pessoa vitima;
 	private UsuarioDTO operador;
 	
-	private Set<EnvolvidoDTO> listaEnvolvidos = new HashSet<>();
-	private Set<OcorrenciaCrimeDTO> listaCrimesEnvolvidos = new HashSet<>();
+	private Set<EnvolvidoDTO> pessoasEnvolvidas = new HashSet<>();
+	private Set<OcorrenciaCrimeDTO> crimesEnvolvidos = new HashSet<>();
 
 	public OcorrenciaDTO() {
 	}
@@ -47,9 +47,9 @@ public class OcorrenciaDTO implements Serializable {
 		this.operador = new UsuarioDTO(ocorrencia.getOperador());
 		this.vitima = ocorrencia.getVitima();
 		
-		this.listaEnvolvidos = ocorrencia.getListaEnvolvidos()
+		this.pessoasEnvolvidas = ocorrencia.getListaEnvolvidos()
 									.stream().map(envolvido -> new EnvolvidoDTO(envolvido)).collect(Collectors.toSet());
-		this.listaCrimesEnvolvidos = ocorrencia.getListaOcorrenciaCrime()
+		this.crimesEnvolvidos = ocorrencia.getListaOcorrenciaCrime()
 				.stream().map(ocorrenciaCrime -> new OcorrenciaCrimeDTO(ocorrenciaCrime)).collect(Collectors.toSet());
 	}
 
@@ -101,12 +101,12 @@ public class OcorrenciaDTO implements Serializable {
 		return operador;
 	}
 
-	public Set<EnvolvidoDTO> getListaEnvolvidos() {
-		return listaEnvolvidos;
+	public Set<EnvolvidoDTO> getPessoasEnvolvidas() {
+		return pessoasEnvolvidas;
 	}
 
-	public Set<OcorrenciaCrimeDTO> getListaCrimesEnvolvidos() {
-		return listaCrimesEnvolvidos;
+	public Set<OcorrenciaCrimeDTO> getCrimesEnvolvidos() {
+		return crimesEnvolvidos;
 	}
 
 	@Override
@@ -114,7 +114,7 @@ public class OcorrenciaDTO implements Serializable {
 		return "OcorrenciaDTO [idOcorrencia=" + idOcorrencia + ", cidade=" + cidade + ", bairro=" + bairro
 				+ ", endereco=" + endereco + ", numero=" + numero + ", complemento=" + complemento + ", dataCriado="
 				+ dataCriado + ", dataOcorrencia=" + dataOcorrencia + ", descricaoGeral=" + descricaoGeral + ", status="
-				+ status + ", vitima=" + vitima + ", operador=" + operador + ", listaEnvolvidos=" + listaEnvolvidos
-				+ ", listaOcorrenciaCrime=" + listaCrimesEnvolvidos + "]";
+				+ status + ", vitima=" + vitima + ", operador=" + operador + ", pessoasEnvolvidas=" + pessoasEnvolvidas
+				+ ", crimesEnvolvidos=" + crimesEnvolvidos + "]";
 	}
 }

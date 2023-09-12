@@ -13,9 +13,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.ficdev.apigoc.dto.EnvolvidoDTO;
+import br.com.ficdev.apigoc.dto.OcorrenciaCrimeDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaDTO;
+import br.com.ficdev.apigoc.dto.OcorrenciaInsertDTO;
+import br.com.ficdev.apigoc.entities.Crime;
+import br.com.ficdev.apigoc.entities.Envolvido;
 import br.com.ficdev.apigoc.entities.Ocorrencia;
+import br.com.ficdev.apigoc.entities.OcorrenciaCrime;
+import br.com.ficdev.apigoc.entities.Pessoa;
+import br.com.ficdev.apigoc.entities.Usuario;
+import br.com.ficdev.apigoc.entities.compositekeys.OcorrenciaCrimeId;
+import br.com.ficdev.apigoc.repositories.EnvolvidoRepository;
+import br.com.ficdev.apigoc.repositories.OcorrenciaCrimeRepository;
 import br.com.ficdev.apigoc.repositories.OcorrenciaRepository;
+import br.com.ficdev.apigoc.repositories.PessoaRepository;
 import br.com.ficdev.apigoc.services.exceptions.DatabaseException;
 import br.com.ficdev.apigoc.services.exceptions.ResourceNotFoundException;
 
@@ -24,6 +36,21 @@ public class OcorrenciaService {
 
 	@Autowired
 	private OcorrenciaRepository repository;
+	
+	@Autowired
+	private OcorrenciaCrimeRepository ocorrenciaCrimeRepository;
+	
+	@Autowired
+	private EnvolvidoRepository envolvidoRepository;
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private CrimeService crimeService;
 
 	@Transactional(readOnly = true)
 	public Page<OcorrenciaDTO> findAllPaged(Pageable pageable) {
@@ -45,6 +72,56 @@ public class OcorrenciaService {
 		ocorrencia.setStatus(true);
 		ocorrencia.setDataCriado(LocalDateTime.now());
 		ocorrencia = repository.save(ocorrencia);
+		return ocorrencia;
+	}
+	
+	@Transactional
+	public Ocorrencia insert(OcorrenciaInsertDTO ocorrenciaInsertDTO) {
+		Ocorrencia ocorrencia = new Ocorrencia();
+		ocorrencia.setBairro(ocorrenciaInsertDTO.getBairro());
+		ocorrencia.setCidade(ocorrenciaInsertDTO.getCidade());
+		ocorrencia.setComplemento(ocorrenciaInsertDTO.getComplemento());
+		ocorrencia.setDataCriado(LocalDateTime.now());
+		ocorrencia.setDataOcorrencia(ocorrenciaInsertDTO.getDataOcorrencia());
+		ocorrencia.setDescricaoGeral(ocorrenciaInsertDTO.getDescricaoGeral());
+		ocorrencia.setEndereco(ocorrenciaInsertDTO.getEndereco());
+		ocorrencia.setNumero(ocorrenciaInsertDTO.getNumero());
+		Usuario operador = userService.findUsuarioById(ocorrenciaInsertDTO.getIdOperador());
+		ocorrencia.setOperador(operador);
+		ocorrencia.setStatus(true);
+		
+		//Verifica se vitima ja existe no DB
+		/*Optional<Pessoa> vitimaOptional = pessoaRepository.findById(ocorrenciaInsertDTO.getVitima().getIdPessoa());
+		if (vitimaOptional.isPresent()) {
+			ocorrencia.setVitima(vitimaOptional.get());
+		} else {
+			Pessoa vitima = ocorrenciaInsertDTO.getVitima();
+			vitima = pessoaRepository.save(vitima);
+			ocorrencia.setVitima(vitima);
+		}
+		*/
+		ocorrencia = repository.save(ocorrencia);
+		for (OcorrenciaCrimeDTO ocorrenciaCrimeDTO : ocorrenciaInsertDTO.getCrimesEnvolvidos()) {
+			OcorrenciaCrime oc1 = new OcorrenciaCrime();
+			Crime crime = crimeService.findById(ocorrenciaCrimeDTO.getIdCrime());
+			OcorrenciaCrimeId oci1 = new OcorrenciaCrimeId(ocorrencia.getIdOcorrencia(),
+					crime.getIdCrime());
+			oc1.setIdOcorrenciaCrime(oci1);
+			oc1.setCrime(crime);
+			oc1.setOcorrencia(ocorrencia);
+			oc1.setDescricaoCrimeOcorrencia(ocorrenciaCrimeDTO.getDescricaoCrimeOcorrencia());
+			ocorrenciaCrimeRepository.save(oc1);
+			ocorrencia.addOcorrenciaCrime(oc1);
+			
+		}
+		for (EnvolvidoDTO envolvidoDTO : ocorrenciaInsertDTO.getPessoasEnvolvidas()) {
+			Envolvido envolvido = new Envolvido();
+			envolvido.setDescricao(envolvidoDTO.getDescricao());
+			envolvido.setOcorrencia(ocorrencia);
+			envolvido.setPessoa(envolvidoDTO.getPessoa());
+			envolvidoRepository.save(envolvido);
+			ocorrencia.addEnvolvido(envolvido);
+		}
 		return ocorrencia;
 	}
 
@@ -74,4 +151,5 @@ public class OcorrenciaService {
 			throw new DatabaseException("Integrity violation");
 		}
 	}
+
 }
