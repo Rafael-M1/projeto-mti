@@ -99,32 +99,35 @@ const OcorrenciaAdministracao = () => {
         <h2 className="card-title text-center">Administração - Ocorrências</h2>
         <Toaster position="top-right" />
         <div className="container mt-5">
-          <div className="d-flex justify-content-between">
-            <div style={{ display: "flex" }}>
+          <div className="row">
+            <div className="col-6 col-lg-3 col-xl-3 mt-2">
               <ButtonIconSmall
                 text="Filtrar"
-                widthPixels={220}
+                widthPixels={"100%"}
                 heightPixels={50}
                 //TODO filtrar pelo numero da ocorrencia
                 onClick={onClickFiltrar}
                 icon={true}
               />
+            </div>
+            <div className="col-md-6 col-lg-4 col-xl-5 mt-2">
               <input
                 type="text"
                 className="form-control"
-                style={{ height: "50px", width: "400px", marginLeft: "10px" }}
+                style={{ height: "50px", width: "100%" }}
                 placeholder="Filtrar pelo número da Ocorrência"
                 onChange={(e) => {}}
               />
             </div>
-            {/* <ButtonIconSmall
+          </div>
+          {/* <ButtonIconSmall
               text="Adicionar"
               widthPixels={240}
               heightPixels={50}
               onClick={() => {}}
               icon={true}
             /> */}
-          </div>
+          {/* <div className="d-flex justify-content-between"></div> */}
           {isLoading ? (
             <CardLoader speed={0.9} width={1120} height={580} />
           ) : (
