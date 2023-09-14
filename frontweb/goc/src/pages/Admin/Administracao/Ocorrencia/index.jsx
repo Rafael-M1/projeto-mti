@@ -100,7 +100,7 @@ const OcorrenciaAdministracao = () => {
         <Toaster position="top-right" />
         <div className="container mt-5">
           <div className="row">
-            <div className="col-6 col-lg-3 col-xl-3 mt-2">
+            <div className="col-12 col-sm-6 col-lg-3 col-xl-3 mt-2">
               <ButtonIconSmall
                 text="Filtrar"
                 widthPixels={"100%"}
