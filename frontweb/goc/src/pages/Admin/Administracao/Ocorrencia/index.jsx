@@ -12,12 +12,15 @@ import CardLoader from "../../../Catalog/CardLoader";
 const OcorrenciaAdministracao = () => {
   const [page, setPage] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [filtroOcorrenciaTexto, setFiltroOcorrenciaTexto] = useState("");
+  const [filtroOcorrencia, setFiltroOcorrencia] = useState("");
   const [showModalExcluir, setShowModalExcluir] = useState(false);
+  const [ocorrenciaSelecionada, setOcorrenciaSelecionada] = useState(null);
   const navigate = useNavigate();
   const { state } = useLocation();
 
   const handleClose = () => {
-    // setTipoCrimeSelecionado(null);
+    setOcorrenciaSelecionada(null);
     setShowModalExcluir(false);
   };
 
@@ -25,11 +28,8 @@ const OcorrenciaAdministracao = () => {
     setIsLoading(true);
     serviceOcorrenciaPromise({})
       .then((response) => setPage(response.data))
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .finally(() => setIsLoading(false));
   }, []);
-  console.log(page);
 
   const serviceOcorrenciaPromise = ({
     pageNumberParam,
@@ -43,11 +43,13 @@ const OcorrenciaAdministracao = () => {
           url: urlParam,
           method: methodParam,
           withCredentials: true,
-          params: {
+        };
+        if (methodParam == "GET" || methodParam != "POST") {
+          params.params = {
             page: pageNumberParam ?? 0,
             size: 12,
-          },
-        };
+          };
+        }
         if (dataParam) {
           params.data = dataParam;
         }
@@ -56,6 +58,32 @@ const OcorrenciaAdministracao = () => {
           .catch((error) => reject(error));
       }, 0);
     });
+
+  const onClickFiltrar = () => {
+    if (filtroOcorrenciaTexto.trim() != "") {
+      setIsLoading(true);
+      setFiltroOcorrencia(filtroOcorrenciaTexto);
+      serviceTipoCrimePromise({
+        methodParam: "POST",
+        urlParam: "/ocorrencia/filtro",
+        //TODO falta arrumar o objeto do dataParam
+        dataParam: { descricao: filtroOcorrenciaTexto },
+      })
+        .then((response) => setPage(response.data))
+        .finally(() => setIsLoading(false));
+    } else {
+      setIsLoading(true);
+      setFiltroOcorrencia(filtroOcorrenciaTexto);
+      serviceTipoCrimePromise({})
+        .then((response) => setPage(response.data))
+        .finally(() => setIsLoading(false));
+    }
+  };
+
+  const onClickExcluir = (ocorrencia) => {
+    setOcorrenciaSelecionada(ocorrencia);
+    setShowModalExcluir(true);
+  };
 
   return (
     <div
@@ -77,7 +105,8 @@ const OcorrenciaAdministracao = () => {
                 text="Filtrar"
                 widthPixels={220}
                 heightPixels={50}
-                onClick={() => {}}
+                //TODO filtrar pelo numero da ocorrencia
+                onClick={onClickFiltrar}
                 icon={true}
               />
               <input
@@ -88,13 +117,13 @@ const OcorrenciaAdministracao = () => {
                 onChange={(e) => {}}
               />
             </div>
-            <ButtonIconSmall
+            {/* <ButtonIconSmall
               text="Adicionar"
               widthPixels={240}
               heightPixels={50}
               onClick={() => {}}
               icon={true}
-            />
+            /> */}
           </div>
           {isLoading ? (
             <CardLoader speed={0.9} width={1120} height={580} />
@@ -147,6 +176,7 @@ const OcorrenciaAdministracao = () => {
                                   margin: "4px",
                                   padding: "4px",
                                 }}
+                                //TODO editar ocorrencia
                                 onClick={() => {}}
                               >
                                 <EditIcon />
@@ -171,7 +201,9 @@ const OcorrenciaAdministracao = () => {
                                   margin: "4px",
                                   padding: "4px",
                                 }}
-                                onClick={() => {}}
+                                onClick={() => {
+                                  onClickExcluir(ocorrencia);
+                                }}
                               >
                                 <DeleteIcon />
                               </div>
@@ -189,6 +221,7 @@ const OcorrenciaAdministracao = () => {
               pageCount={page && page.totalPages ? page.totalPages : 0}
               range={3}
               onChange={(pageNumber) => {
+                //TODO paginação
                 // if (filtroTipoCrime == "") {
                 //   serviceTipoCrimePromise({ pageNumberParam: pageNumber })
                 //     .then((response) => setPage(response.data))
@@ -216,20 +249,35 @@ const OcorrenciaAdministracao = () => {
             <h6>Deseja realmente excluir a Ocorrência?</h6>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>{`Nome: `}</Modal.Body>
+        <Modal.Body>
+          <p>{`Código Ocorrência: ${ocorrenciaSelecionada?.idOcorrencia}`}</p>
+          <p>{`Vítima: ${ocorrenciaSelecionada?.vitima.nome}`}</p>
+        </Modal.Body>
         <Modal.Footer>
           <ButtonIconSmall
             text="Cancelar"
             widthPixels={220}
             heightPixels={40}
-            onClick={() => {}}
+            onClick={() => setShowModalExcluir(false)}
             icon={false}
           />
           <ButtonIconSmall
             text="Confirmar"
             widthPixels={220}
             heightPixels={40}
-            onClick={() => {}}
+            onClick={() => {
+              serviceOcorrenciaPromise({
+                methodParam: "DELETE",
+                urlParam: `/ocorrencia/${ocorrenciaSelecionada.idOcorrencia}`,
+              })
+                .then((response) => {
+                  setIsLoading(true);
+                  serviceOcorrenciaPromise({})
+                    .then((response) => setPage(response.data))
+                    .finally(() => setIsLoading(false));
+                })
+                .finally(() => handleClose());
+            }}
             icon={true}
           />
         </Modal.Footer>

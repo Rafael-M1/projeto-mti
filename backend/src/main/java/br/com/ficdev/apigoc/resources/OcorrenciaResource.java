@@ -31,8 +31,8 @@ public class OcorrenciaResource {
 	private OcorrenciaService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<OcorrenciaDTO>> findAll(Pageable pageable) {
-		Page<OcorrenciaDTO> list = service.findAllPaged(pageable);		
+	public ResponseEntity<Page<OcorrenciaDTO>> findAllAtivos(Pageable pageable) {
+		Page<OcorrenciaDTO> list = service.findAllPagedAtivos(pageable);		
 		return ResponseEntity.ok().body(list);
 	}
 

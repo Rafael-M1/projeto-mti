@@ -53,8 +53,8 @@ public class OcorrenciaService {
 	private CrimeService crimeService;
 
 	@Transactional(readOnly = true)
-	public Page<OcorrenciaDTO> findAllPaged(Pageable pageable) {
-		Page<Ocorrencia> page = repository.findAll(pageable);
+	public Page<OcorrenciaDTO> findAllPagedAtivos(Pageable pageable) {
+		Page<Ocorrencia> page = repository.findAllAtivos(pageable);
 		Page<OcorrenciaDTO> pageDto = page.map(OcorrenciaDTO::new);
 		return pageDto;
 	}
@@ -140,7 +140,9 @@ public class OcorrenciaService {
 
 	public void delete(Long idOcorrencia) {
 		try {
-			repository.deleteById(idOcorrencia);
+			Ocorrencia ocorrencia = repository.findById(idOcorrencia).get();
+			ocorrencia.setStatus(false);
+			repository.save(ocorrencia);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("Id not found " + idOcorrencia);
 		} catch (DataIntegrityViolationException e) {

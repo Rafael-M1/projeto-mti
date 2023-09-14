@@ -33,9 +33,7 @@ const TipoCrime = () => {
     setIsLoading(true);
     serviceTipoCrimePromise({})
       .then((response) => setPage(response.data))
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .finally(() => setIsLoading(false));
   }, []);
 
   const serviceTipoCrimePromise = ({
