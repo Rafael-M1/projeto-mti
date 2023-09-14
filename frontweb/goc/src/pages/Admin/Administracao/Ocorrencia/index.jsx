@@ -107,6 +107,7 @@ const OcorrenciaAdministracao = () => {
                     <th scope="col">Código</th>
                     <th scope="col">Vítima</th>
                     <th scope="col">Data Ocorrência</th>
+                    <th scope="col">Crimes Envolvidos</th>
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
@@ -118,6 +119,18 @@ const OcorrenciaAdministracao = () => {
                         <th scope="row">{ocorrencia.idOcorrencia}</th>
                         <td>{ocorrencia.vitima.nome}</td>
                         <td>{ocorrencia.dataOcorrencia}</td>
+                        <td>
+                          {ocorrencia.crimesEnvolvidos.map((crime, index) => {
+                            if (
+                              ocorrencia.crimesEnvolvidos.length - 1 ==
+                              index
+                            ) {
+                              return <>{crime.tipoCrime}</>;
+                            } else {
+                              return <>{crime.tipoCrime + ", "}</>;
+                            }
+                          })}
+                        </td>
                         <td>
                           <div style={{ display: "flex" }}>
                             <OverlayTrigger
@@ -172,28 +185,28 @@ const OcorrenciaAdministracao = () => {
             </>
           )}
           <div style={{ display: "flex" }} className="mt-4">
-            {/* <Pagination
+            <Pagination
               pageCount={page && page.totalPages ? page.totalPages : 0}
               range={3}
               onChange={(pageNumber) => {
-                if (filtroTipoCrime == "") {
-                  serviceTipoCrimePromise({ pageNumberParam: pageNumber })
-                    .then((response) => setPage(response.data))
-                    .finally(() => setIsLoading(false));
-                } else {
-                  serviceTipoCrimePromise({
-                    pageNumberParam: pageNumber,
-                    methodParam: "POST",
-                    urlParam: "/crime/descricao",
-                    dataParam: {
-                      descricao: filtroTipoCrime,
-                    },
-                  })
-                    .then((response) => setPage(response.data))
-                    .finally(() => setIsLoading(false));
-                }
+                // if (filtroTipoCrime == "") {
+                //   serviceTipoCrimePromise({ pageNumberParam: pageNumber })
+                //     .then((response) => setPage(response.data))
+                //     .finally(() => setIsLoading(false));
+                // } else {
+                //   serviceTipoCrimePromise({
+                //     pageNumberParam: pageNumber,
+                //     methodParam: "POST",
+                //     urlParam: "/crime/descricao",
+                //     dataParam: {
+                //       descricao: filtroTipoCrime,
+                //     },
+                //   })
+                //     .then((response) => setPage(response.data))
+                //     .finally(() => setIsLoading(false));
+                // }
               }}
-            /> */}
+            />
           </div>
         </div>
       </div>
