@@ -43,7 +43,7 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
       <h4>Dados da Vítima</h4>
       <div className="row">
         <p>Pessoa já existente?</p>
-        <div className="col-lg-1">
+        <div className="col-2 col-lg-1">
           <div className="form-check">
             <input
               className="form-check-input"
@@ -59,7 +59,7 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
             </label>
           </div>
         </div>
-        <div className="col-lg-1">
+        <div className="col-2 col-lg-1">
           <div className="form-check">
             <input
               className="form-check-input"
@@ -77,26 +77,28 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
         </div>
         {isVitimaExistente && (
           <>
-            <div style={{ display: "flex", marginTop: "20px" }}>
-              <input
-                type="text"
-                className="form-control"
-                style={{ height: "50px", width: "400px" }}
-                placeholder="Digite o CPF da vítima"
-                value={vitimaExistenteTexto}
-                onChange={(e) => {
-                  if (e.target.value.length > 12) {
-                    return;
-                  }
-                  setVitimaExistenteTexto(
-                    e.target.value.replace(/[a-zA-Z]/g, "")
-                  );
-                }}
-              />
-              <div style={{ marginLeft: "10px" }}>
+            <div style={{ marginTop: "20px" }} className="row">
+              <div className="col-12 col-lg-3 mt-1">
+                <input
+                  type="text"
+                  className="form-control"
+                  style={{ height: "50px" }}
+                  placeholder="Digite o CPF da vítima"
+                  value={vitimaExistenteTexto}
+                  onChange={(e) => {
+                    if (e.target.value.length > 11) {
+                      return;
+                    }
+                    setVitimaExistenteTexto(
+                      e.target.value.replace(/[a-zA-Z]/g, "")
+                    );
+                  }}
+                />
+              </div>
+              <div className="col-12 col-lg-4 mt-1">
                 <ButtonIconSmall
                   text="Buscar Vítima"
-                  widthPixels={250}
+                  widthPixels={"100%"}
                   heightPixels={50}
                   onClick={() => {
                     if (vitimaExistenteTexto.trim().length > 0) {
