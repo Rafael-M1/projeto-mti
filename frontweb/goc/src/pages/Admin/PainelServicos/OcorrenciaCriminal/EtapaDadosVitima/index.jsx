@@ -90,7 +90,9 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
                       return;
                     }
                     setVitimaExistenteTexto(
-                      e.target.value.replace(/[a-zA-Z]/g, "")
+                      e.target.value
+                        .replace(/([^\w ]|_)/g, "")
+                        .replace(/[a-zA-Z]/g, "")
                     );
                   }}
                 />
