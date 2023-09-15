@@ -5,7 +5,6 @@ import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.ficdev.apigoc.entities.Crime;
 import br.com.ficdev.apigoc.repositories.CrimeRepository;
-import br.com.ficdev.apigoc.services.exceptions.DatabaseException;
 import br.com.ficdev.apigoc.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -57,15 +55,14 @@ public class CrimeService {
 		}		
 	}
 
-	public void delete(Long id) {
+	public void delete(Long idCrime) {
 		try {
-			repository.deleteById(id);
+			Crime crime = repository.findById(idCrime).get();
+			crime.setStatus(false);
+			repository.save(crime);
 		}
 		catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException("Id not found " + id);
-		}
-		catch (DataIntegrityViolationException e) {
-			throw new DatabaseException("Integrity violation");
+			throw new ResourceNotFoundException("Id not found " + idCrime);
 		}
 	}
 

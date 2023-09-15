@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +27,6 @@ import br.com.ficdev.apigoc.repositories.EnvolvidoRepository;
 import br.com.ficdev.apigoc.repositories.OcorrenciaCrimeRepository;
 import br.com.ficdev.apigoc.repositories.OcorrenciaRepository;
 import br.com.ficdev.apigoc.repositories.PessoaRepository;
-import br.com.ficdev.apigoc.services.exceptions.DatabaseException;
 import br.com.ficdev.apigoc.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -145,8 +143,6 @@ public class OcorrenciaService {
 			repository.save(ocorrencia);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("Id not found " + idOcorrencia);
-		} catch (DataIntegrityViolationException e) {
-			throw new DatabaseException("Integrity violation");
 		}
 	}
 
