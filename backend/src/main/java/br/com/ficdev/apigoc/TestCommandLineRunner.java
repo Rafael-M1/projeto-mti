@@ -68,7 +68,7 @@ public class TestCommandLineRunner implements CommandLineRunner {
 		crimeRepository.save(new Crime(null, "Femicídio", true));
 		
 		Pessoa pessoa = new Pessoa();
-		pessoa.setCpf("01234567912");
+		pessoa.setCpf("01234567891");
 		pessoa.setEmail("rafael@gmail.com");
 		pessoa.setNome("Rafael Muzzi");
 		pessoa.setSexo('M');

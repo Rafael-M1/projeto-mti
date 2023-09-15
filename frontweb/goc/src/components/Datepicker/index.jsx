@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./styles.css";
 import { CalendarIcon } from "../../assets/images/icon-calendar";
 
-const DatePickerComponent = ({ onChangeDate }) => {
+const DatePickerComponent = ({ onChangeDate, disabled }) => {
   // const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedDateComponent, setSelectedDateComponent] = useState(null);
   return (
@@ -16,6 +16,7 @@ const DatePickerComponent = ({ onChangeDate }) => {
         setSelectedDateComponent(date);
         onChangeDate(date);
       }}
+      disabled={disabled}
       maxDate={new Date()}
       customInput={
         <div style={{ width: "100%", display: "flex" }}>

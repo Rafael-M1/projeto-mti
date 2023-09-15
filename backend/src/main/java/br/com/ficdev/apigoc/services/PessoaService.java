@@ -35,6 +35,16 @@ public class PessoaService {
 		Pessoa pessoa = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
 		return pessoa;
 	}
+	
+	@Transactional(readOnly = true)
+	public Pessoa findByCPF(String cpf) {
+		if (cpf.length() == 11) {			
+			Optional<Pessoa> obj = repository.findPessoaByCPF(cpf);
+			Pessoa pessoa = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+			return pessoa;
+		}
+		throw new IllegalArgumentException("CPF inválido");
+	}
 
 	@Transactional
 	public Pessoa insert(Pessoa pessoa) {

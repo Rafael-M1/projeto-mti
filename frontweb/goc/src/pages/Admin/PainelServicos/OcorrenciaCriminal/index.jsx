@@ -26,7 +26,12 @@ const OcorrenciaCriminalForm = () => {
           {/* Formulário Ocorrência Policial */}
           Formulário
         </h2>
-        {currentStep == 0 && <EtapaDadosGeraisForm changeStep={changeStep} />}
+        {currentStep == 0 && (
+          <>
+            <EtapaDadosVitimaForm changeStep={changeStep} />
+            <EtapaDadosGeraisForm changeStep={changeStep} />
+          </>
+        )}
         {currentStep == 1 && <EtapaDadosVitimaForm changeStep={changeStep} />}
         {currentStep == 2 && (
           <EtapaCrimesEnvolvidosForm changeStep={changeStep} />

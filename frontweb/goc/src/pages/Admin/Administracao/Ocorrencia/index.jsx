@@ -151,6 +151,7 @@ const OcorrenciaAdministracao = () => {
                         <th scope="row">{ocorrencia.idOcorrencia}</th>
                         <td>{ocorrencia.vitima.nome}</td>
                         <td>{ocorrencia.dataOcorrencia}</td>
+                        {/* Coluna Crimes envolvidos */}
                         <td>
                           {ocorrencia.crimesEnvolvidos.map((crime, index) => {
                             if (

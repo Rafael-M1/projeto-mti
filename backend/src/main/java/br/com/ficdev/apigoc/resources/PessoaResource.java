@@ -37,6 +37,12 @@ public class PessoaResource {
 		return ResponseEntity.ok().body(pessoa);
 	}
 	
+	@GetMapping(value = "/cpf/{cpf}")
+	public ResponseEntity<Pessoa> findByCPF(@PathVariable String cpf) {
+		Pessoa pessoa = service.findByCPF(cpf);
+		return ResponseEntity.ok().body(pessoa);
+	}
+	
 	@PostMapping
 	public ResponseEntity<Pessoa> insert(@RequestBody Pessoa pessoa) {
 		pessoa = service.insert(pessoa);
