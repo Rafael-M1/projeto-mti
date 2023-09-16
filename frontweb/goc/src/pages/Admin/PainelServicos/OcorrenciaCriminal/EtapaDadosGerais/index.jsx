@@ -2,11 +2,27 @@ import { listaMunicipiosPorEstado } from "../../../../../util/MockData/municipio
 import { Form } from "react-bootstrap";
 import DatePickerComponent from "../../../../../components/Datepicker";
 import ButtonIconSmall from "../../../../../components/ButtonIconSmall";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const EtapaDadosGeraisForm = ({ changeStep }) => {
+const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
   const listaCidades = listaMunicipiosPorEstado();
-  const navigate = useNavigate();
+  const [dadosGeraisFormObj, setDadosGeraisFormObj] = useState({
+    municipio: "",
+    bairro: "",
+    endereco: "",
+    numero: "",
+    dataOcorrencia: null,
+    descricaoGeral: "",
+  });
+
+  const atualizarDadosGeraisFormObj = (campoForm, value) => {
+    let newDadosGeraisFormObj = {
+      ...dadosGeraisFormObj,
+      [campoForm]: value,
+    };
+    setDadosGeraisFormObj(newDadosGeraisFormObj);
+    atualizarDadosGeraisObj(newDadosGeraisFormObj);
+  };
 
   return (
     <div className="container mt-5">
@@ -17,9 +33,11 @@ const EtapaDadosGeraisForm = ({ changeStep }) => {
             <h6>Município</h6>
             <Form.Select
               className="mt-3"
-              onChange={(e) => console.log(e.target.value)}
+              onChange={(e) =>
+                atualizarDadosGeraisFormObj("municipio", e.target.value)
+              }
             >
-              <option value={null}>Selecione o município da ocorrência</option>
+              <option value={""}>Selecione o município da ocorrência</option>
               {listaCidades.cidades.map((cidade) => (
                 <option key={cidade}>{cidade}</option>
               ))}
@@ -33,6 +51,10 @@ const EtapaDadosGeraisForm = ({ changeStep }) => {
               type="text"
               className="form-control mt-3"
               placeholder="Digite o bairro da ocorrência"
+              value={dadosGeraisFormObj.bairro}
+              onChange={(e) =>
+                atualizarDadosGeraisFormObj("bairro", e.target.value)
+              }
             />
           </div>
         </div>
@@ -43,6 +65,10 @@ const EtapaDadosGeraisForm = ({ changeStep }) => {
               type="text"
               className="form-control mt-3"
               placeholder="Digite o bairro da ocorrência"
+              value={dadosGeraisFormObj.endereco}
+              onChange={(e) =>
+                atualizarDadosGeraisFormObj("endereco", e.target.value)
+              }
             />
           </div>
         </div>
@@ -53,6 +79,10 @@ const EtapaDadosGeraisForm = ({ changeStep }) => {
               type="text"
               className="form-control mt-3"
               placeholder="Digite o número de endereço da ocorrência"
+              value={dadosGeraisFormObj.numero}
+              onChange={(e) =>
+                atualizarDadosGeraisFormObj("numero", e.target.value)
+              }
             />
           </div>
         </div>
@@ -60,7 +90,11 @@ const EtapaDadosGeraisForm = ({ changeStep }) => {
           <div className="mb-3 mt-2">
             <h6>Data da Ocorrência</h6>
             <div className="mt-3">
-              <DatePickerComponent onChangeDate={(date) => console.log(date)} />
+              <DatePickerComponent
+                onChangeDate={(date) =>
+                  atualizarDadosGeraisFormObj("dataOcorrencia", date)
+                }
+              />
             </div>
           </div>
         </div>
@@ -72,26 +106,16 @@ const EtapaDadosGeraisForm = ({ changeStep }) => {
               <textarea
                 className="form-control"
                 placeholder="Descrição Geral da Ocorrência"
+                value={dadosGeraisFormObj.descricaoGeral}
+                onChange={(e) =>
+                  atualizarDadosGeraisFormObj("descricaoGeral", e.target.value)
+                }
                 style={{ width: "100%", height: "150px", resize: "none" }}
               />
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-end">
-          <ButtonIconSmall
-            text="Cancelar"
-            widthPixels={200}
-            heightPixels={50}
-            onClick={() => navigate("/admin")}
-          />
-          <ButtonIconSmall
-            text={"Próximo"}
-            widthPixels={210}
-            heightPixels={50}
-            icon={true}
-            onClick={() => changeStep(1)}
-          />
-        </div>
+        <hr></hr>
       </div>
     </div>
   );

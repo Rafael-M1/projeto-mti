@@ -7,6 +7,7 @@ const ButtonIconSmall = ({
   widthPixels,
   heightPixels,
   icon,
+  widthPixelsButton
 }) => {
   return (
     <div
@@ -21,9 +22,10 @@ const ButtonIconSmall = ({
         className="btn btn-dark"
         style={{
           borderRadius: icon ? "10px 0px 0px 10px" : "10px 10px 10px 10px",
+          // width: widthPixelsButton
         }}
       >
-        <h6>{text}</h6>
+        <p style={{margin: "0", fontSize: "16px"}}>{text}</p>
       </button>
       {icon ? (
         <div

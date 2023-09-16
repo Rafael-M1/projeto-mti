@@ -1,5 +1,6 @@
 package br.com.ficdev.apigoc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
@@ -70,5 +71,9 @@ public class CrimeService {
 	public Page<Crime> findAllPagedByDescricao(String descricao, Pageable pageable) {
 		Page<Crime> list = repository.findAllByDescricao(descricao.toUpperCase(), pageable);
 		return list;
+	}
+
+	public List<Crime> findAllAtivos() {
+		return repository.findAllAtivos();
 	}
 }

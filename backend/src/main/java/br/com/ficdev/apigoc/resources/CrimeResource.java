@@ -1,6 +1,7 @@
 package br.com.ficdev.apigoc.resources;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,12 @@ public class CrimeResource {
 	public ResponseEntity<Page<Crime>> findAll(Pageable pageable) {
 		Page<Crime> list = service.findAllPaged(pageable);		
 		return ResponseEntity.ok().body(list);
+	}
+	
+	@GetMapping(value = "/ativos/lista")
+	public ResponseEntity<List<Crime>> findAll() {
+		List<Crime> crimes = service.findAllAtivos();
+		return ResponseEntity.ok().body(crimes);
 	}
 
 	@GetMapping(value = "/{idCrime}")

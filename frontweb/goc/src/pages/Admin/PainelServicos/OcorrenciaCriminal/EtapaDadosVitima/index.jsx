@@ -5,10 +5,28 @@ import { useState } from "react";
 import { requestBackend } from "../../../../../util/requests";
 import toast, { Toaster } from "react-hot-toast";
 
-const EtapaDadosVitimaForm = ({ changeStep }) => {
+const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
   const [isVitimaExistente, setIsVitimaExistente] = useState(false);
   const [vitimaExistenteTexto, setVitimaExistenteTexto] = useState("");
   const [vitimaExistenteFiltro, setVitimaExistenteFiltro] = useState("");
+  const [vitimaFormObj, setVitimaFormObj] = useState({
+    nome: "",
+    cpf: "",
+    dataNascimento: null,
+    sexo: "",
+    email: "",
+    telefone1: "",
+    telefone2: "",
+  });
+
+  const atualizarVitimaFormObj = (campoForm, value) => {
+    let newVitimaFormObj = {
+      ...vitimaFormObj,
+      [campoForm]: value,
+    };
+    setVitimaFormObj(newVitimaFormObj);
+    atualizarVitimaObj(newVitimaFormObj);
+  };
 
   const serviceOcorrenciaPromise = ({
     pageNumberParam,
@@ -42,8 +60,8 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
       <Toaster position="top-right" />
       <h4>Dados da Vítima</h4>
       <div className="row">
-        <p>Pessoa já existente?</p>
-        <div className="col-2 col-lg-1">
+        {/* <p>Pessoa já existente?</p>
+        <div className="col-3 col-md-2 col-lg-1">
           <div className="form-check">
             <input
               className="form-check-input"
@@ -59,7 +77,7 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
             </label>
           </div>
         </div>
-        <div className="col-2 col-lg-1">
+        <div className="col-3 col-md-2 col-lg-1">
           <div className="form-check">
             <input
               className="form-check-input"
@@ -124,7 +142,7 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
             <br></br>
             {vitimaExistenteFiltro && <p>Busca por: {vitimaExistenteFiltro}</p>}
           </>
-        )}
+        )} */}
         <div className="col-12"></div>
         <div className="col-lg-6">
           <div className="mb-3 mt-4">
@@ -133,6 +151,8 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
               type="text"
               className="form-control mt-3"
               placeholder="Digite o nome da vítima"
+              value={vitimaFormObj.nome}
+              onChange={(e) => atualizarVitimaFormObj("nome", e.target.value)}
               disabled={isVitimaExistente}
             />
           </div>
@@ -144,6 +164,8 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
               type="text"
               className="form-control mt-3"
               placeholder="Digite o CPF da vítima"
+              value={vitimaFormObj.cpf}
+              onChange={(e) => atualizarVitimaFormObj("cpf", e.target.value)}
               disabled={isVitimaExistente}
             />
           </div>
@@ -153,7 +175,9 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
             <h6>Data de Nascimento</h6>
             <div className="mt-3">
               <DatePickerComponent
-                onChangeDate={(date) => console.log(date)}
+                onChangeDate={(date) =>
+                  atualizarVitimaFormObj("dataNascimento", date)
+                }
                 disabled={isVitimaExistente}
               />
             </div>
@@ -164,12 +188,10 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
             <h6>Sexo</h6>
             <Form.Select
               className="mt-3"
-              onChange={(e) => console.log(e.target.value)}
+              onChange={(e) => atualizarVitimaFormObj("sexo", e.target.value)}
               disabled={isVitimaExistente}
             >
-              {/* <option value={null}>
-                  Selecione o município da ocorrência
-                </option> */}
+              <option value={""}>Selecione o sexo da vítima</option>
               <option value={"M"}>Masculino</option>
               <option value={"F"}>Feminino</option>
             </Form.Select>
@@ -185,6 +207,8 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
               type="text"
               className="form-control mt-3"
               placeholder="Digite o e-mail da vítima"
+              value={vitimaFormObj.email}
+              onChange={(e) => atualizarVitimaFormObj("email", e.target.value)}
               disabled={isVitimaExistente}
             />
           </div>
@@ -196,6 +220,10 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
               type="text"
               className="form-control mt-3"
               placeholder="(XX) XXXXX-XXXX"
+              value={vitimaFormObj.telefone1}
+              onChange={(e) =>
+                atualizarVitimaFormObj("telefone1", e.target.value)
+              }
               disabled={isVitimaExistente}
             />
           </div>
@@ -207,28 +235,15 @@ const EtapaDadosVitimaForm = ({ changeStep }) => {
               type="text"
               className="form-control mt-3"
               placeholder="(XX) XXXXX-XXXX"
+              value={vitimaFormObj.telefone2}
+              onChange={(e) =>
+                atualizarVitimaFormObj("telefone2", e.target.value)
+              }
               disabled={isVitimaExistente}
             />
           </div>
         </div>
       </div>
-      {/* <div className="d-flex justify-content-end">
-        <ButtonIconSmall
-          text="Voltar"
-          widthPixels={200}
-          heightPixels={50}
-          onClick={() => changeStep(-1)}
-        />
-        <ButtonIconSmall
-          text={"Próximo"}
-          widthPixels={210}
-          heightPixels={50}
-          icon={true}
-          onClick={() => {
-            changeStep(1);
-          }}
-        />
-      </div> */}
       <hr></hr>
     </div>
   );
