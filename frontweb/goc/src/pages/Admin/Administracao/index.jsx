@@ -37,7 +37,7 @@ const AdministracaoPage = () => {
           descricaoServico={
             "Descrição: Pessoas que estão envolvidas em ocorrências criminais, podendo ser vítimas ou envolvidos."
           }
-          onClickButton={() => navigate("/admin/administracao/pessoas")}
+          onClickButton={() => navigate("/admin/administracao/pessoa")}
         />
         {/* <ServicoCard
           tituloImagem={"Operadores"}

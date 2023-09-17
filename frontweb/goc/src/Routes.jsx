@@ -12,6 +12,7 @@ import OcorrenciaCriminalForm from "./pages/Admin/PainelServicos/OcorrenciaCrimi
 import { isUserAuthenticated } from "./util/auth";
 import OcorrenciaAdministracao from "./pages/Admin/Administracao/Ocorrencia";
 import SobrePage from "./pages/Admin/Sobre";
+import PessoaAdministracao from "./pages/Admin/Administracao/Pessoa";
 
 const RoutesConfig = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -55,6 +56,10 @@ const RoutesConfig = () => {
             <Route
               path="administracao/ocorrencia"
               element={<OcorrenciaAdministracao />}
+            ></Route>
+            <Route
+              path="administracao/pessoa"
+              element={<PessoaAdministracao />}
             ></Route>
             <Route path="sobre" element={<SobrePage />} />
           </Route>
