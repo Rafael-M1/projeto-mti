@@ -24,6 +24,7 @@ const OcorrenciaCriminalForm = () => {
     numero: "",
     dataOcorrencia: null,
     descricaoGeral: "",
+    complemento: "",
   });
   const [crimesEnvolvidosObj, setCrimesEnvolvidosObj] = useState([
     { id: 1, crime: "", descricaoAdicional: "" },
@@ -88,43 +89,37 @@ const OcorrenciaCriminalForm = () => {
   const atualizarSuspeitosEnvolvidosObj = (novoEstado) => {
     setSuspeitosEnvolvidosObj(novoEstado);
   };
-
   const salvarOcorrencia = () => {
     serviceOcorrenciaPromise({
       methodParam: "POST",
       dataParam: {
-        cidade: "Cuiabá",
-        bairro: "Jardim Petropolis",
-        endereco: "Rua 100",
-        numero: "dois",
-        complemento: "Próximo a uma praça",
-        dataOcorrencia: "2023-09-15T14:32:50.505453",
-        descricaoGeral: "Descrição Geral",
+        cidade: dadosGeraisFormObj.municipio,
+        bairro: dadosGeraisFormObj.bairro,
+        endereco: dadosGeraisFormObj.endereco,
+        numero: dadosGeraisFormObj.numero,
+        complemento: dadosGeraisFormObj.complemento,
+        dataOcorrencia: dadosGeraisFormObj.dataOcorrencia,
+        descricaoGeral: dadosGeraisFormObj.descricaoGeral,
         vitima: {
-          nome: "João da Silva",
-          dataNascimento: "1990-09-15T00:00:00.0",
-          cpf: "00012345678",
-          email: "joao2@gmail.com",
-          sexo: "M",
-          telefone: "65 99999-1234",
+          nome: vitimaFormObj.nome,
+          dataNascimento: vitimaFormObj.dataNascimento,
+          cpf: vitimaFormObj.cpf,
+          email: vitimaFormObj.email,
+          sexo: vitimaFormObj.sexo,
+          telefone1: vitimaFormObj.telefone1,
+          telefone2: vitimaFormObj.telefone2,
         },
         idOperador: 1,
-        pessoasEnvolvidas: [
-          {
-            descricao: "Pessoa magra, alta, usava camisa verde",
+        pessoasEnvolvidas: suspeitosEnvolvidosObj.map(
+          (suspeitosEnvolvidoElemento) => ({
+            descricao: suspeitosEnvolvidoElemento.descricaoSuspeito,
             pessoa: null,
-          },
-          {
-            descricao: "Pessoa magra, alta, usava camisa vermelha",
-            pessoa: null,
-          },
-        ],
-        crimesEnvolvidos: [
-          {
-            idCrime: 1,
-            descricaoCrimeOcorrencia: "Descrição adicional crime",
-          },
-        ],
+          })
+        ),
+        crimesEnvolvidos: crimesEnvolvidosObj.map((crimeEnvolvidoElemento) => ({
+          idCrime: crimeEnvolvidoElemento.crime,
+          descricaoCrimeOcorrencia: crimeEnvolvidoElemento.descricaoAdicional,
+        })),
       },
     })
       .then((response) => console.log(response))

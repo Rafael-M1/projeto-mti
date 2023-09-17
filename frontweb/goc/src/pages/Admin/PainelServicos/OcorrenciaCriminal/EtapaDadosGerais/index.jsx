@@ -13,6 +13,7 @@ const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
     numero: "",
     dataOcorrencia: null,
     descricaoGeral: "",
+    complemento: ""
   });
 
   const atualizarDadosGeraisFormObj = (campoForm, value) => {
@@ -64,7 +65,7 @@ const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
             <input
               type="text"
               className="form-control mt-3"
-              placeholder="Digite o bairro da ocorrência"
+              placeholder="Digite o endereço da ocorrência"
               value={dadosGeraisFormObj.endereco}
               onChange={(e) =>
                 atualizarDadosGeraisFormObj("endereco", e.target.value)
@@ -82,6 +83,20 @@ const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
               value={dadosGeraisFormObj.numero}
               onChange={(e) =>
                 atualizarDadosGeraisFormObj("numero", e.target.value)
+              }
+            />
+          </div>
+        </div>
+        <div className="col-lg-6">
+          <div className="mb-3 mt-2">
+            <h6>Complemento</h6>
+            <input
+              type="text"
+              className="form-control mt-3"
+              placeholder="Digite um complemento de endereço da ocorrência"
+              value={dadosGeraisFormObj.complemento}
+              onChange={(e) =>
+                atualizarDadosGeraisFormObj("complemento", e.target.value)
               }
             />
           </div>

@@ -28,7 +28,8 @@ public class Pessoa implements Serializable {
 	private String cpf;
 	private String email;
 	private char sexo;
-	private String telefone;
+	private String telefone1;
+	private String telefone2;
 	
 	public Pessoa() {
 	}
@@ -81,12 +82,20 @@ public class Pessoa implements Serializable {
 		this.sexo = sexo;
 	}
 
-	public String getTelefone() {
-		return telefone;
+	public String getTelefone1() {
+		return telefone1;
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setTelefone1(String telefone1) {
+		this.telefone1 = telefone1;
+	}
+
+	public String getTelefone2() {
+		return telefone2;
+	}
+
+	public void setTelefone2(String telefone2) {
+		this.telefone2 = telefone2;
 	}
 
 }

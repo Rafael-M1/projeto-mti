@@ -60,7 +60,8 @@ public class PessoaService {
 			pessoaSaved.setEmail(pessoa.getEmail());
 			pessoaSaved.setNome(pessoa.getNome());
 			pessoaSaved.setSexo(pessoa.getSexo());
-			pessoaSaved.setTelefone(pessoa.getTelefone());
+			pessoaSaved.setTelefone1(pessoa.getTelefone1());
+			pessoaSaved.setTelefone2(pessoa.getTelefone2());
 			pessoaSaved = repository.save(pessoaSaved);
 			return pessoaSaved;
 		}

@@ -72,7 +72,7 @@ public class TestCommandLineRunner implements CommandLineRunner {
 		pessoa.setEmail("rafael@gmail.com");
 		pessoa.setNome("Rafael Muzzi");
 		pessoa.setSexo('M');
-		pessoa.setTelefone("(65)99999-1234");
+		pessoa.setTelefone1("(65)99999-1234");
 		pessoa.setDataNascimento(LocalDate.of(1997, Month.JUNE, 2));
 		pessoaRepository.save(pessoa);
 		
@@ -81,7 +81,7 @@ public class TestCommandLineRunner implements CommandLineRunner {
 		vitima.setEmail("joao@gmail.com");
 		vitima.setNome("João Silva");
 		vitima.setSexo('M');
-		vitima.setTelefone("(65)88888-1234");
+		vitima.setTelefone1("(65)88888-1234");
 		vitima.setDataNascimento(LocalDate.of(2000, Month.FEBRUARY, 20));
 		pessoaRepository.save(vitima);
 		
