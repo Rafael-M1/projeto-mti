@@ -26,7 +26,7 @@ const OcorrenciaAdministracao = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    serviceOcorrenciaPromise({})
+    serviceOcorrenciaPromise({urlParam: "/ocorrencia?sort=dataCriado,desc"})
       .then((response) => setPage(response.data))
       .finally(() => setIsLoading(false));
   }, []);
@@ -150,7 +150,7 @@ const OcorrenciaAdministracao = () => {
                       <tr key={ocorrencia.idOcorrencia}>
                         <th scope="row">{ocorrencia.idOcorrencia}</th>
                         <td>{ocorrencia.vitima.nome}</td>
-                        <td>{ocorrencia.dataOcorrencia}</td>
+                        <td>{new Date(ocorrencia.dataOcorrencia).toLocaleDateString('pt-BR')}</td>
                         {/* Coluna Crimes envolvidos */}
                         <td>
                           {ocorrencia.crimesEnvolvidos.map((crime, index) => {
