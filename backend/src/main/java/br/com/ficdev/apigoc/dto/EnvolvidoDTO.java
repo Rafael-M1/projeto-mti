@@ -16,9 +16,9 @@ public class EnvolvidoDTO implements Serializable {
 	}
 	
 	public EnvolvidoDTO(Envolvido envolvido) {
-		this.idEnvolvido = envolvido.getIdEnvolvido();
-		this.descricao = envolvido.getDescricao();
-		this.pessoa = envolvido.getPessoa();
+		this.idEnvolvido = envolvido.getIdEnvolvido() != null ? envolvido.getIdEnvolvido() : null;
+		this.descricao = envolvido.getDescricao() != null ? envolvido.getDescricao() : null;
+		this.pessoa = envolvido.getPessoa() != null ? envolvido.getPessoa() : null;
 	}
 
 	public Long getIdEnvolvido() {

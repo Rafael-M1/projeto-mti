@@ -189,6 +189,7 @@ public class Ocorrencia implements Serializable {
 		return "Ocorrencia [idOcorrencia=" + idOcorrencia + ", cidade=" + cidade + ", bairro=" + bairro + ", endereco="
 				+ endereco + ", numero=" + numero + ", complemento=" + complemento + ", dataCriado=" + dataCriado
 				+ ", dataOcorrencia=" + dataOcorrencia + ", descricaoGeral=" + descricaoGeral + ", status=" + status
-				+ ", vitima=" + vitima + ", operador=" + operador + "]";
+				+ ", vitima=" + vitima + ", operador=" + operador + ", listaOcorrenciaCrime=" + listaOcorrenciaCrime
+				+ ", listaEnvolvidos=" + listaEnvolvidos + "]";
 	}
 }

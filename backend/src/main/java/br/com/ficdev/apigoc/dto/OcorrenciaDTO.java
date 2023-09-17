@@ -18,21 +18,21 @@ public class OcorrenciaDTO implements Serializable {
 	private String endereco;
 	private String numero;
 	private String complemento;
-	
+
 	private LocalDateTime dataCriado;
 	private LocalDateTime dataOcorrencia;
 	private String descricaoGeral;
 	private boolean status;
-	
+
 	private Pessoa vitima;
 	private UsuarioDTO operador;
-	
+
 	private Set<EnvolvidoDTO> pessoasEnvolvidas = new HashSet<>();
 	private Set<OcorrenciaCrimeDTO> crimesEnvolvidos = new HashSet<>();
 
 	public OcorrenciaDTO() {
 	}
-	
+
 	public OcorrenciaDTO(Ocorrencia ocorrencia) {
 		this.idOcorrencia = ocorrencia.getIdOcorrencia();
 		this.cidade = ocorrencia.getCidade();
@@ -46,11 +46,12 @@ public class OcorrenciaDTO implements Serializable {
 		this.status = ocorrencia.isStatus();
 		this.operador = new UsuarioDTO(ocorrencia.getOperador());
 		this.vitima = ocorrencia.getVitima();
-		
-		this.pessoasEnvolvidas = ocorrencia.getListaEnvolvidos()
-									.stream().map(envolvido -> new EnvolvidoDTO(envolvido)).collect(Collectors.toSet());
-		this.crimesEnvolvidos = ocorrencia.getListaOcorrenciaCrime()
-				.stream().map(ocorrenciaCrime -> new OcorrenciaCrimeDTO(ocorrenciaCrime)).collect(Collectors.toSet());
+		this.pessoasEnvolvidas = ocorrencia.getListaEnvolvidos() != null ? ocorrencia.getListaEnvolvidos().stream()
+				.map(envolvido -> new EnvolvidoDTO(envolvido)).collect(Collectors.toSet()) : null;
+		this.crimesEnvolvidos = ocorrencia.getListaOcorrenciaCrime() != null
+				? ocorrencia.getListaOcorrenciaCrime().stream()
+						.map(ocorrenciaCrime -> new OcorrenciaCrimeDTO(ocorrenciaCrime)).collect(Collectors.toSet())
+				: null;
 	}
 
 	public Long getIdOcorrencia() {

@@ -98,4 +98,9 @@ public class Pessoa implements Serializable {
 		this.telefone2 = telefone2;
 	}
 
+	@Override
+	public String toString() {
+		return "Pessoa [idPessoa=" + idPessoa + ", dataNascimento=" + dataNascimento + ", nome=" + nome + ", cpf=" + cpf
+				+ ", email=" + email + ", sexo=" + sexo + ", telefone1=" + telefone1 + ", telefone2=" + telefone2 + "]";
+	}
 }

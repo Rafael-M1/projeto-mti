@@ -13,4 +13,11 @@ public interface OcorrenciaRepository extends JpaRepository<Ocorrencia, Long> {
 
 	@Query("select o from Ocorrencia o where o.status = true ")
 	Page<Ocorrencia> findAllAtivos(Pageable pageable);
+
+	@Query("select o from Ocorrencia o where o.status = true "
+			+ "and ("
+			+ "(o.idOcorrencia = :idOcorrenciaFiltro or :idOcorrenciaFiltro is null) "
+				+ "AND "
+				+ "(UPPER(o.vitima.nome) like CONCAT('%', UPPER(:filtroTexto), '%') or :filtroTexto is null) )")
+	Page<Ocorrencia> findByFiltro(Long idOcorrenciaFiltro, String filtroTexto, Pageable pageable);
 }

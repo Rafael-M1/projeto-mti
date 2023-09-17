@@ -20,7 +20,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.ficdev.apigoc.dto.OcorrenciaDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaInsertDTO;
+import br.com.ficdev.apigoc.entities.Crime;
 import br.com.ficdev.apigoc.entities.Ocorrencia;
+import br.com.ficdev.apigoc.entities.filters.OcorrenciaFiltro;
 import br.com.ficdev.apigoc.services.OcorrenciaService;
 
 @RestController
@@ -40,6 +42,12 @@ public class OcorrenciaResource {
 	public ResponseEntity<OcorrenciaDTO> findById(@PathVariable Long idOcorrencia) {
 		OcorrenciaDTO ocorrencia = service.findById(idOcorrencia);
 		return ResponseEntity.ok().body(ocorrencia);
+	}
+	
+	@PostMapping(value = "/filtro")
+	public ResponseEntity<Page<OcorrenciaDTO>> findByFiltro(@RequestBody OcorrenciaFiltro ocorrenciaFiltro, Pageable pageable) {
+		Page<OcorrenciaDTO> list = service.findByFiltro(ocorrenciaFiltro, pageable);
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@PostMapping

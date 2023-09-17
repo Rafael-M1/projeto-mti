@@ -23,6 +23,7 @@ import br.com.ficdev.apigoc.entities.OcorrenciaCrime;
 import br.com.ficdev.apigoc.entities.Pessoa;
 import br.com.ficdev.apigoc.entities.Usuario;
 import br.com.ficdev.apigoc.entities.compositekeys.OcorrenciaCrimeId;
+import br.com.ficdev.apigoc.entities.filters.OcorrenciaFiltro;
 import br.com.ficdev.apigoc.repositories.EnvolvidoRepository;
 import br.com.ficdev.apigoc.repositories.OcorrenciaCrimeRepository;
 import br.com.ficdev.apigoc.repositories.OcorrenciaRepository;
@@ -144,6 +145,23 @@ public class OcorrenciaService {
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("Id not found " + idOcorrencia);
 		}
+	}
+
+	@Transactional
+	public Page<OcorrenciaDTO> findByFiltro(OcorrenciaFiltro ocorrenciaFiltro, Pageable pageable) {
+		Long idOcorrenciaFiltro = null;
+		try {
+			idOcorrenciaFiltro = (ocorrenciaFiltro != null && ocorrenciaFiltro.getFiltroTexto() != null)
+					? Long.parseLong(ocorrenciaFiltro.getFiltroTexto())
+					: null;
+			ocorrenciaFiltro.setFiltroTexto(null);
+		} catch (NumberFormatException e) {
+			idOcorrenciaFiltro = null;
+		}
+		Page<Ocorrencia> page = repository.findByFiltro(idOcorrenciaFiltro, ocorrenciaFiltro.getFiltroTexto(),
+				pageable);
+		Page<OcorrenciaDTO> pageDto = page.map(OcorrenciaDTO::new);
+		return pageDto;
 	}
 
 }
