@@ -28,7 +28,7 @@ const SobrePage = () => {
           <h5 className="mt-5">Autor: Rafael Muzzi da Silva</h5>
           <h5 className="mt-3">Contatos:</h5>
           <h5>E-mail:</h5> <p>rafael.muzzi2@gmail.com</p>
-          <h5>E-Github:</h5> <p>rafael-m1</p>
+          <h5>Github:</h5> <p>rafael-m1</p>
         </div>
       </div>
     </div>

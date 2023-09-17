@@ -48,11 +48,13 @@ const PessoaAdministracao = () => {
           url: urlParam,
           method: methodParam,
           withCredentials: true,
-          params: {
+        };
+        if (methodParam == "GET" || methodParam != "POST") {
+          params.params = {
             page: pageNumberParam ?? 0,
             size: 12,
-          },
-        };
+          };
+        }
         if (dataParam) {
           params.data = dataParam;
         }
@@ -115,9 +117,7 @@ const PessoaAdministracao = () => {
       }}
     >
       <div className="card-body">
-        <h2 className="card-title text-center">
-          Administração - Pessoas
-        </h2>
+        <h2 className="card-title text-center">Administração - Pessoas</h2>
         <Toaster position="top-right" />
         <div className="container mt-5">
           <div className="d-flex justify-content-between">
@@ -155,19 +155,33 @@ const PessoaAdministracao = () => {
               <table className="table table-light table-hover mt-4">
                 <thead>
                   <tr>
-                    <th scope="col">Código</th>
-                    <th scope="col">Tipo de Crime</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Data de Nascimento</th>
+                    <th scope="col">Telefones</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Sexo</th>
                     <th scope="col">Ações</th>
                   </tr>
                 </thead>
                 <tbody>
                   {page &&
-                    page == "aaaa" &&
                     page.content &&
-                    page.content.map((tipoCrime) => (
-                      <tr key={tipoCrime.idCrime}>
-                        <th scope="row">{tipoCrime.idCrime}</th>
-                        <td>{tipoCrime.descricao}</td>
+                    page.content.map((pessoa) => (
+                      <tr key={pessoa.idPessoa}>
+                        <th scope="row">{pessoa.cpf}</th>
+                        <td>{pessoa.nome}</td>
+                        <td>
+                          {new Date(pessoa.dataNascimento).toLocaleDateString(
+                            "pt-BR"
+                          )}
+                        </td>
+                        <td>
+                          {pessoa.telefone1}
+                          {pessoa.telefone2 ? `, ${pessoa.telefone2}` : ""}
+                        </td>
+                        <td>{pessoa.email}</td>
+                        <td>{pessoa.sexo == "M" ? "Masculino" : "Feminino"}</td>
                         <td>
                           <div style={{ display: "flex" }}>
                             <OverlayTrigger
