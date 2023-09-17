@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
 import Pagination from "../../../../components/Pagination";
-import CardLoader from "../../../Catalog/CardLoader";
+import CardLoader from "../../../../components/CardLoader";
 
 const OcorrenciaAdministracao = () => {
   const [page, setPage] = useState();
