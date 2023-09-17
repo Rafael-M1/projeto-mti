@@ -8,19 +8,18 @@ import { requestBackend } from "../../../../../util/requests";
 const EtapaCrimesEnvolvidosForm = ({}) => {
   const [listaCrimesOpcoes, setListaCrimesOpcoes] = useState(null);
   const [listaCrimesEnvolvidos, setListaCrimesEnvolvidos] = useState([
-    { id: 1, crime: "", descricaoAdicional: "" },
+    { id: uuid(), crime: "", descricaoAdicional: "" },
   ]);
   const is768pxOrLesser = useMediaQuery({ maxWidth: 767 });
   const is500pxOrLesser = useMediaQuery({ maxWidth: 500 });
   const onClickAdicionarCrime = () => {
-    setListaCrimesEnvolvidos((current) => {
-      if (current && current.length < 3) {
-        return [...current, { id: uuid(), crime: "", descricaoAdicional: "" }];
-      }
-      return current;
-    });
+    if (listaCrimesEnvolvidos.length < 3) {
+      setListaCrimesEnvolvidos([
+        ...listaCrimesEnvolvidos,
+        { id: uuid(), crime: "", descricaoAdicional: "" },
+      ]);
+    }
   };
-  console.log(listaCrimesEnvolvidos);
   useEffect(() => {
     serviceCrimePromise({ urlParam: "/crime/ativos/lista" })
       .then((response) => setListaCrimesOpcoes(response.data))
@@ -54,7 +53,11 @@ const EtapaCrimesEnvolvidosForm = ({}) => {
           .catch((error) => reject(error));
       }, 0);
     });
-
+  const handleChange = (value, index, atributo) => {
+    const novaListaCrimesEnvolvidos = [...listaCrimesEnvolvidos];
+    novaListaCrimesEnvolvidos[index][atributo] = value;
+    setListaCrimesEnvolvidos(novaListaCrimesEnvolvidos);
+  };
   return (
     <div className="container mt-4">
       {is500pxOrLesser ? (
@@ -85,143 +88,79 @@ const EtapaCrimesEnvolvidosForm = ({}) => {
         </div>
       )}
       <div className="row">
-        <div className="col-12 col-md-6">
-          <div className="mb-3 mt-4">
-            <h6>Crime 1</h6>
-            <Form.Select
-              className="mt-3"
-              onChange={(e) => {
-                // console.log(e.target.value);
-                setListaCrimesEnvolvidos((current) => {
-                  console.log(current);
-                  return current;
-                });
-              }}
-              value={
-                listaCrimesEnvolvidos != null
-                  ? listaCrimesEnvolvidos[0].crime
-                  : null
-              }
-            >
-              <option value={""}>Selecione o crime 1 envolvido</option>
-              {listaCrimesOpcoes?.map((crimeOpcao) => (
-                <option key={crimeOpcao.idCrime} value={crimeOpcao.idCrime}>
-                  {crimeOpcao.descricao}
-                </option>
-              ))}
-            </Form.Select>
-          </div>
-        </div>
-        <div className="col-12 col-md-9">
-          <div className="mb-1 mt-2">
-            <h6>Descrição adicional do Crime 1</h6>
-            <input
-              type="text"
-              className="form-control mt-3"
-              placeholder="Descrição adicional do crime envolvido"
-              value={listaCrimesEnvolvidos[0].descricaoAdicional}
-              onChange={(e) => {
-                if (
-                  listaCrimesEnvolvidos != null &&
-                  listaCrimesEnvolvidos[0] != null
-                ) {
-                  setListaCrimesEnvolvidos((previousState) => {
-                    console.log(previousState);
-                    return {
-                      ...previousState,
-                      [previousState[0].descricaoAdicional]: e.target.value,
-                    };
-                  });
-                }
-              }}
-            />
-          </div>
-        </div>
-        {listaCrimesEnvolvidos?.length > 1 &&
-          listaCrimesEnvolvidos
-            .filter((value, index) => index != 0)
-            .map((elemento, index) => {
-              return (
-                <>
-                  <div className="col-12">
-                    <hr></hr>
-                    {elemento.id}
-                  </div>
-                  <div className="col-12 col-md-6">
-                    <div className="mb-3 mt-2">
-                      <h6>Crime {index + 2}</h6>
-                      <Form.Select
-                        className="mt-3"
-                        onChange={(e) => console.log(e.target.value)}
+        {listaCrimesEnvolvidos.map((elemento, index) => {
+          return (
+            <div key={elemento.id} className="row">
+              <div className="col-12">
+                <hr></hr>
+              </div>
+              <div className="col-12 col-md-6">
+                <div className="mb-3 mt-2">
+                  <h6>Crime {index + 1}</h6>
+                  <Form.Select
+                    className="mt-3"
+                    onChange={(e) =>
+                      handleChange(e.target.value, index, "crime")
+                    }
+                    value={elemento.crime}
+                  >
+                    <option value={""}>
+                      Selecione o crime {index + 1} envolvido
+                    </option>
+                    {listaCrimesOpcoes?.map((crimeOpcao) => (
+                      <option
+                        key={crimeOpcao.idCrime}
+                        value={crimeOpcao.idCrime}
                       >
-                        <option value={""}>
-                          Selecione o crime {index + 2} envolvido
-                        </option>
-                        {listaCrimesOpcoes?.map((crimeOpcao) => (
-                          <option
-                            key={crimeOpcao.idCrime}
-                            value={crimeOpcao.idCrime}
-                          >
-                            {crimeOpcao.descricao}
-                          </option>
-                        ))}
-                        <option value={"M"}>Crime A</option>
-                        <option value={"F"}>Crime B</option>
-                      </Form.Select>
-                    </div>
+                        {crimeOpcao.descricao}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </div>
+              </div>
+              <div className="col-12"></div>
+              <div className="col-12 col-md-9">
+                <div className="mb-1 mt-2">
+                  <h6>Descrição adicional do Crime {index + 1}</h6>
+                  <input
+                    type="text"
+                    className="form-control mt-3"
+                    placeholder="Descrição adicional do crime envolvido"
+                    value={elemento.descricaoAdicional}
+                    onChange={(e) =>
+                      handleChange(e.target.value, index, "descricaoAdicional")
+                    }
+                  />
+                </div>
+              </div>
+              {index != 0 && (
+                <div className="col-12 col-md-3">
+                  <div
+                    className={`d-flex  mt-4 ${
+                      is768pxOrLesser
+                        ? "justify-content-start"
+                        : "justify-content-end"
+                    }`}
+                  >
+                    <ButtonIconSmall
+                      text={"Excluir"}
+                      widthPixels={"100%"}
+                      heightPixels={50}
+                      icon={false}
+                      onClick={() =>
+                        setListaCrimesEnvolvidos((current) =>
+                          current.filter(
+                            (elementoArray) => elementoArray.id != elemento.id
+                          )
+                        )
+                      }
+                    />
                   </div>
-                  <div className="col-12"></div>
-                  <div className="col-12 col-md-9">
-                    <div className="mb-1 mt-2">
-                      <h6>Descrição adicional do Crime {index + 2}</h6>
-                      <input
-                        type="text"
-                        className="form-control mt-3"
-                        placeholder="Descrição adicional do crime envolvido"
-                        onChange={(e) => {
-                          setListaCrimesEnvolvidos((previousStateList) => {
-                            let newElement = previousStateList.filter(
-                              (previousStateElement) =>
-                                previousStateElement.id == elemento.id
-                            )[0];
-                            newElement.descricaoAdicional = e.target.value;
-                            let indexElement =
-                              previousStateList.indexOf(newElement);
-                            const newArray = previousStateList;
-                            newArray[indexElement] = newElement;
-                            return newArray;
-                          });
-                        }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-3">
-                    <div
-                      className={`d-flex  mt-4 ${
-                        is768pxOrLesser
-                          ? "justify-content-start"
-                          : "justify-content-end"
-                      }`}
-                    >
-                      <ButtonIconSmall
-                        text={"Excluir"}
-                        widthPixels={"100%"}
-                        heightPixels={50}
-                        icon={false}
-                        onClick={() =>
-                          setListaCrimesEnvolvidos((current) => {
-                            let newArray = current.filter(
-                              (elementoArray) => elementoArray.id != elemento.id
-                            );
-                            return newArray;
-                          })
-                        }
-                      />
-                    </div>
-                  </div>
-                </>
-              );
-            })}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
       <hr></hr>
     </div>

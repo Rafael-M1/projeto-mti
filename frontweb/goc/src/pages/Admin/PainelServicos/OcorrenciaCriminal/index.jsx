@@ -24,6 +24,9 @@ const OcorrenciaCriminalForm = () => {
     dataOcorrencia: null,
     descricaoGeral: "",
   });
+  const [crimesEnvolvidosObj, setCrimesEnvolvidosObj] = useState([
+    { id: 1, crime: "", descricaoAdicional: "" },
+  ]);
   const is768pxOrLesser = useMediaQuery({ maxWidth: 767 });
   const cardStyle = () => {
     if (is768pxOrLesser) {
@@ -47,6 +50,9 @@ const OcorrenciaCriminalForm = () => {
   };
   const atualizarDadosGeraisObj = (novoEstado) => {
     setDadosGeraisFormObj(novoEstado);
+  };
+  const atualizarCrimesEnvolvidosObj = (novoEstado) => {
+    setCrimesEnvolvidosObj(novoEstado);
   };
   return (
     <div className="card" style={cardStyle()}>
