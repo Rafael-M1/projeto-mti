@@ -184,13 +184,12 @@ const OcorrenciaCriminalForm = () => {
     ) {
       toast.error("Digite a descrição do envolvido.");
     } else {
-      toast.success("Ocorrência cadastrada com sucesso.");
-      // serviceOcorrenciaPromise({
-      //   methodParam: "POST",
-      //   dataParam: ocorrenciaObj,
-      // })
-      //   .then((response) => toast.success("Ocorrência cadastrada com sucesso."))
-      //   .catch((error) => console.log(error));
+      serviceOcorrenciaPromise({
+        methodParam: "POST",
+        dataParam: ocorrenciaObj,
+      })
+        .then((response) => toast.success("Ocorrência cadastrada com sucesso."))
+        .catch((error) => console.log(error));
     }
   };
   return (

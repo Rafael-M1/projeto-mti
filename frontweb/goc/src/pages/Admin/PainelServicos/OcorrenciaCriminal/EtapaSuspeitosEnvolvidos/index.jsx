@@ -2,19 +2,21 @@ import ButtonIconSmall from "../../../../../components/ButtonIconSmall";
 import { useState } from "react";
 import uuid from "react-uuid";
 import { useMediaQuery } from "react-responsive";
-const EtapaSuspeitosEnvolvidosForm = ({atualizarSuspeitosEnvolvidosObj}) => {
+const EtapaSuspeitosEnvolvidosForm = ({ atualizarSuspeitosEnvolvidosObj }) => {
   const [listaSuspeitosEnvolvidos, setListaSuspeitosEnvolvidos] = useState([
     { id: uuid(), descricaoSuspeito: "" },
   ]);
   const is768pxOrLesser = useMediaQuery({ maxWidth: 767 });
   const is500pxOrLesser = useMediaQuery({ maxWidth: 500 });
   const onClickAdicionarSuspeito = () => {
-    setListaSuspeitosEnvolvidos((current) => {
-      if (current.length < 3) {
-        return [...current, { id: uuid(), descricaoSuspeito: "" }];
-      }
-      return current;
-    });
+    if (listaSuspeitosEnvolvidos.length < 3) {
+      let newArray = [
+        ...listaSuspeitosEnvolvidos,
+        { id: uuid(), descricaoSuspeito: "" },
+      ];
+      setListaSuspeitosEnvolvidos(newArray);
+      atualizarSuspeitosEnvolvidosObj(newArray);
+    }
   };
   const handleChange = (value, index, atributo) => {
     const novaListaSuspeitosEnvolvidos = [...listaSuspeitosEnvolvidos];
@@ -87,14 +89,13 @@ const EtapaSuspeitosEnvolvidosForm = ({atualizarSuspeitosEnvolvidosObj}) => {
                       // widthPixelsButton={"auto"}
                       heightPixels={50}
                       icon={false}
-                      onClick={() =>
-                        setListaSuspeitosEnvolvidos((current) => {
-                          let newArray = current.filter(
-                            (elementoArray) => elementoArray.id != elemento.id
-                          );
-                          return newArray;
-                        })
-                      }
+                      onClick={() => {
+                        let newArray = listaSuspeitosEnvolvidos.filter(
+                          (elementoArray) => elementoArray.id != elemento.id
+                        );
+                        setListaSuspeitosEnvolvidos(newArray);
+                        atualizarSuspeitosEnvolvidosObj(newArray);
+                      }}
                     />
                   </div>
                 </div>
