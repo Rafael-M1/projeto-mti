@@ -6,6 +6,7 @@ import EtapaSuspeitosEnvolvidosForm from "./EtapaSuspeitosEnvolvidos";
 import ButtonIconSmall from "../../../../components/ButtonIconSmall";
 import { useMediaQuery } from "react-responsive";
 import { requestBackend } from "../../../../util/requests";
+import toast, { Toaster } from "react-hot-toast";
 
 const OcorrenciaCriminalForm = () => {
   const [vitimaFormObj, setVitimaFormObj] = useState({
@@ -122,7 +123,7 @@ const OcorrenciaCriminalForm = () => {
         })),
       },
     })
-      .then((response) => console.log(response))
+      .then((response) => toast.success("Ocorrência cadastrada com sucesso."))
       .catch((error) => console.log(error));
   };
   return (
@@ -132,6 +133,7 @@ const OcorrenciaCriminalForm = () => {
           Formulário Ocorrência Policial
         </h2>
         <>
+          <Toaster position="top-right" />
           <EtapaDadosVitimaForm atualizarVitimaObj={atualizarVitimaObj} />
           <EtapaDadosGeraisForm
             atualizarDadosGeraisObj={atualizarDadosGeraisObj}
