@@ -4,16 +4,13 @@ import { useState } from "react";
 import "./styles.css";
 import { CalendarIcon } from "../../assets/images/icon-calendar";
 
-const DatePickerComponent = ({ onChangeDate, disabled }) => {
-  // const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedDateComponent, setSelectedDateComponent] = useState(null);
+const DatePickerComponent = ({ onChangeDate, disabled, selectedDateComponent }) => {
   return (
     <DatePicker
       locale="pt-BR"
       dateFormat="dd/MM/yyyy"
       selected={selectedDateComponent}
       onChange={(date) => {
-        setSelectedDateComponent(date);
         onChangeDate(date);
       }}
       disabled={disabled}

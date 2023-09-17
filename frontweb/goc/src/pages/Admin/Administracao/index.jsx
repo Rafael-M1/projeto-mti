@@ -39,14 +39,14 @@ const AdministracaoPage = () => {
           }
           onClickButton={() => navigate("/admin/administracao/pessoas")}
         />
-        <ServicoCard
+        {/* <ServicoCard
           tituloImagem={"Operadores"}
           subTitulo={"Gestão de Operadores"}
           descricaoServico={
             "Descrição: Pessoas que são responsáveis por gerenciar o Sistema de Gestão de Ocorrências Criminais."
           }
           onClickButton={() => navigate("/admin/administracao/operadores")}
-        />
+        /> */}
       </div>
     </div>
   );

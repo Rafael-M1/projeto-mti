@@ -27,6 +27,19 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
     setVitimaFormObj(newVitimaFormObj);
     atualizarVitimaObj(newVitimaFormObj);
   };
+  const popularVitimaFormObj = (formObj) => {
+    let newVitimaFormObj = {
+      nome: formObj.nome,
+      cpf: formObj.cpf,
+      dataNascimento: new Date(formObj.dataNascimento),
+      sexo: formObj.sexo,
+      email: formObj.email,
+      telefone1: formObj.telefone1 ?? "",
+      telefone2: formObj.telefone2 ?? "",
+    };
+    setVitimaFormObj(newVitimaFormObj);
+    atualizarVitimaObj(newVitimaFormObj);
+  };
 
   const serviceOcorrenciaPromise = ({
     pageNumberParam,
@@ -60,7 +73,7 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
       <Toaster position="top-right" />
       <h4>Dados da Vítima</h4>
       <div className="row">
-        {/* <p>Pessoa já existente?</p>
+        <p>Pessoa já existente?</p>
         <div className="col-3 col-md-2 col-lg-1">
           <div className="form-check">
             <input
@@ -71,6 +84,7 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
               onChange={() => {
                 setIsVitimaExistente(true);
               }}
+              checked={isVitimaExistente == true}
             />
             <label className="form-check-label" htmlFor="flexRadioDefault1">
               Sim
@@ -86,7 +100,17 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
               id="flexRadioDefault2"
               onChange={() => {
                 setIsVitimaExistente(false);
+                setVitimaFormObj({
+                  nome: "",
+                  cpf: "",
+                  dataNascimento: null,
+                  sexo: "",
+                  email: "",
+                  telefone1: "",
+                  telefone2: "",
+                });
               }}
+              checked={isVitimaExistente == false}
             />
             <label className="form-check-label" htmlFor="flexRadioDefault2">
               Não
@@ -126,8 +150,8 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
                         urlParam: `/pessoa/cpf/${vitimaExistenteTexto}`,
                       })
                         .then((response) => {
-                          console.log(response.data);
                           setVitimaExistenteFiltro(vitimaExistenteTexto);
+                          popularVitimaFormObj(response.data);
                         })
                         .catch((error) => {
                           toast.error("Usuário não encontrado!");
@@ -142,9 +166,14 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
             <br></br>
             {vitimaExistenteFiltro && <p>Busca por: {vitimaExistenteFiltro}</p>}
           </>
-        )} */}
+        )}
         <div className="col-12"></div>
         <div className="col-lg-6">
+          <input
+            type="hidden"
+            value={vitimaFormObj.idPessoa}
+            disabled={isVitimaExistente}
+          />
           <div className="mb-3 mt-4">
             <h6>Nome</h6>
             <input
@@ -165,7 +194,17 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
               className="form-control mt-3"
               placeholder="Digite o CPF da vítima"
               value={vitimaFormObj.cpf}
-              onChange={(e) => atualizarVitimaFormObj("cpf", e.target.value)}
+              onChange={(e) => {
+                if (e.target.value.length > 11) {
+                  return;
+                }
+                atualizarVitimaFormObj(
+                  "cpf",
+                  e.target.value
+                    .replace(/([^\w ]|_)/g, "")
+                    .replace(/[a-zA-Z]/g, "")
+                );
+              }}
               disabled={isVitimaExistente}
             />
           </div>
@@ -178,6 +217,7 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
                 onChangeDate={(date) =>
                   atualizarVitimaFormObj("dataNascimento", date)
                 }
+                selectedDateComponent={vitimaFormObj.dataNascimento}
                 disabled={isVitimaExistente}
               />
             </div>
@@ -190,6 +230,7 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
               className="mt-3"
               onChange={(e) => atualizarVitimaFormObj("sexo", e.target.value)}
               disabled={isVitimaExistente}
+              value={vitimaFormObj.sexo}
             >
               <option value={""}>Selecione o sexo da vítima</option>
               <option value={"M"}>Masculino</option>

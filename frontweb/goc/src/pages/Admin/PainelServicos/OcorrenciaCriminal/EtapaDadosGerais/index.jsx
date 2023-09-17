@@ -109,6 +109,7 @@ const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
                 onChangeDate={(date) =>
                   atualizarDadosGeraisFormObj("dataOcorrencia", date)
                 }
+                selectedDateComponent={dadosGeraisFormObj.dataOcorrencia}
               />
             </div>
           </div>

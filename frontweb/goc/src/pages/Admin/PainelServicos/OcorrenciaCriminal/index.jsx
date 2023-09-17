@@ -91,40 +91,107 @@ const OcorrenciaCriminalForm = () => {
     setSuspeitosEnvolvidosObj(novoEstado);
   };
   const salvarOcorrencia = () => {
-    serviceOcorrenciaPromise({
-      methodParam: "POST",
-      dataParam: {
-        cidade: dadosGeraisFormObj.municipio,
-        bairro: dadosGeraisFormObj.bairro,
-        endereco: dadosGeraisFormObj.endereco,
-        numero: dadosGeraisFormObj.numero,
-        complemento: dadosGeraisFormObj.complemento,
-        dataOcorrencia: dadosGeraisFormObj.dataOcorrencia,
-        descricaoGeral: dadosGeraisFormObj.descricaoGeral,
-        vitima: {
-          nome: vitimaFormObj.nome,
-          dataNascimento: vitimaFormObj.dataNascimento,
-          cpf: vitimaFormObj.cpf,
-          email: vitimaFormObj.email,
-          sexo: vitimaFormObj.sexo,
-          telefone1: vitimaFormObj.telefone1,
-          telefone2: vitimaFormObj.telefone2,
-        },
-        idOperador: 1,
-        pessoasEnvolvidas: suspeitosEnvolvidosObj.map(
-          (suspeitosEnvolvidoElemento) => ({
-            descricao: suspeitosEnvolvidoElemento.descricaoSuspeito,
-            pessoa: null,
-          })
-        ),
-        crimesEnvolvidos: crimesEnvolvidosObj.map((crimeEnvolvidoElemento) => ({
-          idCrime: crimeEnvolvidoElemento.crime,
-          descricaoCrimeOcorrencia: crimeEnvolvidoElemento.descricaoAdicional,
-        })),
+    let ocorrenciaObj = {
+      cidade: dadosGeraisFormObj.municipio,
+      bairro: dadosGeraisFormObj.bairro,
+      endereco: dadosGeraisFormObj.endereco,
+      numero: dadosGeraisFormObj.numero,
+      complemento: dadosGeraisFormObj.complemento,
+      dataOcorrencia: dadosGeraisFormObj.dataOcorrencia,
+      descricaoGeral: dadosGeraisFormObj.descricaoGeral,
+      vitima: {
+        nome: vitimaFormObj.nome,
+        dataNascimento: vitimaFormObj.dataNascimento,
+        cpf: vitimaFormObj.cpf,
+        email: vitimaFormObj.email,
+        sexo: vitimaFormObj.sexo,
+        telefone1: vitimaFormObj.telefone1,
+        telefone2: vitimaFormObj.telefone2,
       },
-    })
-      .then((response) => toast.success("Ocorrência cadastrada com sucesso."))
-      .catch((error) => console.log(error));
+      idOperador: 1,
+      pessoasEnvolvidas: suspeitosEnvolvidosObj.map(
+        (suspeitosEnvolvidoElemento) => ({
+          descricao: suspeitosEnvolvidoElemento.descricaoSuspeito,
+          pessoa: null,
+        })
+      ),
+      crimesEnvolvidos: crimesEnvolvidosObj.map((crimeEnvolvidoElemento) => ({
+        idCrime: crimeEnvolvidoElemento.crime,
+        descricaoCrimeOcorrencia: crimeEnvolvidoElemento.descricaoAdicional,
+      })),
+    };
+    console.log(ocorrenciaObj);
+    if (vitimaFormObj.cpf == null || vitimaFormObj.cpf.length != 11) {
+      toast.error("Digite o CPF da vítima.");
+    } else if (vitimaFormObj.dataNascimento == null) {
+      toast.error("Selecione a data de nascimento da vítima.");
+    } else if (
+      vitimaFormObj.nome == null ||
+      vitimaFormObj.nome.trim().length < 4
+    ) {
+      toast.error("Digite o nome da vítima.");
+    } else if (
+      vitimaFormObj.telefone1 == null ||
+      vitimaFormObj.telefone1.trim().length < 10
+    ) {
+      toast.error("Digite o telefone de contato da vítima.");
+    } else if (
+      vitimaFormObj.sexo == null ||
+      !(vitimaFormObj.sexo == "M" || vitimaFormObj.sexo == "F")
+    ) {
+      toast.error("Selecione o sexo da vítima.");
+    } else if (
+      vitimaFormObj.email == null ||
+      vitimaFormObj.email.trim().length < 4 ||
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+        vitimaFormObj.email.trim()
+      )
+    ) {
+      toast.error("Digite um e-mail válido da vítima.");
+    } else if (
+      dadosGeraisFormObj.bairro == null ||
+      dadosGeraisFormObj.bairro.trim().length < 4
+    ) {
+      toast.error("Digite o Bairro da ocorrência.");
+    } else if (
+      dadosGeraisFormObj.municipio == null ||
+      dadosGeraisFormObj.municipio.trim() == ""
+    ) {
+      toast.error("Selecione o município da ocorrência.");
+    } else if (
+      dadosGeraisFormObj.endereco == null ||
+      dadosGeraisFormObj.endereco.trim().length < 3
+    ) {
+      toast.error("Digite o endereço da ocorrência.");
+    } else if (dadosGeraisFormObj.dataOcorrencia == null) {
+      toast.error("Selecione a data da ocorrência.");
+    } else if (
+      dadosGeraisFormObj.descricaoGeral == null ||
+      dadosGeraisFormObj.descricaoGeral.trim().length < 10
+    ) {
+      toast.error("Digite os dados gerais da ocorrência.");
+    } else if (
+      crimesEnvolvidosObj.some(
+        (crimeEnvolvidoElemento) => crimeEnvolvidoElemento.crime == ""
+      )
+    ) {
+      toast.error("Selecione um crime envolvido na ocorrência.");
+    } else if (
+      suspeitosEnvolvidosObj.some(
+        (suspeitoEnvolvidoElemento) =>
+          suspeitoEnvolvidoElemento.descricaoSuspeito.trim().length < 4
+      )
+    ) {
+      toast.error("Digite a descrição do envolvido.");
+    } else {
+      toast.success("Ocorrência cadastrada com sucesso.");
+      // serviceOcorrenciaPromise({
+      //   methodParam: "POST",
+      //   dataParam: ocorrenciaObj,
+      // })
+      //   .then((response) => toast.success("Ocorrência cadastrada com sucesso."))
+      //   .catch((error) => console.log(error));
+    }
   };
   return (
     <div className="card" style={cardStyle()}>

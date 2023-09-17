@@ -5,7 +5,7 @@ import uuid from "react-uuid";
 import { useMediaQuery } from "react-responsive";
 import { requestBackend } from "../../../../../util/requests";
 
-const EtapaCrimesEnvolvidosForm = ({atualizarCrimesEnvolvidosObj}) => {
+const EtapaCrimesEnvolvidosForm = ({ atualizarCrimesEnvolvidosObj }) => {
   const [listaCrimesOpcoes, setListaCrimesOpcoes] = useState(null);
   const [listaCrimesEnvolvidos, setListaCrimesEnvolvidos] = useState([
     { id: uuid(), crime: "", descricaoAdicional: "" },
@@ -14,10 +14,12 @@ const EtapaCrimesEnvolvidosForm = ({atualizarCrimesEnvolvidosObj}) => {
   const is500pxOrLesser = useMediaQuery({ maxWidth: 500 });
   const onClickAdicionarCrime = () => {
     if (listaCrimesEnvolvidos.length < 3) {
-      setListaCrimesEnvolvidos([
+      let newArray = [
         ...listaCrimesEnvolvidos,
         { id: uuid(), crime: "", descricaoAdicional: "" },
-      ]);
+      ];
+      setListaCrimesEnvolvidos(newArray);
+      atualizarCrimesEnvolvidosObj(newArray);
     }
   };
   useEffect(() => {
@@ -150,13 +152,13 @@ const EtapaCrimesEnvolvidosForm = ({atualizarCrimesEnvolvidosObj}) => {
                       widthPixels={"100%"}
                       heightPixels={50}
                       icon={false}
-                      onClick={() =>
-                        setListaCrimesEnvolvidos((current) =>
-                          current.filter(
-                            (elementoArray) => elementoArray.id != elemento.id
-                          )
-                        )
-                      }
+                      onClick={() => {
+                        let newArray = listaCrimesEnvolvidos.filter(
+                          (elementoArray) => elementoArray.id != elemento.id
+                        );
+                        setListaCrimesEnvolvidos(newArray);
+                        atualizarCrimesEnvolvidosObj(newArray);
+                      }}
                     />
                   </div>
                 </div>
