@@ -30,6 +30,12 @@ public class PessoaResource {
 		Page<Pessoa> list = service.findAllPaged(pageable);		
 		return ResponseEntity.ok().body(list);
 	}
+	
+	@PostMapping("/filtro")
+	public ResponseEntity<Page<Pessoa>> findByFiltro(@RequestBody Pessoa pessoa, Pageable pageable) {
+		Page<Pessoa> page = service.findByFiltro(pessoa.getNome(), pageable);
+		return ResponseEntity.ok().body(page);
+	}
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Pessoa> findById(@PathVariable Long id) {
@@ -50,6 +56,7 @@ public class PessoaResource {
 				.buildAndExpand(pessoa.getIdPessoa()).toUri();
 		return ResponseEntity.created(uri).body(pessoa);
 	}
+	
 
 	/*@PutMapping(value = "/{id}")
 	public ResponseEntity<Pessoa> update(@PathVariable Long id, @RequestBody @Valid UserUpdateDTO dto) {

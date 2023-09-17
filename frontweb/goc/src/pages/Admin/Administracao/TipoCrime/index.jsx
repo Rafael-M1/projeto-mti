@@ -64,7 +64,7 @@ const TipoCrime = () => {
 
   const onClickFiltrar = () => {
     if (filtroTipoCrimeTexto.trim() != "") {
-      setIsLoading(true);
+      // setIsLoading(true);
       setFiltroTipoCrime(filtroTipoCrimeTexto);
       serviceTipoCrimePromise({
         methodParam: "POST",
@@ -76,7 +76,7 @@ const TipoCrime = () => {
           setIsLoading(false);
         });
     } else {
-      setIsLoading(true);
+      // setIsLoading(true);
       setFiltroTipoCrime(filtroTipoCrimeTexto);
       serviceTipoCrimePromise({})
         .then((response) => setPage(response.data))

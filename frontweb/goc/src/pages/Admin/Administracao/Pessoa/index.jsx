@@ -12,14 +12,14 @@ import CardLoader from "../../../../components/CardLoader";
 const PessoaAdministracao = () => {
   const [page, setPage] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [filtroTipoCrimeTexto, setFiltroTipoCrimeTexto] = useState("");
-  const [filtroTipoCrime, setFiltroTipoCrime] = useState("");
+  const [filtroNomePessoaTexto, setFiltroNomePessoaTexto] = useState("");
+  const [filtroNomePessoa, setFiltroNomePessoa] = useState("");
   const [showModalExcluir, setShowModalExcluir] = useState(false);
-  const [tipoCrimeSelecionado, setTipoCrimeSelecionado] = useState(null);
+  const [pessoaSelecionada, setPessoaSelecionada] = useState(null);
   const navigate = useNavigate();
   const { state } = useLocation();
   const handleClose = () => {
-    setTipoCrimeSelecionado(null);
+    setPessoaSelecionada(null);
     setShowModalExcluir(false);
   };
 
@@ -30,7 +30,7 @@ const PessoaAdministracao = () => {
     //     navigate(location.pathname, { replace: true });
     //   }
     // }
-    setIsLoading(true);
+    // setIsLoading(true);
     servicePessoaPromise({})
       .then((response) => setPage(response.data))
       .finally(() => setIsLoading(false));
@@ -65,45 +65,46 @@ const PessoaAdministracao = () => {
     });
 
   const onClickFiltrar = () => {
-    // if (filtroTipoCrimeTexto.trim() != "") {
-    //   setIsLoading(true);
-    //   setFiltroTipoCrime(filtroTipoCrimeTexto);
-    //   serviceTipoCrimePromise({
-    //     methodParam: "POST",
-    //     urlParam: "/crime/descricao",
-    //     dataParam: { descricao: filtroTipoCrimeTexto },
-    //   })
-    //     .then((response) => setPage(response.data))
-    //     .finally(() => {
-    //       setIsLoading(false);
-    //     });
-    // } else {
-    //   setIsLoading(true);
-    //   setFiltroTipoCrime(filtroTipoCrimeTexto);
-    //   serviceTipoCrimePromise({})
-    //     .then((response) => setPage(response.data))
-    //     .finally(() => {
-    //       setIsLoading(false);
-    //     });
-    // }
+    if (filtroNomePessoaTexto.trim() != "") {
+      setFiltroNomePessoa(filtroNomePessoaTexto);
+      servicePessoaPromise({
+        methodParam: "POST",
+        urlParam: "/pessoa/filtro",
+        dataParam: { nome: filtroNomePessoaTexto },
+      })
+        .then((response) => setPage(response.data))
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      setFiltroNomePessoa(filtroNomePessoaTexto);
+      servicePessoaPromise({})
+        .then((response) => setPage(response.data))
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   };
-  const onClickExcluir = (tipoCrime) => {
-    // setTipoCrimeSelecionado(tipoCrime);
-    // setShowModalExcluir(true);
+  const onClickExcluir = (pessoa) => {
+    setPessoaSelecionada(pessoa);
+    setShowModalExcluir(true);
   };
 
-  const onClickEditar = (tipoCrimeParam) => {
-    // navigate("/admin/administracao/tipocrime/form", {
-    //   state: {
-    //     tipoCrime: {
-    //       idCrime: tipoCrimeParam.idCrime,
-    //       descricao: tipoCrimeParam.descricao,
-    //     },
-    //   },
-    // });
+  const onClickEditar = (pessoa) => {
+    navigate(
+      "/admin/administracao/pessoa/form"
+      // , {
+      // 	state: {
+      // 		tipoCrime: {
+      // 			idCrime: tipoCrimeParam.idCrime,
+      // 			descricao: tipoCrimeParam.descricao,
+      // 		},
+      // 	},
+      // }
+    );
   };
   const onClickAdicionar = () => {
-    // navigate("/admin/administracao/tipocrime/form");
+    navigate("/admin/administracao/pessoa/form");
   };
 
   return (
@@ -134,24 +135,24 @@ const PessoaAdministracao = () => {
                 className="form-control"
                 style={{ height: "50px", width: "400px", marginLeft: "10px" }}
                 placeholder="Filtrar pelo nome da Pessoa"
-                onChange={(e) => setFiltroTipoCrimeTexto(e.target.value)}
+                onChange={(e) => setFiltroNomePessoaTexto(e.target.value)}
               />
             </div>
-            {/* <ButtonIconSmall
+            <ButtonIconSmall
               text="Adicionar"
               widthPixels={240}
               heightPixels={50}
               onClick={onClickAdicionar}
               icon={true}
-            /> */}
+            />
           </div>
           {isLoading ? (
             <CardLoader speed={0.9} width={1120} height={580} />
           ) : (
             <>
-              {/* {filtroTipoCrime && (
-                <p className="mt-3">Busca por: {filtroTipoCrime}</p>
-              )} */}
+              {filtroNomePessoa && (
+                <p className="mt-3">Busca por: {filtroNomePessoa}</p>
+              )}
               <table className="table table-light table-hover mt-4">
                 <thead>
                   <tr>
@@ -198,9 +199,7 @@ const PessoaAdministracao = () => {
                                   margin: "4px",
                                   padding: "4px",
                                 }}
-                                onClick={() => {
-                                  // onClickEditar(tipoCrime);
-                                }}
+                                onClick={() => onClickEditar(pessoa)}
                               >
                                 <EditIcon />
                               </div>
@@ -224,9 +223,7 @@ const PessoaAdministracao = () => {
                                   margin: "4px",
                                   padding: "4px",
                                 }}
-                                onClick={() => {
-                                  // onClickExcluir(tipoCrime);
-                                }}
+                                onClick={() => onClickExcluir(pessoa)}
                               >
                                 <DeleteIcon />
                               </div>
@@ -244,22 +241,22 @@ const PessoaAdministracao = () => {
               pageCount={page && page.totalPages ? page.totalPages : 0}
               range={3}
               onChange={(pageNumber) => {
-                // if (filtroTipoCrime == "") {
-                //   serviceTipoCrimePromise({ pageNumberParam: pageNumber })
-                //     .then((response) => setPage(response.data))
-                //     .finally(() => setIsLoading(false));
-                // } else {
-                //   serviceTipoCrimePromise({
-                //     pageNumberParam: pageNumber,
-                //     methodParam: "POST",
-                //     urlParam: "/crime/descricao",
-                //     dataParam: {
-                //       descricao: filtroTipoCrime,
-                //     },
-                //   })
-                //     .then((response) => setPage(response.data))
-                //     .finally(() => setIsLoading(false));
-                // }
+                if (filtroNomePessoa == "") {
+                  servicePessoaPromise({ pageNumberParam: pageNumber })
+                    .then((response) => setPage(response.data))
+                    .finally(() => setIsLoading(false));
+                } else {
+                  servicePessoaPromise({
+                    pageNumberParam: pageNumber,
+                    methodParam: "POST",
+                    urlParam: "/pessoa/filtro",
+                    dataParam: {
+                      nome: filtroNomePessoa,
+                    },
+                  })
+                    .then((response) => setPage(response.data))
+                    .finally(() => setIsLoading(false));
+                }
               }}
             />
           </div>
@@ -271,7 +268,7 @@ const PessoaAdministracao = () => {
             <h6>Deseja realmente excluir o Tipo de Crime?</h6>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>{`Nome: ${tipoCrimeSelecionado?.descricao}`}</Modal.Body>
+        <Modal.Body>{`Nome: ${pessoaSelecionada?.nome}`}</Modal.Body>
         <Modal.Footer>
           <ButtonIconSmall
             text="Cancelar"
@@ -285,15 +282,13 @@ const PessoaAdministracao = () => {
             widthPixels={220}
             heightPixels={40}
             onClick={() => {
-              serviceTipoCrimePromise({
+              servicePessoaPromise({
                 methodParam: "DELETE",
-                urlParam: `/crime/${tipoCrimeSelecionado.idCrime}`,
+                urlParam: `/pessoa/${pessoaSelecionada.idPessoa}`,
               })
                 .then((response) => {
-                  setIsLoading(true);
                   serviceTipoCrimePromise({})
-                    .then((response) => setPage(response.data))
-                    .finally(() => setIsLoading(false));
+                    .then((response) => setPage(response.data));
                 })
                 .finally(() => handleClose());
             }}

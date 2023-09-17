@@ -81,4 +81,9 @@ public class PessoaService {
 			throw new DatabaseException("Integrity violation");
 		}
 	}
+
+	public Page<Pessoa> findByFiltro(String nome, Pageable pageable) {
+		Page<Pessoa> page = repository.findByFiltro(nome, pageable);
+		return page;
+	}
 }

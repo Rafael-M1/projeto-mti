@@ -20,7 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.ficdev.apigoc.dto.OcorrenciaDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaInsertDTO;
-import br.com.ficdev.apigoc.entities.Crime;
 import br.com.ficdev.apigoc.entities.Ocorrencia;
 import br.com.ficdev.apigoc.entities.filters.OcorrenciaFiltro;
 import br.com.ficdev.apigoc.services.OcorrenciaService;
