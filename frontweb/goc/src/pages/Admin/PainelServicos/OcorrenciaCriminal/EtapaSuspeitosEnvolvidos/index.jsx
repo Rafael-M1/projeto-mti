@@ -2,7 +2,7 @@ import ButtonIconSmall from "../../../../../components/ButtonIconSmall";
 import { useState } from "react";
 import uuid from "react-uuid";
 import { useMediaQuery } from "react-responsive";
-const EtapaSuspeitosEnvolvidosForm = ({}) => {
+const EtapaSuspeitosEnvolvidosForm = ({atualizarSuspeitosEnvolvidosObj}) => {
   const [listaSuspeitosEnvolvidos, setListaSuspeitosEnvolvidos] = useState([
     { id: uuid(), descricaoSuspeito: "" },
   ]);
@@ -20,6 +20,7 @@ const EtapaSuspeitosEnvolvidosForm = ({}) => {
     const novaListaSuspeitosEnvolvidos = [...listaSuspeitosEnvolvidos];
     novaListaSuspeitosEnvolvidos[index][atributo] = value;
     setListaSuspeitosEnvolvidos(novaListaSuspeitosEnvolvidos);
+    atualizarSuspeitosEnvolvidosObj(novaListaSuspeitosEnvolvidos);
   };
   return (
     <div className="container mt-4">

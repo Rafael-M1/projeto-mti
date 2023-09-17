@@ -5,7 +5,7 @@ import uuid from "react-uuid";
 import { useMediaQuery } from "react-responsive";
 import { requestBackend } from "../../../../../util/requests";
 
-const EtapaCrimesEnvolvidosForm = ({}) => {
+const EtapaCrimesEnvolvidosForm = ({atualizarCrimesEnvolvidosObj}) => {
   const [listaCrimesOpcoes, setListaCrimesOpcoes] = useState(null);
   const [listaCrimesEnvolvidos, setListaCrimesEnvolvidos] = useState([
     { id: uuid(), crime: "", descricaoAdicional: "" },
@@ -57,6 +57,7 @@ const EtapaCrimesEnvolvidosForm = ({}) => {
     const novaListaCrimesEnvolvidos = [...listaCrimesEnvolvidos];
     novaListaCrimesEnvolvidos[index][atributo] = value;
     setListaCrimesEnvolvidos(novaListaCrimesEnvolvidos);
+    atualizarCrimesEnvolvidosObj(novaListaCrimesEnvolvidos);
   };
   return (
     <div className="container mt-4">
