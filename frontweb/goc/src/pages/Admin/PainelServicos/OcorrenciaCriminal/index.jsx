@@ -120,7 +120,6 @@ const OcorrenciaCriminalForm = () => {
         descricaoCrimeOcorrencia: crimeEnvolvidoElemento.descricaoAdicional,
       })),
     };
-    console.log(ocorrenciaObj);
     if (vitimaFormObj.cpf == null || vitimaFormObj.cpf.length != 11) {
       toast.error("Digite o CPF da vítima.");
     } else if (vitimaFormObj.dataNascimento == null) {

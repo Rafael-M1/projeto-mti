@@ -32,8 +32,8 @@ const Navbar = ({ toggleAuth }) => {
           </li>
         )}
         <li>
-          <NavLink to="/admin/configuracoes" className="admin-nav-item">
-            <p>Configurações</p>
+          <NavLink to="/admin/sobre" className="admin-nav-item">
+            <p>Sobre</p>
           </NavLink>
         </li>
       </ul>
