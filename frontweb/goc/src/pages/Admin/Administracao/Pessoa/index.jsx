@@ -24,15 +24,18 @@ const PessoaAdministracao = () => {
   };
 
   useEffect(() => {
-    // if (state != null && state.mensagem != null) {
-    //   if (state.mensagem.tipo == "success") {
-    //     toast.success(state.mensagem.texto);
-    //     navigate(location.pathname, { replace: true });
-    //   }
-    // }
+    if (state != null && state.mensagem != null) {
+      if (state.mensagem.tipo == "success") {
+        toast.success(state.mensagem.texto);
+        navigate(location.pathname, { replace: true });
+      }
+    }
     // setIsLoading(true);
     servicePessoaPromise({})
-      .then((response) => setPage(response.data))
+      .then((response) => {
+        console.log(response.data);
+        setPage(response.data);
+      })
       .finally(() => setIsLoading(false));
   }, []);
 
@@ -90,19 +93,23 @@ const PessoaAdministracao = () => {
     setShowModalExcluir(true);
   };
 
-  const onClickEditar = (pessoa) => {
-    navigate(
-      "/admin/administracao/pessoa/form"
-      // , {
-      // 	state: {
-      // 		tipoCrime: {
-      // 			idCrime: tipoCrimeParam.idCrime,
-      // 			descricao: tipoCrimeParam.descricao,
-      // 		},
-      // 	},
-      // }
-    );
+  const onClickEditar = (pessoaParam) => {
+    navigate("/admin/administracao/pessoa/form", {
+      state: {
+        pessoa: {
+          idPessoa: pessoaParam.idPessoa,
+          nome: pessoaParam.nome,
+          dataNascimento: pessoaParam.dataNascimento,
+          cpf: pessoaParam.cpf,
+          email: pessoaParam.email,
+          sexo: pessoaParam.sexo,
+          telefone1: pessoaParam.telefone1,
+          telefone2: pessoaParam.telefone2
+        },
+      },
+    });
   };
+
   const onClickAdicionar = () => {
     navigate("/admin/administracao/pessoa/form");
   };
@@ -287,8 +294,9 @@ const PessoaAdministracao = () => {
                 urlParam: `/pessoa/${pessoaSelecionada.idPessoa}`,
               })
                 .then((response) => {
-                  serviceTipoCrimePromise({})
-                    .then((response) => setPage(response.data));
+                  serviceTipoCrimePromise({}).then((response) =>
+                    setPage(response.data)
+                  );
                 })
                 .finally(() => handleClose());
             }}
