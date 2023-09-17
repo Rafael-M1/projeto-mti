@@ -1,8 +1,6 @@
-import { Route, Routes, Outlet } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Catalog from "./pages/Catalog";
 import Admin from "./pages/Admin";
-import ProductDetails from "./pages/ProductDetails";
 import Auth from "./pages/Admin/Auth";
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
