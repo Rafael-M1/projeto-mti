@@ -91,9 +91,11 @@ const EtapaCrimesEnvolvidosForm = ({}) => {
         {listaCrimesEnvolvidos.map((elemento, index) => {
           return (
             <div key={elemento.id} className="row">
-              <div className="col-12">
-                <hr></hr>
-              </div>
+              {index != 0 && (
+                <div className="col-12">
+                  <hr></hr>
+                </div>
+              )}
               <div className="col-12 col-md-6">
                 <div className="mb-3 mt-2">
                   <h6>Crime {index + 1}</h6>
