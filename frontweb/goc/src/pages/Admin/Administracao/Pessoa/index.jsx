@@ -33,7 +33,7 @@ const PessoaAdministracao = () => {
     // setIsLoading(true);
     servicePessoaPromise({})
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setPage(response.data);
       })
       .finally(() => setIsLoading(false));
@@ -104,7 +104,7 @@ const PessoaAdministracao = () => {
           email: pessoaParam.email,
           sexo: pessoaParam.sexo,
           telefone1: pessoaParam.telefone1,
-          telefone2: pessoaParam.telefone2
+          telefone2: pessoaParam.telefone2,
         },
       },
     });

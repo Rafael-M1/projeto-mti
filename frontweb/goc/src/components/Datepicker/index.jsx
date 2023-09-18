@@ -1,6 +1,6 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { forwardRef, useState } from "react";
+import { forwardRef } from "react";
 import "./styles.css";
 import { CalendarIcon } from "../../assets/images/icon-calendar";
 

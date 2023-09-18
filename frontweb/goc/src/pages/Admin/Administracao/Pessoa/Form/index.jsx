@@ -105,164 +105,167 @@ const PessoaForm = () => {
         <h2 className="card-title text-center">Cadastro - Pessoa</h2>
         <div className="container mt-5">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-4">
-              <input
-                readOnly
-                {...register("idPessoa")}
-                type="hidden"
-                className={`form-control base-input`}
-                name="idPessoa"
-              />
-            </div>
-            <div className="mb-4">
-              <p>
-                <b>Nome da Pessoa</b>
-              </p>
-              <input
-                {...register("nome", {
-                  required: "Campo obrigatório",
-                  minLength: {
-                    value: 3,
-                    message: "Tamanho mínimo de 3 caracteres",
-                  },
-                })}
-                type="text"
-                className={`form-control base-input ${
-                  errors.nome ? "is-invalid" : ""
-                }`}
-                name="nome"
-              />
-              <div className="invalid-feedback d-block">
-                {errors.nome?.message}
+            <div className="row">
+              <div className="mb-4">
+                <input
+                  readOnly
+                  {...register("idPessoa")}
+                  type="hidden"
+                  className={`form-control base-input`}
+                  name="idPessoa"
+                />
               </div>
-            </div>
-            <div className="mb-4">
-              <p>
-                <b>Data de Nascimento</b>
-              </p>
-              <DatePickerComponent
-                onChangeDate={(date) => {
-                  setValue("dataNascimento", date);
-                  setDataNascimentoForm(date);
-                }}
-                name="dataNascimento"
-                error={errors.dataNascimento}
-                selectedDateComponent={dataNascimentoForm}
-                {...register("dataNascimento", {
-                  required: "Campo obrigatório",
-                })}
-              />
-              <div className="invalid-feedback d-block">
-                {errors.dataNascimento?.message}
+              <div className="mb-4">
+                <p>
+                  <b>Nome da Pessoa</b>
+                </p>
+                <input
+                  {...register("nome", {
+                    required: "Campo obrigatório",
+                    minLength: {
+                      value: 3,
+                      message: "Tamanho mínimo de 3 caracteres",
+                    },
+                  })}
+                  type="text"
+                  className={`form-control base-input ${
+                    errors.nome ? "is-invalid" : ""
+                  }`}
+                  name="nome"
+                />
+                <div className="invalid-feedback d-block">
+                  {errors.nome?.message}
+                </div>
               </div>
-            </div>
-            <div className="mb-4">
-              <p>
-                <b>CPF</b>
-              </p>
-              <input
-                {...register("cpf", {
-                  required: "Campo obrigatório",
-                  pattern: {
-                    value: /[\d]{11}/,
-                    message: "Somente números com 11 caracteres, sem pontuação",
-                  },
-                })}
-                type="text"
-                className={`form-control base-input ${
-                  errors.cpf ? "is-invalid" : ""
-                }`}
-                disabled={isEditMode}
-                name="cpf"
-              />
-              <div className="invalid-feedback d-block">
-                {errors.cpf?.message}
+              <div className="mb-4 col-6">
+                <p>
+                  <b>Data de Nascimento</b>
+                </p>
+                <DatePickerComponent
+                  onChangeDate={(date) => {
+                    setValue("dataNascimento", date);
+                    setDataNascimentoForm(date);
+                  }}
+                  name="dataNascimento"
+                  error={errors.dataNascimento}
+                  selectedDateComponent={dataNascimentoForm}
+                  {...register("dataNascimento", {
+                    required: "Campo obrigatório",
+                  })}
+                />
+                <div className="invalid-feedback d-block">
+                  {errors.dataNascimento?.message}
+                </div>
               </div>
-            </div>
-            <div className="mb-4">
-              <p>
-                <b>E-mail</b>
-              </p>
-              <input
-                {...register("email", {
-                  required: "Campo obrigatório",
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "E-mail inválido.",
-                  },
-                })}
-                type="text"
-                className={`form-control base-input ${
-                  errors.email ? "is-invalid" : ""
-                }`}
-                name="email"
-              />
-              <div className="invalid-feedback d-block">
-                {errors.email?.message}
+              <div className="mb-4 col-6">
+                <p>
+                  <b>CPF</b>
+                </p>
+                <input
+                  {...register("cpf", {
+                    required: "Campo obrigatório",
+                    pattern: {
+                      value: /[\d]{11}/,
+                      message:
+                        "Somente números com 11 caracteres, sem pontuação",
+                    },
+                  })}
+                  type="text"
+                  className={`form-control base-input ${
+                    errors.cpf ? "is-invalid" : ""
+                  }`}
+                  disabled={isEditMode}
+                  name="cpf"
+                />
+                <div className="invalid-feedback d-block">
+                  {errors.cpf?.message}
+                </div>
               </div>
-            </div>
-            <div className="mb-4">
-              <p>
-                <b>Sexo</b>
-              </p>
-              <select
-                className={`mt-3 form-select ${
-                  errors.sexo ? "is-invalid" : ""
-                }`}
-                onChange={(e) => setValue("sexo", e.target.value)}
-                name="sexo"
-                {...register("sexo", { required: "Campo obrigatório" })}
-              >
-                <option value={""}>Selecione o sexo da Pessoa</option>
-                <option value={"M"}>Masculino</option>
-                <option value={"F"}>Feminino</option>
-              </select>
-              <div className={`invalid-feedback d-block`}>
-                {errors.sexo?.message}
+              <div className="mb-4 col-6">
+                <p>
+                  <b>E-mail</b>
+                </p>
+                <input
+                  {...register("email", {
+                    required: "Campo obrigatório",
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: "E-mail inválido.",
+                    },
+                  })}
+                  type="text"
+                  className={`form-control base-input ${
+                    errors.email ? "is-invalid" : ""
+                  }`}
+                  name="email"
+                />
+                <div className="invalid-feedback d-block">
+                  {errors.email?.message}
+                </div>
               </div>
-            </div>
-            <div className="mb-4">
-              <p>
-                <b>Telefone 1</b>
-              </p>
-              <input
-                {...register("telefone1", {
-                  required: "Campo obrigatório",
-                  minLength: {
-                    value: 9,
-                    message: "Telefone inválido",
-                  },
-                })}
-                type="text"
-                className={`form-control base-input ${
-                  errors.telefone1 ? "is-invalid" : ""
-                }`}
-                name="telefone1"
-              />
-              <div className="invalid-feedback d-block">
-                {errors.telefone1?.message}
+              <div className="mb-4 col-6">
+                <p>
+                  <b>Sexo</b>
+                </p>
+                <select
+                  className={`mt-3 form-select ${
+                    errors.sexo ? "is-invalid" : ""
+                  }`}
+                  onChange={(e) => setValue("sexo", e.target.value)}
+                  name="sexo"
+                  {...register("sexo", { required: "Campo obrigatório" })}
+                >
+                  <option value={""}>Selecione o sexo da Pessoa</option>
+                  <option value={"M"}>Masculino</option>
+                  <option value={"F"}>Feminino</option>
+                </select>
+                <div className={`invalid-feedback d-block`}>
+                  {errors.sexo?.message}
+                </div>
               </div>
-            </div>
-            <div className="mb-4">
-              <p>
-                <b>Telefone 2</b>
-              </p>
-              <input
-                {...register("telefone2", {
-                  // required: "Campo obrigatório",
-                  minLength: {
-                    value: 9,
-                    message: "Telefone inválido",
-                  },
-                })}
-                type="text"
-                className={`form-control base-input ${
-                  errors.telefone2 ? "is-invalid" : ""
-                }`}
-                name="telefone2"
-              />
-              <div className="invalid-feedback d-block">
-                {errors.telefone2?.message}
+              <div className="mb-4 col-6">
+                <p>
+                  <b>Telefone 1</b>
+                </p>
+                <input
+                  {...register("telefone1", {
+                    required: "Campo obrigatório",
+                    minLength: {
+                      value: 9,
+                      message: "Telefone inválido",
+                    },
+                  })}
+                  type="text"
+                  className={`form-control base-input ${
+                    errors.telefone1 ? "is-invalid" : ""
+                  }`}
+                  name="telefone1"
+                />
+                <div className="invalid-feedback d-block">
+                  {errors.telefone1?.message}
+                </div>
+              </div>
+              <div className="mb-4 col-6">
+                <p>
+                  <b>Telefone 2</b>
+                </p>
+                <input
+                  {...register("telefone2", {
+                    // required: "Campo obrigatório",
+                    minLength: {
+                      value: 9,
+                      message: "Telefone inválido",
+                    },
+                  })}
+                  type="text"
+                  className={`form-control base-input ${
+                    errors.telefone2 ? "is-invalid" : ""
+                  }`}
+                  name="telefone2"
+                />
+                <div className="invalid-feedback d-block">
+                  {errors.telefone2?.message}
+                </div>
               </div>
             </div>
             <div className="d-flex justify-content-end">
