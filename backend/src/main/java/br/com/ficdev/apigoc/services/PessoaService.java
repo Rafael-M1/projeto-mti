@@ -82,6 +82,7 @@ public class PessoaService {
 		}
 	}
 
+	@Transactional(readOnly = true)
 	public Page<Pessoa> findByFiltro(String nome, Pageable pageable) {
 		Page<Pessoa> page = repository.findByFiltro(nome, pageable);
 		return page;

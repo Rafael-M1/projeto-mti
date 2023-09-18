@@ -10,8 +10,7 @@ const Auth = ({ toggleAuth }) => {
   return (
     <div className="auth-container">
       <div className="auth-banner-container">
-        {/* <h1>Gestão de Ocorrências Criminais</h1> */}
-        <h1>Gestão</h1>
+        <h1>Gestão de Ocorrências Criminais</h1>
         {/* <img className="login-image" src={loginImage}></img> */}
       </div>
       <div className="auth-form-container">

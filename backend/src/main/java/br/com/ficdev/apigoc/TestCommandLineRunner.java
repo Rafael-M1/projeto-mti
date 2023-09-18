@@ -70,7 +70,7 @@ public class TestCommandLineRunner implements CommandLineRunner {
 		Pessoa pessoa = new Pessoa();
 		pessoa.setCpf("01234567891");
 		pessoa.setEmail("rafael@gmail.com");
-		pessoa.setNome("Rafael Muzzi");
+		pessoa.setNome("Rafael Muzzi da Silva");
 		pessoa.setSexo('M');
 		pessoa.setTelefone1("(65)99999-1234");
 		pessoa.setDataNascimento(LocalDate.of(1997, Month.JUNE, 2));

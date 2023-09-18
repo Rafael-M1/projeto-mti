@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import ButtonIconSmall from "../../../../../components/ButtonIconSmall";
 import { requestBackend } from "../../../../../util/requests";
-import { Form } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import DatePickerComponent from "../../../../../components/Datepicker";
@@ -11,12 +10,14 @@ const PessoaForm = () => {
   const { state } = useLocation();
   const [isEditMode, setIsEditMode] = useState(false);
   const [dataNascimentoForm, setDataNascimentoForm] = useState(null);
+
   const {
     register,
     handleSubmit,
     getValues,
     setValue,
     formState: { errors },
+    setError,
   } = useForm({
     defaultValues: {
       idPessoa: state && state.pessoa ? state.pessoa.idPessoa : "",
@@ -29,13 +30,12 @@ const PessoaForm = () => {
       telefone2: state && state.pessoa ? state.pessoa.telefone2 : "",
     },
   });
-
   const onClickCancelar = () => {
     navigate("/admin/administracao/pessoa");
   };
 
   const onSubmit = (data, event) => {
-    console.log(data);
+    // console.log(data);
     // if (isEditMode) {
     //   const params = {
     //     method: "PUT",
@@ -131,7 +131,12 @@ const PessoaForm = () => {
                   setValue("dataNascimento", date);
                   setDataNascimentoForm(date);
                 }}
+                name="dataNascimento"
+                error={errors.dataNascimento}
                 selectedDateComponent={dataNascimentoForm}
+                {...register("dataNascimento", {
+                  required: "Campo obrigatório",
+                })}
               />
               <div className="invalid-feedback d-block">
                 {errors.dataNascimento?.message}
@@ -144,13 +149,9 @@ const PessoaForm = () => {
               <input
                 {...register("cpf", {
                   required: "Campo obrigatório",
-                  minLength: {
-                    value: 11,
-                    message: "Tamanho mínimo de 11 caracteres",
-                  },
-                  maxLength: {
-                    value: 11,
-                    message: "Tamanho de 11 caracteres",
+                  pattern: {
+                    value: /[\d]{11}/,
+                    message: "Somente números com 11 caracteres, sem pontuação",
                   },
                 })}
                 type="text"
@@ -170,9 +171,9 @@ const PessoaForm = () => {
               <input
                 {...register("email", {
                   required: "Campo obrigatório",
-                  minLength: {
-                    value: 3,
-                    message: "Tamanho mínimo de 3 caracteres",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: "E-mail inválido.",
                   },
                 })}
                 type="text"
@@ -189,31 +190,19 @@ const PessoaForm = () => {
               <p>
                 <b>Sexo</b>
               </p>
-              {/* <input
-                {...register("sexo", {
-                  required: "Campo obrigatório",
-                  minLength: {
-                    value: 3,
-                    message: "Tamanho mínimo de 3 caracteres",
-                  },
-                })}
-                type="text"
-                className={`form-control base-input ${
+              <select
+                className={`mt-3 form-select ${
                   errors.sexo ? "is-invalid" : ""
                 }`}
-                name="sexo"
-              /> */}
-              <Form.Select
-                className="mt-3"
                 onChange={(e) => setValue("sexo", e.target.value)}
-                value={getValues("sexo")}
                 name="sexo"
+                {...register("sexo", { required: "Campo obrigatório" })}
               >
-                <option value={""}>Selecione o sexo da vítima</option>
+                <option value={""}>Selecione o sexo da Pessoa</option>
                 <option value={"M"}>Masculino</option>
                 <option value={"F"}>Feminino</option>
-              </Form.Select>
-              <div className="invalid-feedback d-block">
+              </select>
+              <div className={`invalid-feedback d-block`}>
                 {errors.sexo?.message}
               </div>
             </div>
@@ -225,8 +214,8 @@ const PessoaForm = () => {
                 {...register("telefone1", {
                   required: "Campo obrigatório",
                   minLength: {
-                    value: 3,
-                    message: "Tamanho mínimo de 3 caracteres",
+                    value: 9,
+                    message: "Telefone inválido",
                   },
                 })}
                 type="text"
@@ -245,10 +234,10 @@ const PessoaForm = () => {
               </p>
               <input
                 {...register("telefone2", {
-                  required: "Campo obrigatório",
+                  // required: "Campo obrigatório",
                   minLength: {
-                    value: 3,
-                    message: "Tamanho mínimo de 3 caracteres",
+                    value: 9,
+                    message: "Telefone inválido",
                   },
                 })}
                 type="text"
