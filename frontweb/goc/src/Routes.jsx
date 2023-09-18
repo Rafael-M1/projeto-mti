@@ -14,6 +14,7 @@ import OcorrenciaAdministracao from "./pages/Admin/Administracao/Ocorrencia";
 import SobrePage from "./pages/Admin/Sobre";
 import PessoaAdministracao from "./pages/Admin/Administracao/Pessoa";
 import PessoaForm from "./pages/Admin/Administracao/Pessoa/Form";
+import DashboardPage from "./pages/Admin/Dashboard";
 
 const RoutesConfig = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -38,7 +39,7 @@ const RoutesConfig = () => {
             element={<Admin toggleAuth={() => toggleAuth()} />}
           >
             <Route path="" element={<PainelServicos />} />
-            <Route path="dashboard" element={<h2>Dashboard</h2>}>
+            <Route path="dashboard" element={<DashboardPage />}>
               {/* a */}
             </Route>
             <Route
