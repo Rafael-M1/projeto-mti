@@ -98,17 +98,18 @@ const Login = ({ toggleAuth }) => {
             {errors.password?.message}
           </div>
         </div>
-        <Link to="/admin/auth/recover" className="login-link-recover">
+        <div style={{ marginBottom: "140px" }}></div>
+        {/* <Link to="/admin/auth/recover" className="login-link-recover">
           Esqueci a senha
-        </Link>
+        </Link> */}
         <div className="login-submit">
           <ButtonIcon text="Fazer login" />
         </div>
         <div className="signup-container">
-          <span className="not-registered">Não tem Cadastro?</span>
-          <Link to="/admin/auth/register" className="login-link-register">
+          {/* <span className="not-registered">Não tem Cadastro?</span> */}
+          {/* <Link to="/admin/auth/register" className="login-link-register">
             CADASTRAR
-          </Link>
+          </Link> */}
         </div>
       </form>
     </div>
