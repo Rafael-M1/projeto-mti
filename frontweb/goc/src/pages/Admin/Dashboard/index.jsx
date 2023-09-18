@@ -3,6 +3,7 @@ import DatePickerComponent from "../../../components/Datepicker";
 import { useState } from "react";
 import ButtonIconSmall from "../../../components/ButtonIconSmall";
 import toast, { Toaster } from "react-hot-toast";
+import { MonitoringIcon } from "../../../assets/images/icon-monitoring";
 
 const DashboardPage = () => {
   const [dataInicio, setDataInicio] = useState(null);
@@ -60,8 +61,15 @@ const DashboardPage = () => {
                 widthPixels={220}
                 heightPixels={40}
                 onClick={() => {
+                  if (dataFim == null || dataInicio == null) {
+                    return toast.error(
+                      "Data Início ou Data Fim não deve ser vazia."
+                    );
+                  }
                   if (dataFim < dataInicio) {
-                    toast.error("Data Início deve ser antes de Data Fim");
+                    return toast.error(
+                      "Data Início deve ser antes de Data Fim"
+                    );
                   }
                 }}
                 icon={true}
@@ -69,7 +77,49 @@ const DashboardPage = () => {
             </div>
           </div>
         </div>
-        <div className="container mt-5">Conteudo</div>
+        <div className="container mt-5">
+          <div className="row">
+            <div
+              className="col-5"
+              style={{
+                background: "#DCDCDC",
+                paddingTop: "15px",
+                paddingBottom: "15px",
+                borderRadius: "10px",
+              }}
+            >
+              <MonitoringIcon
+                size={100}
+                styleComponent={{
+                  background: "#fff",
+                  padding: "3px",
+                  border: "1px solid",
+                  borderRadius: "10px",
+                }}
+              />
+            </div>
+            <div className="col-1"></div>
+            <div
+              className="col-5"
+              style={{
+                background: "#DCDCDC",
+                paddingTop: "15px",
+                paddingBottom: "15px",
+                borderRadius: "10px",
+              }}
+            >
+              <MonitoringIcon
+                size={100}
+                styleComponent={{
+                  background: "#fff",
+                  padding: "3px",
+                  border: "1px solid",
+                  borderRadius: "10px",
+                }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
