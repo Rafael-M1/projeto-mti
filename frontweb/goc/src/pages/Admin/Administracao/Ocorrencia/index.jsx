@@ -184,7 +184,6 @@ const OcorrenciaAdministracao = () => {
                                   margin: "4px",
                                   padding: "4px",
                                 }}
-                                //TODO editar ocorrencia
                                 onClick={() => {}}
                               >
                                 <EditIcon />
@@ -229,23 +228,20 @@ const OcorrenciaAdministracao = () => {
               pageCount={page && page.totalPages ? page.totalPages : 0}
               range={3}
               onChange={(pageNumber) => {
-                // TODO paginação
-                // if (filtroTipoCrime == "") {
-                //   serviceTipoCrimePromise({ pageNumberParam: pageNumber })
-                //     .then((response) => setPage(response.data))
-                //     .finally(() => setIsLoading(false));
-                // } else {
-                //   serviceTipoCrimePromise({
-                //     pageNumberParam: pageNumber,
-                //     methodParam: "POST",
-                //     urlParam: "/crime/descricao",
-                //     dataParam: {
-                //       descricao: filtroTipoCrime,
-                //     },
-                //   })
-                //     .then((response) => setPage(response.data))
-                //     .finally(() => setIsLoading(false));
-                // }
+                if (filtroOcorrencia == "") {
+                  serviceOcorrenciaPromise({ pageNumberParam: pageNumber })
+                    .then((response) => setPage(response.data))
+                    .finally(() => setIsLoading(false));
+                } else {
+                  serviceOcorrenciaPromise({
+                    pageNumberParam: pageNumber,
+                    methodParam: "POST",
+                    urlParam: "/ocorrencia/filtro",
+                    dataParam: { filtroTexto: filtroOcorrencia },
+                  })
+                    .then((response) => setPage(response.data))
+                    .finally(() => setIsLoading(false));
+                }
               }}
             />
           </div>
