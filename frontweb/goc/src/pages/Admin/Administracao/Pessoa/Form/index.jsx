@@ -35,45 +35,59 @@ const PessoaForm = () => {
   };
 
   const onSubmit = (data, event) => {
-    // console.log(data);
-    // if (isEditMode) {
-    //   const params = {
-    //     method: "PUT",
-    //     url: `/pessoa/${data.idPessoa}`,
-    //     data: {
-    //       descricao: data.descricao,
-    //     },
-    //     withCredentials: true,
-    //   };
-    //   requestBackend(params).then((response) => {
-    //     navigate("/admin/administracao/pessoa", {
-    //       state: {
-    //         mensagem: { texto: "Alterado com sucesso!", tipo: "success" },
-    //       },
-    //     });
-    //   });
-    // } else {
-    //   const params = {
-    //     method: "POST",
-    //     url: "/pessoa",
-    //     data: {
-    //       descricao: data.descricao,
-    //     },
-    //     withCredentials: true,
-    //   };
-    //   requestBackend(params).then((response) => {
-    //     navigate("/admin/administracao/pessoa", {
-    //       state: {
-    //         mensagem: { texto: "Cadastrado com sucesso!", tipo: "success" },
-    //       },
-    //     });
-    //   });
-    // }
+    if (isEditMode) {
+      const params = {
+        method: "PUT",
+        url: `/pessoa/${data.idPessoa}`,
+        data: {
+          idPessoa: data.idPessoa,
+          dataNascimento: data.dataNascimento,
+          nome: data.nome,
+          cpf: data.cpf,
+          email: data.email,
+          sexo: data.sexo,
+          telefone1: data.telefone1,
+          telefone2: data.telefone2,
+        },
+        withCredentials: true,
+      };
+      requestBackend(params).then((response) => {
+        navigate("/admin/administracao/pessoa", {
+          state: {
+            mensagem: { texto: "Alterado com sucesso!", tipo: "success" },
+          },
+        });
+      });
+    } else {
+      const params = {
+        method: "POST",
+        url: "/pessoa",
+        data: {
+          idPessoa: null,
+          dataNascimento: data.dataNascimento,
+          nome: data.nome,
+          cpf: data.cpf,
+          email: data.email,
+          sexo: data.sexo,
+          telefone1: data.telefone1,
+          telefone2: data.telefone2,
+        },
+        withCredentials: true,
+      };
+      requestBackend(params).then((response) => {
+        navigate("/admin/administracao/pessoa", {
+          state: {
+            mensagem: { texto: "Cadastrado com sucesso!", tipo: "success" },
+          },
+        });
+      });
+    }
   };
 
   useEffect(() => {
     if (state != null && state.pessoa != null) {
       setIsEditMode(true);
+      setDataNascimentoForm(new Date(state.pessoa.dataNascimento));
     }
   }, []);
 
@@ -158,6 +172,7 @@ const PessoaForm = () => {
                 className={`form-control base-input ${
                   errors.cpf ? "is-invalid" : ""
                 }`}
+                disabled={isEditMode}
                 name="cpf"
               />
               <div className="invalid-feedback d-block">
