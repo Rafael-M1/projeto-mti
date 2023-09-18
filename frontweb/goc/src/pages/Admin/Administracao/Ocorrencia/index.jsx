@@ -26,7 +26,7 @@ const OcorrenciaAdministracao = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    serviceOcorrenciaPromise({urlParam: "/ocorrencia?sort=dataCriado,desc"})
+    serviceOcorrenciaPromise({ urlParam: "/ocorrencia?sort=dataCriado,desc" })
       .then((response) => setPage(response.data))
       .finally(() => setIsLoading(false));
   }, []);
@@ -44,7 +44,7 @@ const OcorrenciaAdministracao = () => {
           method: methodParam,
           withCredentials: true,
         };
-        if (methodParam == "GET" || methodParam != "POST") {
+        if (methodParam == "GET" || methodParam == "POST") {
           params.params = {
             page: pageNumberParam ?? 0,
             size: 12,
@@ -61,20 +61,19 @@ const OcorrenciaAdministracao = () => {
 
   const onClickFiltrar = () => {
     if (filtroOcorrenciaTexto.trim() != "") {
-      setIsLoading(true);
+      // setIsLoading(true);
       setFiltroOcorrencia(filtroOcorrenciaTexto);
-      serviceTipoCrimePromise({
+      serviceOcorrenciaPromise({
         methodParam: "POST",
         urlParam: "/ocorrencia/filtro",
-        //TODO falta arrumar o objeto do dataParam
-        dataParam: { descricao: filtroOcorrenciaTexto },
+        dataParam: { filtroTexto: filtroOcorrenciaTexto },
       })
         .then((response) => setPage(response.data))
         .finally(() => setIsLoading(false));
     } else {
-      setIsLoading(true);
+      // setIsLoading(true);
       setFiltroOcorrencia(filtroOcorrenciaTexto);
-      serviceTipoCrimePromise({})
+      serviceOcorrenciaPromise({})
         .then((response) => setPage(response.data))
         .finally(() => setIsLoading(false));
     }
@@ -105,7 +104,6 @@ const OcorrenciaAdministracao = () => {
                 text="Filtrar"
                 widthPixels={"100%"}
                 heightPixels={50}
-                //TODO filtrar pelo numero da ocorrencia
                 onClick={onClickFiltrar}
                 icon={true}
               />
@@ -115,8 +113,8 @@ const OcorrenciaAdministracao = () => {
                 type="text"
                 className="form-control"
                 style={{ height: "50px", width: "100%" }}
-                placeholder="Filtrar pelo número da Ocorrência"
-                onChange={(e) => {}}
+                placeholder="Filtrar pelo número da Ocorrência ou nome da Vítima"
+                onChange={(e) => setFiltroOcorrenciaTexto(e.target.value)}
               />
             </div>
           </div>
@@ -132,7 +130,9 @@ const OcorrenciaAdministracao = () => {
             <CardLoader speed={0.9} width={1120} height={580} />
           ) : (
             <>
-              {/* {filtroTipoCrime && <p className="mt-3">Busca por: </p>} */}
+              {filtroOcorrencia && (
+                <p className="mt-3">Busca por: {filtroOcorrencia}</p>
+              )}
               <table className="table table-light table-hover mt-4">
                 <thead>
                   <tr>
@@ -150,7 +150,11 @@ const OcorrenciaAdministracao = () => {
                       <tr key={ocorrencia.idOcorrencia}>
                         <th scope="row">{ocorrencia.idOcorrencia}</th>
                         <td>{ocorrencia.vitima.nome}</td>
-                        <td>{new Date(ocorrencia.dataOcorrencia).toLocaleDateString('pt-BR')}</td>
+                        <td>
+                          {new Date(
+                            ocorrencia.dataOcorrencia
+                          ).toLocaleDateString("pt-BR")}
+                        </td>
                         {/* Coluna Crimes envolvidos */}
                         <td>
                           {ocorrencia.crimesEnvolvidos.map((crime, index) => {
@@ -166,7 +170,7 @@ const OcorrenciaAdministracao = () => {
                         </td>
                         <td>
                           <div style={{ display: "flex" }}>
-                            <OverlayTrigger
+                            {/* <OverlayTrigger
                               placement="top"
                               delay={{ show: 250, hide: 100 }}
                               overlay={
@@ -190,7 +194,7 @@ const OcorrenciaAdministracao = () => {
                               style={{
                                 width: "10px",
                               }}
-                            ></div>
+                            ></div> */}
                             <OverlayTrigger
                               placement="top"
                               delay={{ show: 250, hide: 100 }}
@@ -225,7 +229,7 @@ const OcorrenciaAdministracao = () => {
               pageCount={page && page.totalPages ? page.totalPages : 0}
               range={3}
               onChange={(pageNumber) => {
-                //TODO paginação
+                // TODO paginação
                 // if (filtroTipoCrime == "") {
                 //   serviceTipoCrimePromise({ pageNumberParam: pageNumber })
                 //     .then((response) => setPage(response.data))
