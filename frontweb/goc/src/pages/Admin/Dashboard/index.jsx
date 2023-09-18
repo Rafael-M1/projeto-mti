@@ -8,6 +8,8 @@ import { MonitoringIcon } from "../../../assets/images/icon-monitoring";
 const DashboardPage = () => {
   const [dataInicio, setDataInicio] = useState(null);
   const [dataFim, setDataFim] = useState(null);
+  const [value, setValue] = useState(null);
+  const [texto, setTexto] = useState(null);
   const is768pxOrLesser = useMediaQuery({ maxWidth: 767 });
   const cardStyle = () => {
     if (is768pxOrLesser) {
@@ -80,7 +82,7 @@ const DashboardPage = () => {
         <div className="container mt-5">
           <div className="row">
             <div
-              className="col-5"
+              className="col-5 d-flex"
               style={{
                 background: "#DCDCDC",
                 paddingTop: "15px",
@@ -89,7 +91,7 @@ const DashboardPage = () => {
               }}
             >
               <MonitoringIcon
-                size={100}
+                size={110}
                 styleComponent={{
                   background: "#fff",
                   padding: "3px",
@@ -97,10 +99,38 @@ const DashboardPage = () => {
                   borderRadius: "10px",
                 }}
               />
+              <div
+                style={{
+                  marginLeft: "10px",
+                  background: "#fff",
+                  borderRadius: "10px",
+                  width: "80%",
+                  padding: "0 10px",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "36px",
+                    fontWeight: "bold",
+                    marginBottom: "0px",
+                  }}
+                >
+                  {value ?? "100"}
+                </p>
+                <p
+                  style={{
+                    fontSize: "24px",
+                    fontWeight: "normal",
+                    marginBottom: "0px",
+                  }}
+                >
+                  {texto ?? "Ocorrências no período."}
+                </p>
+              </div>
             </div>
             <div className="col-1"></div>
             <div
-              className="col-5"
+              className="col-5 d-flex"
               style={{
                 background: "#DCDCDC",
                 paddingTop: "15px",
@@ -109,7 +139,7 @@ const DashboardPage = () => {
               }}
             >
               <MonitoringIcon
-                size={100}
+                size={110}
                 styleComponent={{
                   background: "#fff",
                   padding: "3px",
@@ -117,6 +147,34 @@ const DashboardPage = () => {
                   borderRadius: "10px",
                 }}
               />
+              <div
+                style={{
+                  marginLeft: "10px",
+                  background: "#fff",
+                  borderRadius: "10px",
+                  width: "80%",
+                  padding: "0 10px",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "36px",
+                    fontWeight: "bold",
+                    marginBottom: "0px",
+                  }}
+                >
+                  {value ?? "100"}
+                </p>
+                <p
+                  style={{
+                    fontSize: "24px",
+                    fontWeight: "normal",
+                    marginBottom: "0px",
+                  }}
+                >
+                  {texto ?? "Ocorrências no período."}
+                </p>
+              </div>
             </div>
           </div>
         </div>
