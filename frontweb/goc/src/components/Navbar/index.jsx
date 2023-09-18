@@ -40,7 +40,7 @@ const Navbar = ({ isAuthenticated }) => {
           <Link to={"/"} className="nav-logo-text">
             <div style={{ display: "flex" }}>
               <img src={pjcBrasao} style={{ height: "50px" }}></img>
-              <h4
+              <h5
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -49,7 +49,7 @@ const Navbar = ({ isAuthenticated }) => {
               >
                 Título Projeto
                 {/* Polícia Judiciária Civil do Estado de Mato Grosso */}
-              </h4>
+              </h5>
             </div>
           </Link>
           {is768pxOrLesser && isAuthenticated == false && (
