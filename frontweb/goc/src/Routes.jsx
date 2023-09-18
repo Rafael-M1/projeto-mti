@@ -13,6 +13,7 @@ import { isUserAuthenticated } from "./util/auth";
 import OcorrenciaAdministracao from "./pages/Admin/Administracao/Ocorrencia";
 import SobrePage from "./pages/Admin/Sobre";
 import PessoaAdministracao from "./pages/Admin/Administracao/Pessoa";
+import PessoaForm from "./pages/Admin/Administracao/Pessoa/Form";
 
 const RoutesConfig = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -60,6 +61,10 @@ const RoutesConfig = () => {
             <Route
               path="administracao/pessoa"
               element={<PessoaAdministracao />}
+            ></Route>
+            <Route
+              path="administracao/pessoa/form"
+              element={<PessoaForm />}
             ></Route>
             <Route path="sobre" element={<SobrePage />} />
           </Route>
