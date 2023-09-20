@@ -52,7 +52,6 @@ public class OcorrenciaResource {
 	@GetMapping
 	public ResponseEntity<Page<OcorrenciaDTO>> findAllAtivos(Pageable pageable) {
 		Page<OcorrenciaDTO> list = service.findAllPagedAtivos(pageable);
-		System.out.println(list.getContent().toString());
 		return ResponseEntity.ok().body(list);
 	}
 

@@ -1,9 +1,12 @@
 package br.com.ficdev.apigoc.services;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.ficdev.apigoc.dto.DashboardDTO;
 import br.com.ficdev.apigoc.dto.EnvolvidoDTO;
+import br.com.ficdev.apigoc.dto.MapDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaCrimeDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaInsertDTO;
@@ -34,6 +38,9 @@ import br.com.ficdev.apigoc.services.exceptions.ResourceNotFoundException;
 @Service
 public class OcorrenciaService {
 
+	@Autowired
+	private EntityManager entityManager;
+	
 	@Autowired
 	private OcorrenciaRepository repository;
 
@@ -170,10 +177,27 @@ public class OcorrenciaService {
 		Long qtdOcorrenciasPeriodo = repository.findOcorrenciasPorPeriodo(dataInicio, dataFim);
 		Long qtdOcorrenciasMulheresPorPeriodo = repository.findOcorrenciasMulheresPorPeriodo(dataInicio, dataFim);
 		Long qtdOcorrenciasHomensPorPeriodo = repository.findOcorrenciasHomensPorPeriodo(dataInicio, dataFim);
+		
 		DashboardDTO dashboardDTO = new DashboardDTO();
 		dashboardDTO.setQtdOcorrenciasPorPeriodo(qtdOcorrenciasPeriodo);
 		dashboardDTO.setQtdOcorrenciasHomensPorPeriodo(qtdOcorrenciasHomensPorPeriodo);
 		dashboardDTO.setQtdOcorrenciasMulheresPorPeriodo(qtdOcorrenciasMulheresPorPeriodo);
+		
+		String jpqlQuery = "select new br.com.ficdev.apigoc.dto.MapDTO(c.descricao, COUNT(*)) from Ocorrencia o "
+				+ "	INNER JOIN OcorrenciaCrime oc ON o.idOcorrencia = oc.ocorrencia.idOcorrencia "
+				+ "	INNER JOIN Crime c ON oc.crime.idCrime = c.idCrime "
+				+ "	where o.status = true "
+				+ "	and o.dataOcorrencia < :dataFim "
+				+ "	and o.dataOcorrencia > :dataInicio "
+				+ "	and o.vitima.sexo = 'M' "
+				+ "	GROUP BY c.descricao ";
+		TypedQuery<MapDTO> query = entityManager.createQuery(jpqlQuery, MapDTO.class);
+		query.setParameter("dataFim", dataFim);
+		query.setParameter("dataInicio", dataInicio);
+		dashboardDTO.setQtdOcorrenciasPorTipoCrimePorPeriodo(query.getResultList());
+		//[MapDTO [key=Calúnia, value=2], MapDTO [key=Furto, value=1], MapDTO [key=Homicídio, value=8], MapDTO [key=Roubo, value=2], MapDTO [key=Tráfico de Drogas, value=3]]
+
+		
 		return dashboardDTO;
 	}
 

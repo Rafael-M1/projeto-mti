@@ -1,9 +1,12 @@
 package br.com.ficdev.apigoc.dto;
 
+import java.util.List;
+
 public class DashboardDTO {
 	private Long qtdOcorrenciasPorPeriodo;
 	private Long qtdOcorrenciasMulheresPorPeriodo;
 	private Long qtdOcorrenciasHomensPorPeriodo;
+	private List<MapDTO> qtdOcorrenciasPorTipoCrimePorPeriodo;
 
 	public DashboardDTO() {
 	}
@@ -30,6 +33,14 @@ public class DashboardDTO {
 
 	public void setQtdOcorrenciasHomensPorPeriodo(Long qtdOcorrenciasHomensPorPeriodo) {
 		this.qtdOcorrenciasHomensPorPeriodo = qtdOcorrenciasHomensPorPeriodo;
+	}
+
+	public List<MapDTO> getQtdOcorrenciasPorTipoCrimePorPeriodo() {
+		return qtdOcorrenciasPorTipoCrimePorPeriodo;
+	}
+
+	public void setQtdOcorrenciasPorTipoCrimePorPeriodo(List<MapDTO> qtdOcorrenciasPorTipoCrimePorPeriodo) {
+		this.qtdOcorrenciasPorTipoCrimePorPeriodo = qtdOcorrenciasPorTipoCrimePorPeriodo;
 	}
 
 }
