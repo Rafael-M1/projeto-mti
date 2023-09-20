@@ -8,6 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
 import Pagination from "../../../../components/Pagination";
 import CardLoader from "../../../../components/CardLoader";
+import { useMediaQuery } from "react-responsive";
 
 const TipoCrime = () => {
   const [page, setPage] = useState();
@@ -16,6 +17,7 @@ const TipoCrime = () => {
   const [filtroTipoCrime, setFiltroTipoCrime] = useState("");
   const [showModalExcluir, setShowModalExcluir] = useState(false);
   const [tipoCrimeSelecionado, setTipoCrimeSelecionado] = useState(null);
+  const is1000pxOrLesser = useMediaQuery({ maxWidth: 1000 });
   const navigate = useNavigate();
   const { state } = useLocation();
   const handleClose = () => {
@@ -119,31 +121,61 @@ const TipoCrime = () => {
         </h2>
         <Toaster position="top-right" />
         <div className="container mt-5">
-          <div className="d-flex justify-content-between">
-            <div style={{ display: "flex" }}>
+          {!is1000pxOrLesser ? (
+            <div className="d-flex justify-content-between">
+              <div style={{ display: "flex" }}>
+                <ButtonIconSmall
+                  text="Filtrar"
+                  widthPixels={220}
+                  heightPixels={50}
+                  onClick={onClickFiltrar}
+                  icon={true}
+                />
+                <input
+                  type="text"
+                  className="form-control"
+                  style={{ height: "50px", width: "400px", marginLeft: "10px" }}
+                  placeholder="Filtrar pelo nome do Tipo de Crime"
+                  onChange={(e) => setFiltroTipoCrimeTexto(e.target.value)}
+                />
+              </div>
               <ButtonIconSmall
-                text="Filtrar"
-                widthPixels={220}
+                text="Adicionar"
+                widthPixels={240}
                 heightPixels={50}
-                onClick={onClickFiltrar}
+                onClick={onClickAdicionar}
                 icon={true}
               />
-              <input
-                type="text"
-                className="form-control"
-                style={{ height: "50px", width: "400px", marginLeft: "10px" }}
-                placeholder="Filtrar pelo nome do Tipo de Crime"
-                onChange={(e) => setFiltroTipoCrimeTexto(e.target.value)}
-              />
             </div>
-            <ButtonIconSmall
-              text="Adicionar"
-              widthPixels={240}
-              heightPixels={50}
-              onClick={onClickAdicionar}
-              icon={true}
-            />
-          </div>
+          ) : (
+            <div className="row">
+              <div className="col-12 d-flex justify-content-end">
+                <ButtonIconSmall
+                  text="Adicionar"
+                  widthPixels={240}
+                  heightPixels={50}
+                  onClick={onClickAdicionar}
+                  icon={true}
+                />
+              </div>
+              <div className="col-12 col-lg-6 mt-4">
+                <ButtonIconSmall
+                  text="Filtrar"
+                  widthPixels={220}
+                  heightPixels={50}
+                  onClick={onClickFiltrar}
+                  icon={true}
+                />
+                <input
+                  type="text"
+                  className="form-control"
+                  style={{ height: "50px", width: "100%", marginLeft: "10px" }}
+                  placeholder="Filtrar pelo nome do Tipo de Crime"
+                  onChange={(e) => setFiltroTipoCrimeTexto(e.target.value)}
+                />
+              </div>
+            </div>
+          )}
           {isLoading ? (
             <CardLoader speed={0.9} width={1120} height={580} />
           ) : (
