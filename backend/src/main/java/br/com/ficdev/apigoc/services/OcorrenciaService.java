@@ -189,7 +189,6 @@ public class OcorrenciaService {
 				+ "	where o.status = true "
 				+ "	and o.dataOcorrencia < :dataFim "
 				+ "	and o.dataOcorrencia > :dataInicio "
-				+ "	and o.vitima.sexo = 'M' "
 				+ "	GROUP BY c.descricao ";
 		TypedQuery<MapDTO> query = entityManager.createQuery(jpqlQuery, MapDTO.class);
 		query.setParameter("dataFim", dataFim);
