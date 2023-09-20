@@ -91,7 +91,7 @@ const TipoCrime = () => {
   };
 
   const onClickEditar = (tipoCrimeParam) => {
-    navigate("/admin/administracao/tipocrime/form", {
+    navigate("/goc/admin/administracao/tipocrime/form", {
       state: {
         tipoCrime: {
           idCrime: tipoCrimeParam.idCrime,
@@ -101,7 +101,7 @@ const TipoCrime = () => {
     });
   };
   const onClickAdicionar = () => {
-    navigate("/admin/administracao/tipocrime/form");
+    navigate("/goc/admin/administracao/tipocrime/form");
   };
   return (
     <div

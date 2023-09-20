@@ -21,7 +21,7 @@ const PainelServicos = () => {
           descricaoServico={
             "Descrição: Serviço de registro de ocorrência policial, permitindo a comunicação de crimes e fatos atípicos pela unidade de polícia competente."
           }
-          onClickButton={() => navigate("/admin/ocorrencia")}
+          onClickButton={() => navigate("/goc/admin/ocorrencia")}
         />
       </div>
     </div>

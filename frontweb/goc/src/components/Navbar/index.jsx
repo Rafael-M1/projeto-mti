@@ -37,7 +37,7 @@ const Navbar = ({ isAuthenticated }) => {
     <>
       <nav className="navbar navbar-dark bg-dark">
         <div className="container-fluid">
-          <Link to={"/"} className="nav-logo-text">
+          <Link to={"/goc"} className="nav-logo-text">
             <div style={{ display: "flex" }}>
               <img src={pjcBrasao} style={{ height: "50px" }}></img>
               <h5
@@ -68,12 +68,12 @@ const Navbar = ({ isAuthenticated }) => {
               <div className="collapse navbar-collapse" id="goc-navbar">
                 <ul className="navbar-nav offset-md-2 main-menu">
                   <li>
-                    <Link to={"/"} activeClassName="active">
+                    <Link to={"/goc"} activeClassName="active">
                       Página Inicial
                     </Link>
                   </li>
                   <li>
-                    <Link to={"/admin/auth"} activeClassName="active">
+                    <Link to={"/goc/admin/auth"} activeClassName="active">
                       Administração
                     </Link>
                   </li>
@@ -84,10 +84,10 @@ const Navbar = ({ isAuthenticated }) => {
           {!is768pxOrLesser && isAuthenticated == false && (
             <>
               <div style={{ display: "flex" }}>
-                <Link to={"/"} className="nav-logo-text">
+                <Link to={"/goc"} className="nav-logo-text">
                   <h5>Página Inicial</h5>
                 </Link>
-                <Link to={"/admin/auth"} className="nav-logo-text mx-4">
+                <Link to={"/goc/admin/auth"} className="nav-logo-text mx-4">
                   <h5>Administração</h5>
                 </Link>
               </div>

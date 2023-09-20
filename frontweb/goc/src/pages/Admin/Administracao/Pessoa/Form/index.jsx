@@ -31,7 +31,7 @@ const PessoaForm = () => {
     },
   });
   const onClickCancelar = () => {
-    navigate("/admin/administracao/pessoa");
+    navigate("/goc/admin/administracao/pessoa");
   };
 
   const onSubmit = (data, event) => {
@@ -52,7 +52,7 @@ const PessoaForm = () => {
         withCredentials: true,
       };
       requestBackend(params).then((response) => {
-        navigate("/admin/administracao/pessoa", {
+        navigate("/goc/admin/administracao/pessoa", {
           state: {
             mensagem: { texto: "Alterado com sucesso!", tipo: "success" },
           },
@@ -75,7 +75,7 @@ const PessoaForm = () => {
         withCredentials: true,
       };
       requestBackend(params).then((response) => {
-        navigate("/admin/administracao/pessoa", {
+        navigate("/goc/admin/administracao/pessoa", {
           state: {
             mensagem: { texto: "Cadastrado com sucesso!", tipo: "success" },
           },

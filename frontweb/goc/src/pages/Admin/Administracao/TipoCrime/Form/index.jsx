@@ -20,7 +20,7 @@ const TipoCrimeForm = () => {
   });
 
   const onClickCancelar = () => {
-    navigate("/admin/administracao/tipocrime");
+    navigate("/goc/admin/administracao/tipocrime");
   };
 
   const onSubmit = (data, event) => {
@@ -34,7 +34,7 @@ const TipoCrimeForm = () => {
         withCredentials: true,
       };
       requestBackend(params).then((response) => {
-        navigate("/admin/administracao/tipocrime", {
+        navigate("/goc/admin/administracao/tipocrime", {
           state: {
             mensagem: { texto: "Alterado com sucesso!", tipo: "success" },
           },
@@ -50,7 +50,7 @@ const TipoCrimeForm = () => {
         withCredentials: true,
       };
       requestBackend(params).then((response) => {
-        navigate("/admin/administracao/tipocrime", {
+        navigate("/goc/admin/administracao/tipocrime", {
           state: {
             mensagem: { texto: "Cadastrado com sucesso!", tipo: "success" },
           },

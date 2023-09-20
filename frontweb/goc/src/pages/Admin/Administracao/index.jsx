@@ -21,7 +21,7 @@ const AdministracaoPage = () => {
           descricaoServico={
             "Descrição: Tipos de crimes que estão envolvidos em uma ocorrência criminal."
           }
-          onClickButton={() => navigate("/admin/administracao/tipocrime")}
+          onClickButton={() => navigate("/goc/admin/administracao/tipocrime")}
         />
         <ServicoCard
           tituloImagem={"Ocorrências Criminais"}
@@ -29,7 +29,7 @@ const AdministracaoPage = () => {
           descricaoServico={
             "Descrição: Ocorrências criminais que podem ser registradas pelo cidadão ou operadores."
           }
-          onClickButton={() => navigate("/admin/administracao/ocorrencia")}
+          onClickButton={() => navigate("/goc/admin/administracao/ocorrencia")}
         />
         <ServicoCard
           tituloImagem={"Pessoas"}
@@ -37,7 +37,7 @@ const AdministracaoPage = () => {
           descricaoServico={
             "Descrição: Pessoas que estão envolvidas em ocorrências criminais, podendo ser vítimas ou envolvidos."
           }
-          onClickButton={() => navigate("/admin/administracao/pessoa")}
+          onClickButton={() => navigate("/goc/admin/administracao/pessoa")}
         />
         {/* <ServicoCard
           tituloImagem={"Operadores"}
@@ -45,7 +45,7 @@ const AdministracaoPage = () => {
           descricaoServico={
             "Descrição: Pessoas que são responsáveis por gerenciar o Sistema de Gestão de Ocorrências Criminais."
           }
-          onClickButton={() => navigate("/admin/administracao/operadores")}
+          onClickButton={() => navigate("/goc/admin/administracao/operadores")}
         /> */}
       </div>
     </div>

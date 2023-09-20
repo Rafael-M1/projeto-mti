@@ -7,7 +7,7 @@ const Navbar = ({ toggleAuth }) => {
   const navigate = useNavigate();
   const onClickSairSistema = () => {
     toggleAuth();
-    navigate("/admin/auth");
+    navigate("/goc/admin/auth");
     removeAuthData();
   };
 
@@ -15,24 +15,24 @@ const Navbar = ({ toggleAuth }) => {
     <nav className="admin-nav-container">
       <ul>
         <li>
-          <NavLink to="/admin/" className="admin-nav-item">
+          <NavLink to="/goc/admin/" className="admin-nav-item">
             <p>Página Inicial</p>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/admin/dashboard" className="admin-nav-item">
+          <NavLink to="/goc/admin/dashboard" className="admin-nav-item">
             <p>Dashboard</p>
           </NavLink>
         </li>
         {hasAnyRoles(["ROLE_ADMIN"]) && (
           <li>
-            <NavLink to="/admin/administracao" className="admin-nav-item">
+            <NavLink to="/goc/admin/administracao" className="admin-nav-item">
               <p>Administração</p>
             </NavLink>
           </li>
         )}
         <li>
-          <NavLink to="/admin/sobre" className="admin-nav-item">
+          <NavLink to="/goc/admin/sobre" className="admin-nav-item">
             <p>Sobre</p>
           </NavLink>
         </li>

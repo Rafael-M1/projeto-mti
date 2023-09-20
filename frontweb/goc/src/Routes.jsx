@@ -31,11 +31,11 @@ const RoutesConfig = () => {
   }, []);
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Navbar isAuthenticated={isAuthenticated} />}>
-          <Route path="/" element={<Home />} />
+      <Routes >
+        <Route path="/goc" element={<Navbar isAuthenticated={isAuthenticated} />}>
+          <Route index element={<Home />} />
           <Route
-            path="/admin"
+            path="admin"
             element={<Admin toggleAuth={() => toggleAuth()} />}
           >
             <Route path="" element={<PainelServicos />} />
@@ -70,7 +70,7 @@ const RoutesConfig = () => {
             <Route path="sobre" element={<SobrePage />} />
           </Route>
           <Route
-            path="/admin/auth"
+            path="admin/auth"
             element={<Auth toggleAuth={() => toggleAuth()} />}
           />
         </Route>

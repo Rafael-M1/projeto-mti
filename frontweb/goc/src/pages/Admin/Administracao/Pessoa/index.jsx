@@ -94,7 +94,7 @@ const PessoaAdministracao = () => {
   };
 
   const onClickEditar = (pessoaParam) => {
-    navigate("/admin/administracao/pessoa/form", {
+    navigate("/goc/admin/administracao/pessoa/form", {
       state: {
         pessoa: {
           idPessoa: pessoaParam.idPessoa,
@@ -111,7 +111,7 @@ const PessoaAdministracao = () => {
   };
 
   const onClickAdicionar = () => {
-    navigate("/admin/administracao/pessoa/form");
+    navigate("/goc/admin/administracao/pessoa/form");
   };
 
   return (

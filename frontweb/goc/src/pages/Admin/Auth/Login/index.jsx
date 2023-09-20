@@ -37,7 +37,7 @@ const Login = ({ toggleAuth }) => {
         //   tokenData: getTokenData(),
         // });
         toggleAuth();
-        navigate("/admin");
+        navigate("/goc/admin");
       })
       .catch((error) => {
         toast.error("Credenciais inválidas");
