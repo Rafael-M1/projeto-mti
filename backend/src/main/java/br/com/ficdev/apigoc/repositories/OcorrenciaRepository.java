@@ -1,5 +1,7 @@
 package br.com.ficdev.apigoc.repositories;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +22,11 @@ public interface OcorrenciaRepository extends JpaRepository<Ocorrencia, Long> {
 				+ "AND "
 				+ "(UPPER(o.vitima.nome) like CONCAT('%', UPPER(:filtroTexto), '%') or :filtroTexto is null) )")
 	Page<Ocorrencia> findByFiltro(Long idOcorrenciaFiltro, String filtroTexto, Pageable pageable);
+	
+	//Consultas Dashboard
+	@Query("select COUNT(*) from Ocorrencia o "
+			+ "where o.status = true "
+			+ "and o.dataOcorrencia < :dataFim "
+			+ "and o.dataOcorrencia > :dataInicio ")
+	Long findOcorrenciasPorPeriodo(LocalDateTime dataInicio, LocalDateTime dataFim);
 }

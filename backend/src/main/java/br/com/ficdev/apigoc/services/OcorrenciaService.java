@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.ficdev.apigoc.dto.DashboardDTO;
 import br.com.ficdev.apigoc.dto.EnvolvidoDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaCrimeDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaDTO;
@@ -162,6 +163,14 @@ public class OcorrenciaService {
 				pageable);
 		Page<OcorrenciaDTO> pageDto = page.map(OcorrenciaDTO::new);
 		return pageDto;
+	}
+
+	@Transactional
+	public DashboardDTO findDashboardValues(LocalDateTime dataInicio, LocalDateTime dataFim) {
+		Long qtdOcorrenciasPeriodo = repository.findOcorrenciasPorPeriodo(dataInicio, dataFim);
+		DashboardDTO dashboardDTO = new DashboardDTO();
+		dashboardDTO.setQtdOcorrenciasPorPeriodo(qtdOcorrenciasPeriodo);
+		return dashboardDTO;
 	}
 
 }
