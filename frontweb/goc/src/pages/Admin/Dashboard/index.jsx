@@ -7,6 +7,7 @@ import { MonitoringIcon } from "../../../assets/images/icon-monitoring";
 import DashboardCard from "../../../components/DashboardCard";
 import { requestBackend } from "../../../util/requests";
 import { formatLocalDateTime } from "../../../util/formatters";
+import { Chart } from "react-google-charts";
 
 const DashboardPage = () => {
   const [dataInicio, setDataInicio] = useState(null);
@@ -20,6 +21,10 @@ const DashboardPage = () => {
     qtdOcorrenciasMulheresPorPeriodo: 0,
     qtdOcorrenciasHomensPorPeriodo: 0,
   });
+  const [dataOcorrenciaPorTipoCrime, setDataOcorrenciaPorTipoCime] = useState([
+    [" ", "Sales", "Expenses", "Profit"],
+    [" ", 1000, 400, 200],
+  ]);
   const is768pxOrLesser = useMediaQuery({ maxWidth: 767 });
   const cardStyle = () => {
     if (is768pxOrLesser) {
@@ -72,9 +77,29 @@ const DashboardPage = () => {
     serviceDashboardPromise({
       urlParam: `/ocorrencia/dashboard?dataInicio=${dataInicioFiltro}&dataFim=${dataFimFiltro}`,
     }).then((response) => {
+      // console.log(response.data);
       setDashboardInfo(response.data);
+      let tipoCrimeArray = [" "];
+      response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.forEach((element) => {
+        tipoCrimeArray.push(element.key);
+      });
+      let numeroOcorrenciaPorTipoCrimeArray = [" "];
+      response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.forEach((element) => {
+        numeroOcorrenciaPorTipoCrimeArray.push(element.value);
+      });
+      setDataOcorrenciaPorTipoCime([
+        tipoCrimeArray,
+        numeroOcorrenciaPorTipoCrimeArray,
+      ]);
     });
   };
+
+  const options = {
+    chart: {
+      title: "Ocorrências por Tipo de Crime",
+    },
+  };
+
   return (
     <div className="card" style={cardStyle()}>
       <div className="card-body">
@@ -127,6 +152,15 @@ const DashboardPage = () => {
             <DashboardCard
               texto={"Ocorrências no período envolvendo mulheres como vítima."}
               valor={dashboardInfo?.qtdOcorrenciasMulheresPorPeriodo}
+            />
+          </div>
+          <div className="mt-5">
+            <Chart
+              chartType="Bar"
+              width="80%"
+              height="300px"
+              data={dataOcorrenciaPorTipoCrime}
+              options={options}
             />
           </div>
         </div>
