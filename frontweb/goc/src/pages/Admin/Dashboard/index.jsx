@@ -80,41 +80,38 @@ const DashboardPage = () => {
       <div className="card-body">
         <Toaster position="top-right" />
         <h2 className="card-title text-center">Dashboard</h2>
-        <div className="container mt-5">
-          <div className="d-flex justify-content-center">
-            <div className="col-3">
-              <h5>Data Início</h5>
-              <DatePickerComponent
-                onChangeDate={(date) => {
-                  setDataInicio(date);
-                  setDataInicioFiltro(formatLocalDateTime(new Date(date)));
-                }}
-                selectedDateComponent={dataInicio}
-              />
-            </div>
-            <div style={{ width: "10px" }}></div>
-            <div className="col-3">
-              <h5>Data Fim</h5>
-              <DatePickerComponent
-                onChangeDate={(date) => {
-                  setDataFim(date);
-                  setDataFimFiltro(formatLocalDateTime(new Date(date)));
-                }}
-                selectedDateComponent={dataFim}
-              />
-            </div>
-            <div
-              className="col-3 d-flex"
-              style={{ alignItems: "center", justifyContent: "flex-end" }}
-            >
-              <ButtonIconSmall
-                text="Filtrar"
-                widthPixels={220}
-                heightPixels={40}
-                onClick={onClickFiltrar}
-                icon={true}
-              />
-            </div>
+        <div className="container mt-5 row mx-auto">
+          <div className="col-12 col-lg-3">
+            <h5>Data Início</h5>
+            <DatePickerComponent
+              onChangeDate={(date) => {
+                setDataInicio(date);
+                setDataInicioFiltro(formatLocalDateTime(new Date(date)));
+              }}
+              selectedDateComponent={dataInicio}
+            />
+          </div>
+          <div className="col-12 col-lg-3">
+            <h5>Data Fim</h5>
+            <DatePickerComponent
+              onChangeDate={(date) => {
+                setDataFim(date);
+                setDataFimFiltro(formatLocalDateTime(new Date(date)));
+              }}
+              selectedDateComponent={dataFim}
+            />
+          </div>
+          <div
+            className="col-12 col-lg-3 d-flex"
+            style={{ alignItems: "center", justifyContent: "flex-end" }}
+          >
+            <ButtonIconSmall
+              text="Filtrar"
+              widthPixels={220}
+              heightPixels={40}
+              onClick={onClickFiltrar}
+              icon={true}
+            />
           </div>
         </div>
         <div className="container mt-5">
