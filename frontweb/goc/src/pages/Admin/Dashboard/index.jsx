@@ -4,6 +4,7 @@ import { useState } from "react";
 import ButtonIconSmall from "../../../components/ButtonIconSmall";
 import toast, { Toaster } from "react-hot-toast";
 import { MonitoringIcon } from "../../../assets/images/icon-monitoring";
+import DashboardCard from "../../../components/DashboardCard";
 
 const DashboardPage = () => {
   const [dataInicio, setDataInicio] = useState(null);
@@ -81,101 +82,8 @@ const DashboardPage = () => {
         </div>
         <div className="container mt-5">
           <div className="row">
-            <div
-              className="col-5 d-flex"
-              style={{
-                background: "#DCDCDC",
-                paddingTop: "15px",
-                paddingBottom: "15px",
-                borderRadius: "10px",
-              }}
-            >
-              <MonitoringIcon
-                size={110}
-                styleComponent={{
-                  background: "#fff",
-                  padding: "3px",
-                  border: "1px solid",
-                  borderRadius: "10px",
-                }}
-              />
-              <div
-                style={{
-                  marginLeft: "10px",
-                  background: "#fff",
-                  borderRadius: "10px",
-                  width: "80%",
-                  padding: "0 10px",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: "36px",
-                    fontWeight: "bold",
-                    marginBottom: "0px",
-                  }}
-                >
-                  {value ?? "100"}
-                </p>
-                <p
-                  style={{
-                    fontSize: "24px",
-                    fontWeight: "normal",
-                    marginBottom: "0px",
-                  }}
-                >
-                  {texto ?? "Ocorrências no período."}
-                </p>
-              </div>
-            </div>
-            <div className="col-1"></div>
-            <div
-              className="col-5 d-flex"
-              style={{
-                background: "#DCDCDC",
-                paddingTop: "15px",
-                paddingBottom: "15px",
-                borderRadius: "10px",
-              }}
-            >
-              <MonitoringIcon
-                size={110}
-                styleComponent={{
-                  background: "#fff",
-                  padding: "3px",
-                  border: "1px solid",
-                  borderRadius: "10px",
-                }}
-              />
-              <div
-                style={{
-                  marginLeft: "10px",
-                  background: "#fff",
-                  borderRadius: "10px",
-                  width: "80%",
-                  padding: "0 10px",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: "36px",
-                    fontWeight: "bold",
-                    marginBottom: "0px",
-                  }}
-                >
-                  {value ?? "100"}
-                </p>
-                <p
-                  style={{
-                    fontSize: "24px",
-                    fontWeight: "normal",
-                    marginBottom: "0px",
-                  }}
-                >
-                  {texto ?? "Ocorrências no período."}
-                </p>
-              </div>
-            </div>
+            <DashboardCard texto={"Ocorrências"} valor={100} />
+            <DashboardCard texto={"Ocorrências no período"} valor={100} />
           </div>
         </div>
       </div>
