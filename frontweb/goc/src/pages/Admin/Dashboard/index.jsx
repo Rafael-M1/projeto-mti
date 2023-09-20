@@ -22,8 +22,8 @@ const DashboardPage = () => {
     qtdOcorrenciasHomensPorPeriodo: 0,
   });
   const [dataOcorrenciaPorTipoCrime, setDataOcorrenciaPorTipoCime] = useState([
-    [" ", "Sales", "Expenses", "Profit"],
-    [" ", 1000, 400, 200],
+    [" ", " "],
+    [" ", " "],
   ]);
   const is768pxOrLesser = useMediaQuery({ maxWidth: 767 });
   const cardStyle = () => {
