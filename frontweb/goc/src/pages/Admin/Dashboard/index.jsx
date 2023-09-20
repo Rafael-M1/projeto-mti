@@ -1,16 +1,21 @@
 import { useMediaQuery } from "react-responsive";
 import DatePickerComponent from "../../../components/Datepicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonIconSmall from "../../../components/ButtonIconSmall";
 import toast, { Toaster } from "react-hot-toast";
 import { MonitoringIcon } from "../../../assets/images/icon-monitoring";
 import DashboardCard from "../../../components/DashboardCard";
+import { requestBackend } from "../../../util/requests";
+import { formatLocalDateTime } from "../../../util/formatters";
 
 const DashboardPage = () => {
   const [dataInicio, setDataInicio] = useState(null);
   const [dataFim, setDataFim] = useState(null);
+  const [dataInicioFiltro, setDataInicioFiltro] = useState(null);
+  const [dataFimFiltro, setDataFimFiltro] = useState(null);
   const [value, setValue] = useState(null);
   const [texto, setTexto] = useState(null);
+  const [dashboardInfo, setDashboardInfo] = useState(null);
   const is768pxOrLesser = useMediaQuery({ maxWidth: 767 });
   const cardStyle = () => {
     if (is768pxOrLesser) {
@@ -29,6 +34,43 @@ const DashboardPage = () => {
     }
   };
 
+  useEffect(() => {
+    // serviceDashboardPromise({
+    //   urlParam:
+    //     "/ocorrencia/dashboard?dataInicio=01/01/2023 00:00:00&dataFim=01/12/2023 00:00:00",
+    // }).then((response) => console.log(response));
+  }, []);
+
+  const serviceDashboardPromise = ({
+    methodParam = "GET",
+    urlParam = "/ocorrencia/dashboard",
+  }) =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        let params = {
+          url: urlParam,
+          method: methodParam,
+          withCredentials: true,
+        };
+        requestBackend(params)
+          .then((response) => resolve(response))
+          .catch((error) => reject(error));
+      }, 0);
+    });
+
+  const onClickFiltrar = () => {
+    if (dataFim == null || dataInicio == null) {
+      return toast.error("Data Início ou Data Fim não deve ser vazia.");
+    }
+    if (dataFim < dataInicio) {
+      return toast.error("Data Início deve ser antes de Data Fim");
+    }
+    serviceDashboardPromise({
+      urlParam: `/ocorrencia/dashboard?dataInicio=${dataInicioFiltro}&dataFim=${dataFimFiltro}`,
+    }).then((response) => {
+      setDashboardInfo(response.data);
+    });
+  };
   return (
     <div className="card" style={cardStyle()}>
       <div className="card-body">
@@ -41,6 +83,7 @@ const DashboardPage = () => {
               <DatePickerComponent
                 onChangeDate={(date) => {
                   setDataInicio(date);
+                  setDataInicioFiltro(formatLocalDateTime(new Date(date)));
                 }}
                 selectedDateComponent={dataInicio}
               />
@@ -51,6 +94,7 @@ const DashboardPage = () => {
               <DatePickerComponent
                 onChangeDate={(date) => {
                   setDataFim(date);
+                  setDataFimFiltro(formatLocalDateTime(new Date(date)));
                 }}
                 selectedDateComponent={dataFim}
               />
@@ -63,18 +107,7 @@ const DashboardPage = () => {
                 text="Filtrar"
                 widthPixels={220}
                 heightPixels={40}
-                onClick={() => {
-                  if (dataFim == null || dataInicio == null) {
-                    return toast.error(
-                      "Data Início ou Data Fim não deve ser vazia."
-                    );
-                  }
-                  if (dataFim < dataInicio) {
-                    return toast.error(
-                      "Data Início deve ser antes de Data Fim"
-                    );
-                  }
-                }}
+                onClick={onClickFiltrar}
                 icon={true}
               />
             </div>
@@ -82,8 +115,10 @@ const DashboardPage = () => {
         </div>
         <div className="container mt-5">
           <div className="row">
-            <DashboardCard texto={"Ocorrências"} valor={100} />
-            <DashboardCard texto={"Ocorrências no período"} valor={100} />
+            <DashboardCard
+              texto={"Ocorrências no período"}
+              valor={dashboardInfo?.qtdOcorrenciasPorPeriodo}
+            />
           </div>
         </div>
       </div>

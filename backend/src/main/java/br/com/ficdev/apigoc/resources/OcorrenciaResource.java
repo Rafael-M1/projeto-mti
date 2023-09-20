@@ -37,8 +37,8 @@ public class OcorrenciaResource {
 
 	@GetMapping("/dashboard")
 	public ResponseEntity<DashboardDTO> findDashboardValues(
-			@PathParam(value = "dataInicio") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dataInicio,
-			@PathParam(value = "dataFim") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dataFim) {
+			@PathParam(value = "dataInicio") @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss") LocalDateTime dataInicio,
+			@PathParam(value = "dataFim") @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss") LocalDateTime dataFim) {
 		if (dataInicio == null || dataFim == null) {
 			throw new IllegalArgumentException("Data Início ou Data Fim não podem ser vazias.");
 		}

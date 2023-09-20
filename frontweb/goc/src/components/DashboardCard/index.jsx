@@ -49,7 +49,7 @@ const DashboardCard = ({
                 marginBottom: "0px",
               }}
             >
-              {valor ?? "100"}
+              {valor ?? "0"}
             </p>
             <p style={textoStyle}>{texto ?? "Ocorrências no período."}</p>
           </div>
