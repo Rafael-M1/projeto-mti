@@ -168,8 +168,12 @@ public class OcorrenciaService {
 	@Transactional
 	public DashboardDTO findDashboardValues(LocalDateTime dataInicio, LocalDateTime dataFim) {
 		Long qtdOcorrenciasPeriodo = repository.findOcorrenciasPorPeriodo(dataInicio, dataFim);
+		Long qtdOcorrenciasMulheresPorPeriodo = repository.findOcorrenciasMulheresPorPeriodo(dataInicio, dataFim);
+		Long qtdOcorrenciasHomensPorPeriodo = repository.findOcorrenciasHomensPorPeriodo(dataInicio, dataFim);
 		DashboardDTO dashboardDTO = new DashboardDTO();
 		dashboardDTO.setQtdOcorrenciasPorPeriodo(qtdOcorrenciasPeriodo);
+		dashboardDTO.setQtdOcorrenciasHomensPorPeriodo(qtdOcorrenciasHomensPorPeriodo);
+		dashboardDTO.setQtdOcorrenciasMulheresPorPeriodo(qtdOcorrenciasMulheresPorPeriodo);
 		return dashboardDTO;
 	}
 

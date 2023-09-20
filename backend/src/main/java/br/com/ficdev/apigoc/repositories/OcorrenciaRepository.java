@@ -29,4 +29,18 @@ public interface OcorrenciaRepository extends JpaRepository<Ocorrencia, Long> {
 			+ "and o.dataOcorrencia < :dataFim "
 			+ "and o.dataOcorrencia > :dataInicio ")
 	Long findOcorrenciasPorPeriodo(LocalDateTime dataInicio, LocalDateTime dataFim);
+
+	@Query("select COUNT(*) from Ocorrencia o "
+			+ "where o.status = true "
+			+ "and o.dataOcorrencia < :dataFim "
+			+ "and o.dataOcorrencia > :dataInicio "
+			+ "and o.vitima.sexo = 'F' ")
+	Long findOcorrenciasMulheresPorPeriodo(LocalDateTime dataInicio, LocalDateTime dataFim);
+
+	@Query("select COUNT(*) from Ocorrencia o "
+			+ "where o.status = true "
+			+ "and o.dataOcorrencia < :dataFim "
+			+ "and o.dataOcorrencia > :dataInicio "
+			+ "and o.vitima.sexo = 'M' ")
+	Long findOcorrenciasHomensPorPeriodo(LocalDateTime dataInicio, LocalDateTime dataFim);
 }

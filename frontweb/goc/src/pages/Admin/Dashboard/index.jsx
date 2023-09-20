@@ -15,7 +15,11 @@ const DashboardPage = () => {
   const [dataFimFiltro, setDataFimFiltro] = useState(null);
   const [value, setValue] = useState(null);
   const [texto, setTexto] = useState(null);
-  const [dashboardInfo, setDashboardInfo] = useState(null);
+  const [dashboardInfo, setDashboardInfo] = useState({
+    qtdOcorrenciasPorPeriodo: 0,
+    qtdOcorrenciasMulheresPorPeriodo: 0,
+    qtdOcorrenciasHomensPorPeriodo: 0,
+  });
   const is768pxOrLesser = useMediaQuery({ maxWidth: 767 });
   const cardStyle = () => {
     if (is768pxOrLesser) {
@@ -118,6 +122,14 @@ const DashboardPage = () => {
             <DashboardCard
               texto={"Ocorrências no período"}
               valor={dashboardInfo?.qtdOcorrenciasPorPeriodo}
+            />
+            <DashboardCard
+              texto={"Ocorrências no período envolvendo homens como vítima."}
+              valor={dashboardInfo?.qtdOcorrenciasHomensPorPeriodo}
+            />
+            <DashboardCard
+              texto={"Ocorrências no período envolvendo mulheres como vítima."}
+              valor={dashboardInfo?.qtdOcorrenciasMulheresPorPeriodo}
             />
           </div>
         </div>
