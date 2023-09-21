@@ -9,7 +9,7 @@ import AdministracaoPage from "./pages/Admin/Administracao";
 import TipoCrime from "./pages/Admin/Administracao/TipoCrime";
 import TipoCrimeForm from "./pages/Admin/Administracao/TipoCrime/Form";
 import OcorrenciaCriminalForm from "./pages/Admin/PainelServicos/OcorrenciaCriminal";
-import { isUserAuthenticated } from "./util/auth";
+import { hasAnyRoles, isUserAuthenticated } from "./util/auth";
 import OcorrenciaAdministracao from "./pages/Admin/Administracao/Ocorrencia";
 import SobrePage from "./pages/Admin/Sobre";
 import PessoaAdministracao from "./pages/Admin/Administracao/Pessoa";
@@ -41,7 +41,9 @@ const RoutesConfig = () => {
           <Route
             path="admin"
             element={
-              <PrivateRoute isAllowed={false}>
+              <PrivateRoute
+                isAllowed={hasAnyRoles(["ROLE_ADMIN", "ROLE_OPERATOR"])}
+              >
                 <Admin toggleAuth={() => toggleAuth()} />
               </PrivateRoute>
             }
