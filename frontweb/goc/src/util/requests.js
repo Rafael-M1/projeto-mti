@@ -1,9 +1,10 @@
 import axios from "axios";
 import qs from "qs";
 import { getAuthData } from "./storage";
+import { isUserAuthenticated } from "./auth";
 
 export const BASE_URL =
-  import.meta.env.VITE_BACKEND_URL ?? "http://localhost:8080";
+  import.meta.env.VITE_BACKEND_URL ?? "http://localhost:8081/apigoc";
 
 const CLIENT_ID = import.meta.env.VITE_CLIENT_ID ?? "myclientid";
 const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET ?? "myclientsecret";
@@ -38,17 +39,32 @@ export const requestBackend = (config) => {
   return axios({ ...config, baseURL: BASE_URL, headers });
 };
 
-// Add a request interceptor
-axios.interceptors.request.use(
-  function (config) {
-    //
-    return config;
-  },
-  function (error) {
-    //
-    return Promise.reject(error);
-  }
-);
+const AxiosInterceptorsSetup = (navigate) => {
+  axios.interceptors.request.use(
+    (response) => {
+      if (
+        response &&
+        response.headers &&
+        response.headers.Authorization &&
+        response.headers.Authorization.includes("Bearer ")
+      ) {
+        if (!isUserAuthenticated()) {
+          response.headers.Authorization = "";
+          navigate("/goc/admin/auth");
+        }
+      }
+      return response;
+    },
+    (error) => {
+      if (error.response.status === 401) {
+        navigate("/goc/admin/auth");
+      }
+      return Promise.reject(error);
+    }
+  );
+};
+
+export default AxiosInterceptorsSetup;
 
 // Add a response interceptor
 axios.interceptors.response.use(
@@ -58,7 +74,12 @@ axios.interceptors.response.use(
     return response;
   },
   function (error) {
-    if (error.response.status === 401) {
+    if (
+      error &&
+      error.response &&
+      error.response.status &&
+      error.response.status === 401
+    ) {
       // history.push('/admin/auth');
     }
     return Promise.reject(error);
