@@ -15,6 +15,7 @@ import SobrePage from "./pages/Admin/Sobre";
 import PessoaAdministracao from "./pages/Admin/Administracao/Pessoa";
 import PessoaForm from "./pages/Admin/Administracao/Pessoa/Form";
 import DashboardPage from "./pages/Admin/Dashboard";
+import { PrivateRoute } from "./components/PrivateRoute";
 
 const RoutesConfig = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -31,12 +32,19 @@ const RoutesConfig = () => {
   }, []);
   return (
     <>
-      <Routes >
-        <Route path="/goc" element={<Navbar isAuthenticated={isAuthenticated} />}>
+      <Routes>
+        <Route
+          path="/goc"
+          element={<Navbar isAuthenticated={isAuthenticated} />}
+        >
           <Route index element={<Home />} />
           <Route
             path="admin"
-            element={<Admin toggleAuth={() => toggleAuth()} />}
+            element={
+              <PrivateRoute isAllowed={false}>
+                <Admin toggleAuth={() => toggleAuth()} />
+              </PrivateRoute>
+            }
           >
             <Route path="" element={<PainelServicos />} />
             <Route path="dashboard" element={<DashboardPage />}>

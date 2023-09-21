@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-const PrivateRoute = ({
+export const PrivateRoute = ({
   isAllowed,
-  redirectPath = "/apigoc/admin/auth",
+  redirectPath = "/goc/admin/auth",
   children,
 }) => {
   if (!isAllowed) {
