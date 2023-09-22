@@ -1,13 +1,25 @@
 import { Modal } from "react-bootstrap";
 import ButtonIconSmall from "../../../../../components/ButtonIconSmall";
+import EtapaDadosVitimaForm from "../../../PainelServicos/OcorrenciaCriminal/EtapaDadosVitima";
+import EtapaDadosGeraisForm from "../../../PainelServicos/OcorrenciaCriminal/EtapaDadosGerais";
+import EtapaCrimesEnvolvidosForm from "../../../PainelServicos/OcorrenciaCriminal/EtapaCrimesEnvolvidos";
 
 const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
+  if (ocorrencia) {
+    console.log(ocorrencia);
+  }
   return (
-    <Modal show={showModalVisualizar} onHide={onHide} centered>
+    <Modal
+      show={showModalVisualizar}
+      onHide={onHide}
+      centered
+      size="xl"
+      scrollable
+    >
       <Modal.Header>
         <Modal.Title>
           <h6>
-            Ocorrencia -
+            Ocorrência - Código:
             {ocorrencia && ocorrencia.idOcorrencia
               ? " " + ocorrencia.idOcorrencia
               : ""}
@@ -15,8 +27,44 @@ const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>{`Código Ocorrência: ${ocorrencia?.idOcorrencia}`}</p>
-        <p>{`Vítima: ${ocorrencia?.vitima.nome}`}</p>
+        {/* <p>{`Código Ocorrência: ${ocorrencia?.idOcorrencia}`}</p>
+        <p>{`Vítima: ${ocorrencia?.vitima.nome}`}</p> */}
+        <EtapaDadosVitimaForm
+          modoVisualizar={true}
+          vitimaParamObj={{
+            nome: ocorrencia?.vitima?.nome,
+            cpf: ocorrencia?.vitima?.cpf,
+            dataNascimento: new Date(ocorrencia?.vitima?.dataNascimento),
+            sexo: ocorrencia?.vitima?.sexo,
+            email: ocorrencia?.vitima?.email,
+            telefone1: ocorrencia?.vitima?.telefone1,
+            telefone2: ocorrencia?.vitima?.telefone2 ?? "",
+          }}
+        />
+        <EtapaDadosGeraisForm
+          modoVisualizar={true}
+          dadosGeraisParamObj={{
+            municipio: ocorrencia?.cidade,
+            bairro: ocorrencia?.bairro,
+            endereco: ocorrencia?.endereco,
+            numero: ocorrencia?.numero,
+            dataOcorrencia: new Date(ocorrencia?.dataOcorrencia),
+            descricaoGeral: ocorrencia?.descricaoGeral,
+            complemento: ocorrencia?.complemento,
+          }}
+        />
+        <EtapaCrimesEnvolvidosForm
+          modoVisualizar={true}
+          crimesEnvolvidosParamObj={ocorrencia?.crimesEnvolvidos.map(
+            (crimeEnvolvido) => {
+              return {
+                id: crimeEnvolvido.idCrime,
+                crime: crimeEnvolvido.tipoCrime,
+                descricaoAdicional: crimeEnvolvido.descricaoCrimeOcorrencia,
+              };
+            }
+          )}
+        />
       </Modal.Body>
       <Modal.Footer>
         <ButtonIconSmall
@@ -30,19 +78,7 @@ const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
           text="Confirmar"
           widthPixels={220}
           heightPixels={40}
-          onClick={() => {
-            serviceOcorrenciaPromise({
-              methodParam: "DELETE",
-              urlParam: `/ocorrencia/${ocorrenciaSelecionada.idOcorrencia}`,
-            })
-              .then((response) => {
-                setIsLoading(true);
-                serviceOcorrenciaPromise({})
-                  .then((response) => setPage(response.data))
-                  .finally(() => setIsLoading(false));
-              })
-              .finally(() => handleClose());
-          }}
+          onClick={() => {}}
           icon={true}
         /> */}
       </Modal.Footer>

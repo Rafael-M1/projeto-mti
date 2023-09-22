@@ -5,11 +5,20 @@ import uuid from "react-uuid";
 import { useMediaQuery } from "react-responsive";
 import { requestBackend } from "../../../../../util/requests";
 
-const EtapaCrimesEnvolvidosForm = ({ atualizarCrimesEnvolvidosObj }) => {
+const EtapaCrimesEnvolvidosForm = ({
+  atualizarCrimesEnvolvidosObj,
+  crimesEnvolvidosParamObj,
+  modoVisualizar = false,
+}) => {
   const [listaCrimesOpcoes, setListaCrimesOpcoes] = useState(null);
-  const [listaCrimesEnvolvidos, setListaCrimesEnvolvidos] = useState([
-    { id: uuid(), crime: "", descricaoAdicional: "" },
-  ]);
+  const [listaCrimesEnvolvidos, setListaCrimesEnvolvidos] = useState(
+    crimesEnvolvidosParamObj
+      ? crimesEnvolvidosParamObj
+      : [{ id: uuid(), crime: "", descricaoAdicional: "" }]
+  );
+  if (listaCrimesEnvolvidos) {
+    console.log(listaCrimesEnvolvidos);
+  }
   const is768pxOrLesser = useMediaQuery({ maxWidth: 767 });
   const is500pxOrLesser = useMediaQuery({ maxWidth: 500 });
   const onClickAdicionarCrime = () => {
@@ -63,32 +72,36 @@ const EtapaCrimesEnvolvidosForm = ({ atualizarCrimesEnvolvidosObj }) => {
   };
   return (
     <div className="container mt-4">
-      {is500pxOrLesser ? (
-        <div className="row mt-2">
-          <h4>Crimes Envolvidos</h4>
-          <div className="col-12">
-            <ButtonIconSmall
-              text={"Adicionar Crime"}
-              widthPixels={"100%"}
-              heightPixels={50}
-              icon={false}
-              onClick={onClickAdicionarCrime}
-            />
+      {!modoVisualizar ? (
+        is500pxOrLesser ? (
+          <div className="row mt-2">
+            <h4>Crimes Envolvidos</h4>
+            <div className="col-12">
+              <ButtonIconSmall
+                text={"Adicionar Crime"}
+                widthPixels={"100%"}
+                heightPixels={50}
+                icon={false}
+                onClick={onClickAdicionarCrime}
+              />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="d-flex justify-content-between mt-2">
+            <h4>Crimes Envolvidos</h4>
+            <div style={{ width: "300px" }}>
+              <ButtonIconSmall
+                text={"Adicionar Crime"}
+                widthPixels={"100%"}
+                heightPixels={50}
+                icon={true}
+                onClick={onClickAdicionarCrime}
+              />
+            </div>
+          </div>
+        )
       ) : (
-        <div className="d-flex justify-content-between mt-2">
-          <h4>Crimes Envolvidos</h4>
-          <div style={{ width: "300px" }}>
-            <ButtonIconSmall
-              text={"Adicionar Crime"}
-              widthPixels={"100%"}
-              heightPixels={50}
-              icon={true}
-              onClick={onClickAdicionarCrime}
-            />
-          </div>
-        </div>
+        <></>
       )}
       <div className="row">
         {listaCrimesEnvolvidos.map((elemento, index) => {
@@ -108,6 +121,7 @@ const EtapaCrimesEnvolvidosForm = ({ atualizarCrimesEnvolvidosObj }) => {
                       handleChange(e.target.value, index, "crime")
                     }
                     value={elemento.crime}
+                    disabled={modoVisualizar}
                   >
                     <option value={""}>
                       Selecione o crime {index + 1} envolvido
@@ -135,10 +149,11 @@ const EtapaCrimesEnvolvidosForm = ({ atualizarCrimesEnvolvidosObj }) => {
                     onChange={(e) =>
                       handleChange(e.target.value, index, "descricaoAdicional")
                     }
+                    disabled={modoVisualizar}
                   />
                 </div>
               </div>
-              {index != 0 && (
+              {!modoVisualizar && index != 0 && (
                 <div className="col-12 col-md-3">
                   <div
                     className={`d-flex  mt-4 ${

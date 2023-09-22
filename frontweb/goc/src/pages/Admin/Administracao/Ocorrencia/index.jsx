@@ -86,7 +86,7 @@ const OcorrenciaAdministracao = () => {
   const onClickVisualizar = (ocorrencia) => {
     setOcorrenciaSelecionada(ocorrencia);
     setShowModalVisualizar(true);
-  }
+  };
   const onClickExcluir = (ocorrencia) => {
     setOcorrenciaSelecionada(ocorrencia);
     setShowModalExcluir(true);
@@ -192,9 +192,9 @@ const OcorrenciaAdministracao = () => {
                                   margin: "4px",
                                   padding: "4px",
                                 }}
-                                onClick={() => {onClickVisualizar(ocorrencia)}}
+                                onClick={() => onClickVisualizar(ocorrencia)}
                               >
-                                <VisibilityIcon size={24}/>
+                                <VisibilityIcon size={24} />
                               </div>
                             </OverlayTrigger>
                             <div
@@ -216,9 +216,7 @@ const OcorrenciaAdministracao = () => {
                                   margin: "4px",
                                   padding: "4px",
                                 }}
-                                onClick={() => {
-                                  onClickExcluir(ocorrencia);
-                                }}
+                                onClick={() => onClickExcluir(ocorrencia)}
                               >
                                 <DeleteIcon />
                               </div>
@@ -294,7 +292,11 @@ const OcorrenciaAdministracao = () => {
           />
         </Modal.Footer>
       </Modal>
-      <ModalVisualizar showModalVisualizar={showModalVisualizar} onHide={handleClose}/>
+      <ModalVisualizar
+        showModalVisualizar={showModalVisualizar}
+        onHide={handleClose}
+        ocorrencia={ocorrenciaSelecionada}
+      />
     </div>
   );
 };

@@ -5,19 +5,27 @@ import { useState } from "react";
 import { requestBackend } from "../../../../../util/requests";
 import toast, { Toaster } from "react-hot-toast";
 
-const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
+const EtapaDadosVitimaForm = ({
+  atualizarVitimaObj,
+  vitimaParamObj,
+  modoVisualizar = false,
+}) => {
   const [isVitimaExistente, setIsVitimaExistente] = useState(false);
   const [vitimaExistenteTexto, setVitimaExistenteTexto] = useState("");
   const [vitimaExistenteFiltro, setVitimaExistenteFiltro] = useState("");
-  const [vitimaFormObj, setVitimaFormObj] = useState({
-    nome: "",
-    cpf: "",
-    dataNascimento: null,
-    sexo: "",
-    email: "",
-    telefone1: "",
-    telefone2: "",
-  });
+  const [vitimaFormObj, setVitimaFormObj] = useState(
+    vitimaParamObj
+      ? vitimaParamObj
+      : {
+          nome: "",
+          cpf: "",
+          dataNascimento: null,
+          sexo: "",
+          email: "",
+          telefone1: "",
+          telefone2: "",
+        }
+  );
 
   const atualizarVitimaFormObj = (campoForm, value) => {
     let newVitimaFormObj = {
@@ -73,50 +81,54 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
       <Toaster position="top-right" />
       <h4>Dados da Vítima</h4>
       <div className="row">
-        <p>Pessoa já existente?</p>
-        <div className="col-3 col-md-2 col-lg-1">
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault1"
-              onChange={() => {
-                setIsVitimaExistente(true);
-              }}
-              checked={isVitimaExistente == true}
-            />
-            <label className="form-check-label" htmlFor="flexRadioDefault1">
-              Sim
-            </label>
-          </div>
-        </div>
-        <div className="col-3 col-md-2 col-lg-1">
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault2"
-              onChange={() => {
-                setIsVitimaExistente(false);
-                setVitimaFormObj({
-                  nome: "",
-                  cpf: "",
-                  dataNascimento: null,
-                  sexo: "",
-                  email: "",
-                  telefone1: "",
-                  telefone2: "",
-                });
-              }}
-              checked={isVitimaExistente == false}
-            />
-            <label className="form-check-label" htmlFor="flexRadioDefault2">
-              Não
-            </label>
-          </div>
-        </div>
+        {!modoVisualizar && (
+          <>
+            <p>Pessoa já existente?</p>
+            <div className="col-3 col-md-2 col-lg-1">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
+                  onChange={() => {
+                    setIsVitimaExistente(true);
+                  }}
+                  checked={isVitimaExistente == true}
+                />
+                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                  Sim
+                </label>
+              </div>
+            </div>
+            <div className="col-3 col-md-2 col-lg-1">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault2"
+                  onChange={() => {
+                    setIsVitimaExistente(false);
+                    setVitimaFormObj({
+                      nome: "",
+                      cpf: "",
+                      dataNascimento: null,
+                      sexo: "",
+                      email: "",
+                      telefone1: "",
+                      telefone2: "",
+                    });
+                  }}
+                  checked={isVitimaExistente == false}
+                />
+                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                  Não
+                </label>
+              </div>
+            </div>
+          </>
+        )}
         {isVitimaExistente && (
           <>
             <div style={{ marginTop: "20px" }} className="row">
@@ -182,7 +194,7 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
               placeholder="Digite o nome da vítima"
               value={vitimaFormObj.nome}
               onChange={(e) => atualizarVitimaFormObj("nome", e.target.value)}
-              disabled={isVitimaExistente}
+              disabled={isVitimaExistente || modoVisualizar}
             />
           </div>
         </div>
@@ -205,7 +217,7 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
                     .replace(/[a-zA-Z]/g, "")
                 );
               }}
-              disabled={isVitimaExistente}
+              disabled={isVitimaExistente || modoVisualizar}
             />
           </div>
         </div>
@@ -218,7 +230,7 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
                   atualizarVitimaFormObj("dataNascimento", date)
                 }
                 selectedDateComponent={vitimaFormObj.dataNascimento}
-                disabled={isVitimaExistente}
+                disabled={isVitimaExistente || modoVisualizar}
               />
             </div>
           </div>
@@ -229,7 +241,7 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
             <Form.Select
               className="mt-3"
               onChange={(e) => atualizarVitimaFormObj("sexo", e.target.value)}
-              disabled={isVitimaExistente}
+              disabled={isVitimaExistente || modoVisualizar}
               value={vitimaFormObj.sexo}
             >
               <option value={""}>Selecione o sexo da vítima</option>
@@ -239,7 +251,7 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
           </div>
         </div>
       </div>
-      <h4>Contatos da Pessoa</h4>
+      <h4>Contatos da Vítima</h4>
       <div className="row">
         <div className="col-lg-6">
           <div className="mb-3 mt-5">
@@ -250,7 +262,7 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
               placeholder="Digite o e-mail da vítima"
               value={vitimaFormObj.email}
               onChange={(e) => atualizarVitimaFormObj("email", e.target.value)}
-              disabled={isVitimaExistente}
+              disabled={isVitimaExistente || modoVisualizar}
             />
           </div>
         </div>
@@ -265,7 +277,7 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
               onChange={(e) =>
                 atualizarVitimaFormObj("telefone1", e.target.value)
               }
-              disabled={isVitimaExistente}
+              disabled={isVitimaExistente || modoVisualizar}
             />
           </div>
         </div>
@@ -280,7 +292,7 @@ const EtapaDadosVitimaForm = ({ atualizarVitimaObj }) => {
               onChange={(e) =>
                 atualizarVitimaFormObj("telefone2", e.target.value)
               }
-              disabled={isVitimaExistente}
+              disabled={isVitimaExistente || modoVisualizar}
             />
           </div>
         </div>

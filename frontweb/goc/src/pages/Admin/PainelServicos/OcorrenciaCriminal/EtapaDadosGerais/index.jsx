@@ -4,17 +4,25 @@ import DatePickerComponent from "../../../../../components/Datepicker";
 import ButtonIconSmall from "../../../../../components/ButtonIconSmall";
 import { useState } from "react";
 
-const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
+const EtapaDadosGeraisForm = ({
+  atualizarDadosGeraisObj,
+  dadosGeraisParamObj,
+  modoVisualizar = false,
+}) => {
   const listaCidades = listaMunicipiosPorEstado();
-  const [dadosGeraisFormObj, setDadosGeraisFormObj] = useState({
-    municipio: "",
-    bairro: "",
-    endereco: "",
-    numero: "",
-    dataOcorrencia: null,
-    descricaoGeral: "",
-    complemento: ""
-  });
+  const [dadosGeraisFormObj, setDadosGeraisFormObj] = useState(
+    dadosGeraisParamObj
+      ? dadosGeraisParamObj
+      : {
+          municipio: "",
+          bairro: "",
+          endereco: "",
+          numero: "",
+          dataOcorrencia: null,
+          descricaoGeral: "",
+          complemento: "",
+        }
+  );
 
   const atualizarDadosGeraisFormObj = (campoForm, value) => {
     let newDadosGeraisFormObj = {
@@ -34,9 +42,11 @@ const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
             <h6>Município</h6>
             <Form.Select
               className="mt-3"
+              disabled={modoVisualizar}
               onChange={(e) =>
                 atualizarDadosGeraisFormObj("municipio", e.target.value)
               }
+              value={dadosGeraisFormObj.municipio}
             >
               <option value={""}>Selecione o município da ocorrência</option>
               {listaCidades.cidades.map((cidade) => (
@@ -53,6 +63,7 @@ const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
               className="form-control mt-3"
               placeholder="Digite o bairro da ocorrência"
               value={dadosGeraisFormObj.bairro}
+              disabled={modoVisualizar}
               onChange={(e) =>
                 atualizarDadosGeraisFormObj("bairro", e.target.value)
               }
@@ -67,6 +78,7 @@ const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
               className="form-control mt-3"
               placeholder="Digite o endereço da ocorrência"
               value={dadosGeraisFormObj.endereco}
+              disabled={modoVisualizar}
               onChange={(e) =>
                 atualizarDadosGeraisFormObj("endereco", e.target.value)
               }
@@ -81,6 +93,7 @@ const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
               className="form-control mt-3"
               placeholder="Digite o número de endereço da ocorrência"
               value={dadosGeraisFormObj.numero}
+              disabled={modoVisualizar}
               onChange={(e) =>
                 atualizarDadosGeraisFormObj("numero", e.target.value)
               }
@@ -95,6 +108,7 @@ const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
               className="form-control mt-3"
               placeholder="Digite um complemento de endereço da ocorrência"
               value={dadosGeraisFormObj.complemento}
+              disabled={modoVisualizar}
               onChange={(e) =>
                 atualizarDadosGeraisFormObj("complemento", e.target.value)
               }
@@ -106,6 +120,7 @@ const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
             <h6>Data da Ocorrência</h6>
             <div className="mt-3">
               <DatePickerComponent
+                disabled={modoVisualizar}
                 onChangeDate={(date) =>
                   atualizarDadosGeraisFormObj("dataOcorrencia", date)
                 }
@@ -123,6 +138,7 @@ const EtapaDadosGeraisForm = ({ atualizarDadosGeraisObj }) => {
                 className="form-control"
                 placeholder="Descrição Geral da Ocorrência"
                 value={dadosGeraisFormObj.descricaoGeral}
+                disabled={modoVisualizar}
                 onChange={(e) =>
                   atualizarDadosGeraisFormObj("descricaoGeral", e.target.value)
                 }
