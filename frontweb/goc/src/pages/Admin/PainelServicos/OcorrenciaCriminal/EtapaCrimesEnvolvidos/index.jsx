@@ -102,7 +102,6 @@ const EtapaCrimesEnvolvidosForm = ({
       )}
       <div className="row">
         {listaCrimesEnvolvidos.map((elemento, index) => {
-          console.log(elemento);
           return (
             <div key={elemento.id} className="row">
               {index != 0 && (

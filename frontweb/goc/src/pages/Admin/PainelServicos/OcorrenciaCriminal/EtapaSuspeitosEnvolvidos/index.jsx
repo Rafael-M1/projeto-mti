@@ -2,10 +2,16 @@ import ButtonIconSmall from "../../../../../components/ButtonIconSmall";
 import { useState } from "react";
 import uuid from "react-uuid";
 import { useMediaQuery } from "react-responsive";
-const EtapaSuspeitosEnvolvidosForm = ({ atualizarSuspeitosEnvolvidosObj }) => {
-  const [listaSuspeitosEnvolvidos, setListaSuspeitosEnvolvidos] = useState([
-    { id: uuid(), descricaoSuspeito: "" },
-  ]);
+const EtapaSuspeitosEnvolvidosForm = ({
+  atualizarSuspeitosEnvolvidosObj,
+  pessoasEnvolvidasParamObj,
+  modoVisualizar = false,
+}) => {
+  const [listaSuspeitosEnvolvidos, setListaSuspeitosEnvolvidos] = useState(
+    pessoasEnvolvidasParamObj
+      ? pessoasEnvolvidasParamObj
+      : [{ id: uuid(), descricaoSuspeito: "" }]
+  );
   const is768pxOrLesser = useMediaQuery({ maxWidth: 767 });
   const is500pxOrLesser = useMediaQuery({ maxWidth: 500 });
   const onClickAdicionarSuspeito = () => {
@@ -29,26 +35,30 @@ const EtapaSuspeitosEnvolvidosForm = ({ atualizarSuspeitosEnvolvidosObj }) => {
       {is500pxOrLesser ? (
         <div className="row mt-2">
           <h4>Suspeitos Envolvidos</h4>
-          <div className="col-12">
-            <ButtonIconSmall
-              text={"Adicionar Suspeito"}
-              widthPixels={"100%"}
-              heightPixels={50}
-              icon={false}
-              onClick={onClickAdicionarSuspeito}
-            />
-          </div>
+          {!modoVisualizar && (
+            <div className="col-12">
+              <ButtonIconSmall
+                text={"Adicionar Suspeito"}
+                widthPixels={"100%"}
+                heightPixels={50}
+                icon={false}
+                onClick={onClickAdicionarSuspeito}
+              />
+            </div>
+          )}
         </div>
       ) : (
         <div className="d-flex justify-content-between mt-2">
           <h4>Suspeitos Envolvidos</h4>
-          <ButtonIconSmall
-            text={"Adicionar Suspeito"}
-            widthPixels={300}
-            heightPixels={50}
-            icon={true}
-            onClick={onClickAdicionarSuspeito}
-          />
+          {!modoVisualizar && (
+            <ButtonIconSmall
+              text={"Adicionar Suspeito"}
+              widthPixels={300}
+              heightPixels={50}
+              icon={true}
+              onClick={onClickAdicionarSuspeito}
+            />
+          )}
         </div>
       )}
       <div className="row">
@@ -71,10 +81,11 @@ const EtapaSuspeitosEnvolvidosForm = ({ atualizarSuspeitosEnvolvidosObj }) => {
                     onChange={(e) =>
                       handleChange(e.target.value, index, "descricaoSuspeito")
                     }
+                    disabled={modoVisualizar}
                   />
                 </div>
               </div>
-              {index != 0 && (
+              {!modoVisualizar && index != 0 && (
                 <div className="col-12 col-md-3">
                   <div
                     className={`d-flex  mt-4 ${

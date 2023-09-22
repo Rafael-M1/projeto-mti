@@ -4,11 +4,9 @@ import EtapaDadosVitimaForm from "../../../PainelServicos/OcorrenciaCriminal/Eta
 import EtapaDadosGeraisForm from "../../../PainelServicos/OcorrenciaCriminal/EtapaDadosGerais";
 import EtapaCrimesEnvolvidosForm from "../../../PainelServicos/OcorrenciaCriminal/EtapaCrimesEnvolvidos";
 import uuid from "react-uuid";
+import EtapaSuspeitosEnvolvidosForm from "../../../PainelServicos/OcorrenciaCriminal/EtapaSuspeitosEnvolvidos";
 
 const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
-  if (ocorrencia) {
-    console.log(ocorrencia);
-  }
   return (
     <Modal
       show={showModalVisualizar}
@@ -62,6 +60,17 @@ const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
                 id: uuid(),
                 crime: crimeEnvolvido.tipoCrime,
                 descricaoAdicional: crimeEnvolvido.descricaoCrimeOcorrencia,
+              };
+            }
+          )}
+        />
+        <EtapaSuspeitosEnvolvidosForm
+          modoVisualizar={true}
+          pessoasEnvolvidasParamObj={ocorrencia?.pessoasEnvolvidas.map(
+            (pessoaEnvolvida) => {
+              return {
+                id: pessoaEnvolvida.idEnvolvido,
+                descricaoSuspeito: pessoaEnvolvida.descricao,
               };
             }
           )}
