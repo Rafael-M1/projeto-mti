@@ -1,8 +1,19 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ServicoCard from "../../../components/ServicoCard";
+import { useEffect } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const PainelServicos = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  useEffect(() => {
+    if (state != null && state.mensagem != null) {
+      if (state.mensagem.tipo == "success") {
+        toast.success(state.mensagem.texto);
+        navigate(location.pathname, { replace: true });
+      }
+    }
+  }, []);
   return (
     <div
       className="card"
@@ -14,6 +25,7 @@ const PainelServicos = () => {
       }}
     >
       <div className="card-body">
+        <Toaster position="top-right" />
         <h2 className="card-title text-center">Painel de Serviços</h2>
         <ServicoCard
           tituloImagem={"Ocorrência Criminal"}

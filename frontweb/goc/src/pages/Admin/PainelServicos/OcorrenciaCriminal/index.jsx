@@ -7,8 +7,11 @@ import ButtonIconSmall from "../../../../components/ButtonIconSmall";
 import { useMediaQuery } from "react-responsive";
 import { requestBackend } from "../../../../util/requests";
 import toast, { Toaster } from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OcorrenciaCriminalForm = () => {
+  const navigate = useNavigate();
+  let location = useLocation();
   const [vitimaFormObj, setVitimaFormObj] = useState({
     nome: "",
     cpf: "",
@@ -187,7 +190,15 @@ const OcorrenciaCriminalForm = () => {
         methodParam: "POST",
         dataParam: ocorrenciaObj,
       })
-        .then((response) => toast.success("Ocorrência cadastrada com sucesso."))
+        .then((response) => {
+          if (location && location.pathname == "/goc/admin/ocorrencia") {
+            navigate("/goc/admin/", {
+              state: {
+                mensagem: { texto: "Cadastrado com sucesso!", tipo: "success" },
+              },
+            });
+          }
+        })
         .catch((error) => console.log(error));
     }
   };
