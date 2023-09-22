@@ -8,6 +8,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
 import Pagination from "../../../../components/Pagination";
 import CardLoader from "../../../../components/CardLoader";
+import { VisibilityIcon } from "../../../../assets/images/icon-visibility";
+import ModalVisualizar from "./ModalVisualizar";
 
 const OcorrenciaAdministracao = () => {
   const [page, setPage] = useState();
@@ -15,6 +17,7 @@ const OcorrenciaAdministracao = () => {
   const [filtroOcorrenciaTexto, setFiltroOcorrenciaTexto] = useState("");
   const [filtroOcorrencia, setFiltroOcorrencia] = useState("");
   const [showModalExcluir, setShowModalExcluir] = useState(false);
+  const [showModalVisualizar, setShowModalVisualizar] = useState(false);
   const [ocorrenciaSelecionada, setOcorrenciaSelecionada] = useState(null);
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -22,6 +25,7 @@ const OcorrenciaAdministracao = () => {
   const handleClose = () => {
     setOcorrenciaSelecionada(null);
     setShowModalExcluir(false);
+    setShowModalVisualizar(false);
   };
 
   useEffect(() => {
@@ -79,6 +83,10 @@ const OcorrenciaAdministracao = () => {
     }
   };
 
+  const onClickVisualizar = (ocorrencia) => {
+    setOcorrenciaSelecionada(ocorrencia);
+    setShowModalVisualizar(true);
+  }
   const onClickExcluir = (ocorrencia) => {
     setOcorrenciaSelecionada(ocorrencia);
     setShowModalExcluir(true);
@@ -170,11 +178,11 @@ const OcorrenciaAdministracao = () => {
                         </td>
                         <td>
                           <div style={{ display: "flex" }}>
-                            {/* <OverlayTrigger
+                            <OverlayTrigger
                               placement="top"
                               delay={{ show: 250, hide: 100 }}
                               overlay={
-                                <Tooltip id="tooltip-top">Editar</Tooltip>
+                                <Tooltip id="tooltip-top">Visualizar</Tooltip>
                               }
                             >
                               <div
@@ -184,16 +192,16 @@ const OcorrenciaAdministracao = () => {
                                   margin: "4px",
                                   padding: "4px",
                                 }}
-                                onClick={() => {}}
+                                onClick={() => {onClickVisualizar(ocorrencia)}}
                               >
-                                <EditIcon />
+                                <VisibilityIcon size={24}/>
                               </div>
                             </OverlayTrigger>
                             <div
                               style={{
                                 width: "10px",
                               }}
-                            ></div> */}
+                            ></div>
                             <OverlayTrigger
                               placement="top"
                               delay={{ show: 250, hide: 100 }}
@@ -286,6 +294,7 @@ const OcorrenciaAdministracao = () => {
           />
         </Modal.Footer>
       </Modal>
+      <ModalVisualizar showModalVisualizar={showModalVisualizar} onHide={handleClose}/>
     </div>
   );
 };

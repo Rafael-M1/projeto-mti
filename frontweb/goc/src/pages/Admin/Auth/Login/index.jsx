@@ -29,7 +29,6 @@ const Login = ({ toggleAuth }) => {
   const onSubmit = (formData) => {
     requestBackendLogin(formData)
       .then((response) => {
-        console.log(response);
         saveAuthData(response.data);
         setHasError(false);
         // setAuthContextData({
