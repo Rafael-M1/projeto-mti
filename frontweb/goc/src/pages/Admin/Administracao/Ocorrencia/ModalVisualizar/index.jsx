@@ -3,6 +3,7 @@ import ButtonIconSmall from "../../../../../components/ButtonIconSmall";
 import EtapaDadosVitimaForm from "../../../PainelServicos/OcorrenciaCriminal/EtapaDadosVitima";
 import EtapaDadosGeraisForm from "../../../PainelServicos/OcorrenciaCriminal/EtapaDadosGerais";
 import EtapaCrimesEnvolvidosForm from "../../../PainelServicos/OcorrenciaCriminal/EtapaCrimesEnvolvidos";
+import uuid from "react-uuid";
 
 const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
   if (ocorrencia) {
@@ -58,7 +59,7 @@ const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
           crimesEnvolvidosParamObj={ocorrencia?.crimesEnvolvidos.map(
             (crimeEnvolvido) => {
               return {
-                id: crimeEnvolvido.idCrime,
+                id: uuid(),
                 crime: crimeEnvolvido.tipoCrime,
                 descricaoAdicional: crimeEnvolvido.descricaoCrimeOcorrencia,
               };

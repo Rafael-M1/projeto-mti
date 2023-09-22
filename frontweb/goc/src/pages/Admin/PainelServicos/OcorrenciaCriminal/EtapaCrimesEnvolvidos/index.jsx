@@ -16,9 +16,6 @@ const EtapaCrimesEnvolvidosForm = ({
       ? crimesEnvolvidosParamObj
       : [{ id: uuid(), crime: "", descricaoAdicional: "" }]
   );
-  if (listaCrimesEnvolvidos) {
-    console.log(listaCrimesEnvolvidos);
-  }
   const is768pxOrLesser = useMediaQuery({ maxWidth: 767 });
   const is500pxOrLesser = useMediaQuery({ maxWidth: 500 });
   const onClickAdicionarCrime = () => {
@@ -72,10 +69,10 @@ const EtapaCrimesEnvolvidosForm = ({
   };
   return (
     <div className="container mt-4">
-      {!modoVisualizar ? (
-        is500pxOrLesser ? (
-          <div className="row mt-2">
-            <h4>Crimes Envolvidos</h4>
+      {is500pxOrLesser ? (
+        <div className="row mt-2">
+          <h4>Crimes Envolvidos</h4>
+          {!modoVisualizar && (
             <div className="col-12">
               <ButtonIconSmall
                 text={"Adicionar Crime"}
@@ -85,10 +82,12 @@ const EtapaCrimesEnvolvidosForm = ({
                 onClick={onClickAdicionarCrime}
               />
             </div>
-          </div>
-        ) : (
-          <div className="d-flex justify-content-between mt-2">
-            <h4>Crimes Envolvidos</h4>
+          )}
+        </div>
+      ) : (
+        <div className="d-flex justify-content-between mt-2">
+          <h4>Crimes Envolvidos</h4>
+          {!modoVisualizar && (
             <div style={{ width: "300px" }}>
               <ButtonIconSmall
                 text={"Adicionar Crime"}
@@ -98,13 +97,12 @@ const EtapaCrimesEnvolvidosForm = ({
                 onClick={onClickAdicionarCrime}
               />
             </div>
-          </div>
-        )
-      ) : (
-        <></>
+          )}
+        </div>
       )}
       <div className="row">
         {listaCrimesEnvolvidos.map((elemento, index) => {
+          console.log(elemento);
           return (
             <div key={elemento.id} className="row">
               {index != 0 && (
@@ -115,26 +113,36 @@ const EtapaCrimesEnvolvidosForm = ({
               <div className="col-12 col-md-6">
                 <div className="mb-3 mt-2">
                   <h6>Crime {index + 1}</h6>
-                  <Form.Select
-                    className="mt-3"
-                    onChange={(e) =>
-                      handleChange(e.target.value, index, "crime")
-                    }
-                    value={elemento.crime}
-                    disabled={modoVisualizar}
-                  >
-                    <option value={""}>
-                      Selecione o crime {index + 1} envolvido
-                    </option>
-                    {listaCrimesOpcoes?.map((crimeOpcao) => (
-                      <option
-                        key={crimeOpcao.idCrime}
-                        value={crimeOpcao.idCrime}
-                      >
-                        {crimeOpcao.descricao}
+                  {!modoVisualizar ? (
+                    <Form.Select
+                      className="mt-3"
+                      onChange={(e) =>
+                        handleChange(e.target.value, index, "crime")
+                      }
+                      value={elemento.crime}
+                      disabled={modoVisualizar}
+                    >
+                      <option value={""}>
+                        Selecione o crime {index + 1} envolvido
                       </option>
-                    ))}
-                  </Form.Select>
+                      {listaCrimesOpcoes?.map((crimeOpcao) => (
+                        <option
+                          key={crimeOpcao.idCrime}
+                          value={crimeOpcao.idCrime}
+                        >
+                          {crimeOpcao.descricao}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  ) : (
+                    <input
+                      type="text"
+                      className="form-control mt-3"
+                      placeholder="Descrição adicional do crime envolvido"
+                      value={elemento.crime}
+                      disabled={modoVisualizar}
+                    />
+                  )}
                 </div>
               </div>
               <div className="col-12"></div>
