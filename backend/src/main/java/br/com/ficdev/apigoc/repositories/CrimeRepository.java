@@ -13,7 +13,7 @@ import br.com.ficdev.apigoc.entities.Crime;
 @Repository
 public interface CrimeRepository extends JpaRepository<Crime, Long> {
 
-	@Query("select c from Crime c where UPPER(c.descricao) like CONCAT('%', :descricao, '%') ")
+	@Query("select c from Crime c where UPPER(c.descricao) like CONCAT('%', UPPER(:descricao), '%') ")
 	Page<Crime> findAllByDescricao(String descricao, Pageable pageable);
 
 	@Query("select c from Crime c where c.status = true ")
