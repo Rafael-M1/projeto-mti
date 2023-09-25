@@ -82,6 +82,7 @@ ul {
         font-size: 18px;
         height: 80px;
         background-color: #fff;
+        border-top: 1px solid #E1E1E1;
         border-bottom: 1px solid #E1E1E1;
         justify-content: flex-start;
         padding-left: 40px;
