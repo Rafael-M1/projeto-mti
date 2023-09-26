@@ -21,39 +21,52 @@ const Home = () => {
               <div className="col-lg-6">
                 <div>
                   <h4>Telefones de Contato</h4>
-                  <h5 style={{ textAlign: "left", marginTop: "10px" }}>
+                  <h5
+                    style={{
+                      textAlign: "left",
+                      marginTop: "10px",
+                      paddingLeft: "10px",
+                    }}
+                  >
                     Em caso de emergência ligue diretamente em um dos seguintes
                     números:
                   </h5>
-                  <ul style={{display: "flex", marginTop: "30px"}}>
-                    <li style={{textAlign: "left"}}>
+                  <ul
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      marginTop: "30px",
+                      paddingLeft: "10px",
+                    }}
+                  >
+                    <li style={{ textAlign: "left" }}>
                       <h5>Polícia Militar: 190</h5>
                     </li>
-                    <li style={{textAlign: "left"}}>
+                    <li style={{ textAlign: "left" }}>
                       <h5>Corpo de Bombeiros: 193</h5>
                     </li>
-                    <li style={{textAlign: "left"}}>
+                    <li style={{ textAlign: "left" }}>
                       <h5>
                         Polícia Judiciária Civil: 197 – Caso estiver em Cuiabá e
                         Várzea Grande
                       </h5>
                     </li>
-                    <li style={{textAlign: "left"}}>
+                    <li style={{ textAlign: "left" }}>
                       <h5>
                         Polícia Judiciária Civil: 181 – Caso estiver em outras
                         cidades de Mato Grosso
                       </h5>
                     </li>
-                    <li style={{textAlign: "left"}}>
+                    <li style={{ textAlign: "left" }}>
                       <h5>
                         Polícia Judiciária Civil: (65) 3613-6981 – Caso estiver
                         em outro Estado
                       </h5>
                     </li>
-                    <li style={{textAlign: "left"}}>
+                    <li style={{ textAlign: "left" }}>
                       <h5>Polícia Rodoviária Federal: 191</h5>
                     </li>
-                    <li style={{textAlign: "left"}}>
+                    <li style={{ textAlign: "left" }}>
                       <h5>Defesa Civil: 199</h5>
                     </li>
                   </ul>
