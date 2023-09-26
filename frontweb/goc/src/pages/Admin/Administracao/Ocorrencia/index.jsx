@@ -183,7 +183,11 @@ const OcorrenciaAdministracao = () => {
                                 placement="top"
                                 delay={{ show: 250, hide: 100 }}
                                 overlay={
-                                  <Tooltip id="tooltip-top">Visualizar</Tooltip>
+                                  <Tooltip id="tooltip-top">
+                                    {ocorrencia.operador == null
+                                      ? "Validar"
+                                      : "Visualizar"}
+                                  </Tooltip>
                                 }
                               >
                                 <div
@@ -193,9 +197,21 @@ const OcorrenciaAdministracao = () => {
                                     margin: "4px",
                                     padding: "4px",
                                   }}
-                                  onClick={() => onClickVisualizar(ocorrencia)}
+                                  onClick={() => {
+                                    if (ocorrencia.operador == null) {
+                                      console.log(
+                                        "chama service validar ocorrencia"
+                                      );
+                                    } else {
+                                      onClickVisualizar(ocorrencia);
+                                    }
+                                  }}
                                 >
-                                  <VisibilityIcon size={24} />
+                                  {ocorrencia.operador == null ? (
+                                    <EditIcon size={24} />
+                                  ) : (
+                                    <VisibilityIcon size={24} />
+                                  )}
                                 </div>
                               </OverlayTrigger>
                               <div
