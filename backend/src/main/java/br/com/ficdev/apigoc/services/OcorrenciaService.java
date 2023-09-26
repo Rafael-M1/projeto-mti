@@ -21,6 +21,7 @@ import br.com.ficdev.apigoc.dto.MapDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaCrimeDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaInsertDTO;
+import br.com.ficdev.apigoc.dto.ValidarOcorrenciaDTO;
 import br.com.ficdev.apigoc.entities.Crime;
 import br.com.ficdev.apigoc.entities.Envolvido;
 import br.com.ficdev.apigoc.entities.Ocorrencia;
@@ -202,6 +203,12 @@ public class OcorrenciaService {
 
 		
 		return dashboardDTO;
+	}
+
+	public String validarOcorrencia(ValidarOcorrenciaDTO validarOcorrenciaDTO) {
+		Ocorrencia ocorrencia = repository.findById(validarOcorrenciaDTO.getIdOcorrencia()).get();
+		
+		return null;
 	}
 
 }

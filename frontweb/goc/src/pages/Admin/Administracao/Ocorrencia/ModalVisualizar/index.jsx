@@ -5,8 +5,38 @@ import EtapaDadosGeraisForm from "../../../PainelServicos/OcorrenciaCriminal/Eta
 import EtapaCrimesEnvolvidosForm from "../../../PainelServicos/OcorrenciaCriminal/EtapaCrimesEnvolvidos";
 import uuid from "react-uuid";
 import EtapaSuspeitosEnvolvidosForm from "../../../PainelServicos/OcorrenciaCriminal/EtapaSuspeitosEnvolvidos";
+import { requestBackend } from "../../../../../util/requests";
 
 const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
+  const onClickValidar = () => {
+    servicePromise({ urlParam: "/me" }).then((response) => {
+      console.log(response);
+      let idUsuarioLogado = response.data.idUser;
+      servicePromise();
+    });
+  };
+
+  const servicePromise = ({
+    methodParam = "GET",
+    urlParam = "/ocorrencia",
+    dataParam,
+  }) =>
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        let params = {
+          url: urlParam,
+          method: methodParam,
+          withCredentials: true,
+        };
+        if (dataParam) {
+          params.data = dataParam;
+        }
+        requestBackend(params)
+          .then((response) => resolve(response))
+          .catch((error) => reject(error));
+      }, 0);
+    });
+
   return (
     <Modal
       show={showModalVisualizar}
@@ -84,13 +114,15 @@ const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
           onClick={onHide}
           icon={false}
         />
-        {/* <ButtonIconSmall
-          text="Confirmar"
-          widthPixels={220}
-          heightPixels={40}
-          onClick={() => {}}
-          icon={true}
-        /> */}
+        {ocorrencia && ocorrencia.operador == null && (
+          <ButtonIconSmall
+            text="Validar"
+            widthPixels={220}
+            heightPixels={40}
+            onClick={() => onClickValidar()}
+            icon={true}
+          />
+        )}
       </Modal.Footer>
     </Modal>
   );

@@ -198,13 +198,14 @@ const OcorrenciaAdministracao = () => {
                                     padding: "4px",
                                   }}
                                   onClick={() => {
-                                    if (ocorrencia.operador == null) {
-                                      console.log(
-                                        "chama service validar ocorrencia"
-                                      );
-                                    } else {
-                                      onClickVisualizar(ocorrencia);
-                                    }
+                                    onClickVisualizar(ocorrencia);
+                                    // if (ocorrencia.operador == null) {
+                                    //   console.log(
+                                    //     "chama service validar ocorrencia"
+                                    //   );
+                                    // } else {
+                                    //   onClickVisualizar(ocorrencia);
+                                    // }
                                   }}
                                 >
                                   {ocorrencia.operador == null ? (

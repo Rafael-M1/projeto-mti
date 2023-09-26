@@ -2,6 +2,8 @@ package br.com.ficdev.apigoc.resources;
 
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.ficdev.apigoc.dto.DashboardDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaDTO;
 import br.com.ficdev.apigoc.dto.OcorrenciaInsertDTO;
+import br.com.ficdev.apigoc.dto.ValidarOcorrenciaDTO;
 import br.com.ficdev.apigoc.entities.Ocorrencia;
 import br.com.ficdev.apigoc.entities.filters.OcorrenciaFiltro;
 import br.com.ficdev.apigoc.services.OcorrenciaService;
@@ -66,6 +69,14 @@ public class OcorrenciaResource {
 			Pageable pageable) {
 		Page<OcorrenciaDTO> list = service.findByFiltro(ocorrenciaFiltro, pageable);
 		return ResponseEntity.ok().body(list);
+	}
+	
+	@PostMapping(value = "/validar")
+	public ResponseEntity<Map<String, String>> validarOcorrencia(@RequestBody ValidarOcorrenciaDTO validarOcorrenciaDTO) {
+		String stringResponse = service.validarOcorrencia(validarOcorrenciaDTO);
+		Map<String, String> response = new HashMap<>();
+		response.put("message", stringResponse);
+		return ResponseEntity.ok().body(response);
 	}
 
 	@PostMapping
