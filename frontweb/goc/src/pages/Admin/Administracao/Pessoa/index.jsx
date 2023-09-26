@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
 import Pagination from "../../../../components/Pagination";
 import CardLoader from "../../../../components/CardLoader";
+import { useMediaQuery } from "react-responsive";
 
 const PessoaAdministracao = () => {
   const [page, setPage] = useState();
@@ -16,6 +17,7 @@ const PessoaAdministracao = () => {
   const [filtroNomePessoa, setFiltroNomePessoa] = useState("");
   const [showModalExcluir, setShowModalExcluir] = useState(false);
   const [pessoaSelecionada, setPessoaSelecionada] = useState(null);
+  const is1000pxOrLesser = useMediaQuery({ maxWidth: 1000 });
   const navigate = useNavigate();
   const { state } = useLocation();
   const handleClose = () => {
@@ -128,31 +130,65 @@ const PessoaAdministracao = () => {
         <h2 className="card-title text-center">Administração - Pessoas</h2>
         <Toaster position="top-right" />
         <div className="container mt-5">
-          <div className="d-flex justify-content-between">
-            <div style={{ display: "flex" }}>
+          {!is1000pxOrLesser ? (
+            <div className="d-flex justify-content-between">
+              <div style={{ display: "flex" }}>
+                <ButtonIconSmall
+                  text="Filtrar"
+                  widthPixels={220}
+                  heightPixels={50}
+                  onClick={onClickFiltrar}
+                  icon={true}
+                />
+                <input
+                  type="text"
+                  className="form-control"
+                  style={{
+                    height: "50px",
+                    width: "400px",
+                    marginLeft: "10px",
+                  }}
+                  placeholder="Filtrar pelo nome da Pessoa"
+                  onChange={(e) => setFiltroNomePessoaTexto(e.target.value)}
+                />
+              </div>
               <ButtonIconSmall
-                text="Filtrar"
-                widthPixels={220}
+                text="Adicionar"
+                widthPixels={240}
                 heightPixels={50}
-                onClick={onClickFiltrar}
+                onClick={onClickAdicionar}
                 icon={true}
               />
-              <input
-                type="text"
-                className="form-control"
-                style={{ height: "50px", width: "400px", marginLeft: "10px" }}
-                placeholder="Filtrar pelo nome da Pessoa"
-                onChange={(e) => setFiltroNomePessoaTexto(e.target.value)}
-              />
             </div>
-            <ButtonIconSmall
-              text="Adicionar"
-              widthPixels={240}
-              heightPixels={50}
-              onClick={onClickAdicionar}
-              icon={true}
-            />
-          </div>
+          ) : (
+            <div className="row">
+              <div className="col-12 d-flex justify-content-end">
+                <ButtonIconSmall
+                  text="Adicionar"
+                  widthPixels={240}
+                  heightPixels={50}
+                  onClick={onClickAdicionar}
+                  icon={true}
+                />
+              </div>
+              <div className="col-12 col-lg-6 mt-4">
+                <ButtonIconSmall
+                  text="Filtrar"
+                  widthPixels={220}
+                  heightPixels={50}
+                  onClick={onClickFiltrar}
+                  icon={true}
+                />
+                <input
+                  type="text"
+                  className="form-control"
+                  style={{ height: "50px", width: "100%", marginLeft: "10px" }}
+                  placeholder="Filtrar pelo nome da Pessoa"
+                  onChange={(e) => setFiltroNomePessoaTexto(e.target.value)}
+                />
+              </div>
+            </div>
+          )}
           {isLoading ? (
             <CardLoader speed={0.9} width={1120} height={580} />
           ) : (
@@ -160,87 +196,91 @@ const PessoaAdministracao = () => {
               {filtroNomePessoa && (
                 <p className="mt-3">Busca por: {filtroNomePessoa}</p>
               )}
-              <table className="table table-light table-hover mt-4">
-                <thead>
-                  <tr>
-                    <th scope="col">CPF</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Data de Nascimento</th>
-                    <th scope="col">Telefones</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">Sexo</th>
-                    <th scope="col">Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {page &&
-                    page.content &&
-                    page.content.map((pessoa) => (
-                      <tr key={pessoa.idPessoa}>
-                        <th scope="row">{pessoa.cpf}</th>
-                        <td>{pessoa.nome}</td>
-                        <td>
-                          {new Date(pessoa.dataNascimento).toLocaleDateString(
-                            "pt-BR"
-                          )}
-                        </td>
-                        <td>
-                          {pessoa.telefone1}
-                          {pessoa.telefone2 ? `, ${pessoa.telefone2}` : ""}
-                        </td>
-                        <td>{pessoa.email}</td>
-                        <td>{pessoa.sexo == "M" ? "Masculino" : "Feminino"}</td>
-                        <td>
-                          <div style={{ display: "flex" }}>
-                            <OverlayTrigger
-                              placement="top"
-                              delay={{ show: 250, hide: 100 }}
-                              overlay={
-                                <Tooltip id="tooltip-top">Editar</Tooltip>
-                              }
-                            >
+              <div style={{ overflowX: "auto" }}>
+                <table className="table table-light table-hover mt-4">
+                  <thead>
+                    <tr>
+                      <th scope="col">CPF</th>
+                      <th scope="col">Nome</th>
+                      <th scope="col">Data de Nascimento</th>
+                      <th scope="col">Telefones</th>
+                      <th scope="col">E-mail</th>
+                      <th scope="col">Sexo</th>
+                      <th scope="col">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {page &&
+                      page.content &&
+                      page.content.map((pessoa) => (
+                        <tr key={pessoa.idPessoa}>
+                          <th scope="row">{pessoa.cpf}</th>
+                          <td>{pessoa.nome}</td>
+                          <td>
+                            {new Date(pessoa.dataNascimento).toLocaleDateString(
+                              "pt-BR"
+                            )}
+                          </td>
+                          <td>
+                            {pessoa.telefone1}
+                            {pessoa.telefone2 ? `, ${pessoa.telefone2}` : ""}
+                          </td>
+                          <td>{pessoa.email}</td>
+                          <td>
+                            {pessoa.sexo == "M" ? "Masculino" : "Feminino"}
+                          </td>
+                          <td>
+                            <div style={{ display: "flex" }}>
+                              <OverlayTrigger
+                                placement="top"
+                                delay={{ show: 250, hide: 100 }}
+                                overlay={
+                                  <Tooltip id="tooltip-top">Editar</Tooltip>
+                                }
+                              >
+                                <div
+                                  style={{
+                                    cursor: "pointer",
+                                    borderStyle: "hidden",
+                                    margin: "4px",
+                                    padding: "4px",
+                                  }}
+                                  onClick={() => onClickEditar(pessoa)}
+                                >
+                                  <EditIcon />
+                                </div>
+                              </OverlayTrigger>
                               <div
                                 style={{
-                                  cursor: "pointer",
-                                  borderStyle: "hidden",
-                                  margin: "4px",
-                                  padding: "4px",
+                                  width: "10px",
                                 }}
-                                onClick={() => onClickEditar(pessoa)}
+                              ></div>
+                              <OverlayTrigger
+                                placement="top"
+                                delay={{ show: 250, hide: 100 }}
+                                overlay={
+                                  <Tooltip id="tooltip-top">Excluir</Tooltip>
+                                }
                               >
-                                <EditIcon />
-                              </div>
-                            </OverlayTrigger>
-                            <div
-                              style={{
-                                width: "10px",
-                              }}
-                            ></div>
-                            <OverlayTrigger
-                              placement="top"
-                              delay={{ show: 250, hide: 100 }}
-                              overlay={
-                                <Tooltip id="tooltip-top">Excluir</Tooltip>
-                              }
-                            >
-                              <div
-                                style={{
-                                  cursor: "pointer",
-                                  borderStyle: "hidden",
-                                  margin: "4px",
-                                  padding: "4px",
-                                }}
-                                onClick={() => onClickExcluir(pessoa)}
-                              >
-                                <DeleteIcon />
-                              </div>
-                            </OverlayTrigger>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+                                <div
+                                  style={{
+                                    cursor: "pointer",
+                                    borderStyle: "hidden",
+                                    margin: "4px",
+                                    padding: "4px",
+                                  }}
+                                  onClick={() => onClickExcluir(pessoa)}
+                                >
+                                  <DeleteIcon />
+                                </div>
+                              </OverlayTrigger>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
             </>
           )}
           <div style={{ display: "flex" }} className="mt-4">
@@ -272,7 +312,7 @@ const PessoaAdministracao = () => {
       <Modal show={showModalExcluir} onHide={handleClose} centered>
         <Modal.Header>
           <Modal.Title>
-            <h6>Deseja realmente excluir o Tipo de Crime?</h6>
+            <h6>Deseja realmente excluir a Pessoa?</h6>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>{`Nome: ${pessoaSelecionada?.nome}`}</Modal.Body>
@@ -294,7 +334,7 @@ const PessoaAdministracao = () => {
                 urlParam: `/pessoa/${pessoaSelecionada.idPessoa}`,
               })
                 .then((response) => {
-                  serviceTipoCrimePromise({}).then((response) =>
+                  servicePessoaPromise({}).then((response) =>
                     setPage(response.data)
                   );
                 })

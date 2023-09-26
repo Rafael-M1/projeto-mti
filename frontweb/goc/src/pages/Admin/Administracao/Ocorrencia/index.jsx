@@ -141,92 +141,94 @@ const OcorrenciaAdministracao = () => {
               {filtroOcorrencia && (
                 <p className="mt-3">Busca por: {filtroOcorrencia}</p>
               )}
-              <table className="table table-light table-hover mt-4">
-                <thead>
-                  <tr>
-                    <th scope="col">Código</th>
-                    <th scope="col">Vítima</th>
-                    <th scope="col">Data Ocorrência</th>
-                    <th scope="col">Crimes Envolvidos</th>
-                    <th scope="col">Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {page &&
-                    page.content &&
-                    page.content.map((ocorrencia) => (
-                      <tr key={ocorrencia.idOcorrencia}>
-                        <th scope="row">{ocorrencia.idOcorrencia}</th>
-                        <td>{ocorrencia.vitima.nome}</td>
-                        <td>
-                          {new Date(
-                            ocorrencia.dataOcorrencia
-                          ).toLocaleDateString("pt-BR")}
-                        </td>
-                        {/* Coluna Crimes envolvidos */}
-                        <td>
-                          {ocorrencia.crimesEnvolvidos.map((crime, index) => {
-                            if (
-                              ocorrencia.crimesEnvolvidos.length - 1 ==
-                              index
-                            ) {
-                              return <>{crime.tipoCrime}</>;
-                            } else {
-                              return <>{crime.tipoCrime + ", "}</>;
-                            }
-                          })}
-                        </td>
-                        <td>
-                          <div style={{ display: "flex" }}>
-                            <OverlayTrigger
-                              placement="top"
-                              delay={{ show: 250, hide: 100 }}
-                              overlay={
-                                <Tooltip id="tooltip-top">Visualizar</Tooltip>
+              <div style={{ overflowX: "auto" }}>
+                <table className="table table-light table-hover mt-4">
+                  <thead>
+                    <tr>
+                      <th scope="col">Código</th>
+                      <th scope="col">Vítima</th>
+                      <th scope="col">Data Ocorrência</th>
+                      <th scope="col">Crimes Envolvidos</th>
+                      <th scope="col">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {page &&
+                      page.content &&
+                      page.content.map((ocorrencia) => (
+                        <tr key={ocorrencia.idOcorrencia}>
+                          <th scope="row">{ocorrencia.idOcorrencia}</th>
+                          <td>{ocorrencia.vitima.nome}</td>
+                          <td>
+                            {new Date(
+                              ocorrencia.dataOcorrencia
+                            ).toLocaleDateString("pt-BR")}
+                          </td>
+                          {/* Coluna Crimes envolvidos */}
+                          <td>
+                            {ocorrencia.crimesEnvolvidos.map((crime, index) => {
+                              if (
+                                ocorrencia.crimesEnvolvidos.length - 1 ==
+                                index
+                              ) {
+                                return <>{crime.tipoCrime}</>;
+                              } else {
+                                return <>{crime.tipoCrime + ", "}</>;
                               }
-                            >
+                            })}
+                          </td>
+                          <td>
+                            <div style={{ display: "flex" }}>
+                              <OverlayTrigger
+                                placement="top"
+                                delay={{ show: 250, hide: 100 }}
+                                overlay={
+                                  <Tooltip id="tooltip-top">Visualizar</Tooltip>
+                                }
+                              >
+                                <div
+                                  style={{
+                                    cursor: "pointer",
+                                    borderStyle: "hidden",
+                                    margin: "4px",
+                                    padding: "4px",
+                                  }}
+                                  onClick={() => onClickVisualizar(ocorrencia)}
+                                >
+                                  <VisibilityIcon size={24} />
+                                </div>
+                              </OverlayTrigger>
                               <div
                                 style={{
-                                  cursor: "pointer",
-                                  borderStyle: "hidden",
-                                  margin: "4px",
-                                  padding: "4px",
+                                  width: "10px",
                                 }}
-                                onClick={() => onClickVisualizar(ocorrencia)}
+                              ></div>
+                              <OverlayTrigger
+                                placement="top"
+                                delay={{ show: 250, hide: 100 }}
+                                overlay={
+                                  <Tooltip id="tooltip-top">Excluir</Tooltip>
+                                }
                               >
-                                <VisibilityIcon size={24} />
-                              </div>
-                            </OverlayTrigger>
-                            <div
-                              style={{
-                                width: "10px",
-                              }}
-                            ></div>
-                            <OverlayTrigger
-                              placement="top"
-                              delay={{ show: 250, hide: 100 }}
-                              overlay={
-                                <Tooltip id="tooltip-top">Excluir</Tooltip>
-                              }
-                            >
-                              <div
-                                style={{
-                                  cursor: "pointer",
-                                  borderStyle: "hidden",
-                                  margin: "4px",
-                                  padding: "4px",
-                                }}
-                                onClick={() => onClickExcluir(ocorrencia)}
-                              >
-                                <DeleteIcon />
-                              </div>
-                            </OverlayTrigger>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
+                                <div
+                                  style={{
+                                    cursor: "pointer",
+                                    borderStyle: "hidden",
+                                    margin: "4px",
+                                    padding: "4px",
+                                  }}
+                                  onClick={() => onClickExcluir(ocorrencia)}
+                                >
+                                  <DeleteIcon />
+                                </div>
+                              </OverlayTrigger>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
             </>
           )}
           <div style={{ display: "flex" }} className="mt-4">
