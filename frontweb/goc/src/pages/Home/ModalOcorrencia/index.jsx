@@ -10,6 +10,7 @@ import ButtonIconSmall from "../../../components/ButtonIconSmall";
 
 const ModalOcorrenciaPublic = ({ isModalVisible, closeModal, ocorrencia }) => {
   const [isVisibleOcorrenciaModal, setVisibleOcorrenciaModal] = useState(false);
+  const [idOcorrenciaSalva, setIdOcorrenciaSalva] = useState(null);
   const closeModalBoletimOcorrencia = () => {
     setVisibleOcorrenciaModal(false);
     closeModal();
@@ -170,6 +171,7 @@ const ModalOcorrenciaPublic = ({ isModalVisible, closeModal, ocorrencia }) => {
         dataParam: ocorrenciaObj,
       })
         .then((response) => {
+          setIdOcorrenciaSalva(response.data.idOcorrencia);
           toast.success("Cadastrado com sucesso!");
           setVisibleOcorrenciaModal(true);
         })
@@ -240,12 +242,19 @@ const ModalOcorrenciaPublic = ({ isModalVisible, closeModal, ocorrencia }) => {
         <Modal.Header>
           <Modal.Title>
             <div style={{ display: "flex" }}>
-              {/* <h6>Boletim de Ocorrência Online</h6> */}
-              <h6>Boletim de ocorrencia criado com sucesso!</h6>
+              <h5>Boletim de Ocorrência registrado</h5>
             </div>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body></Modal.Body>
+        <Modal.Body>
+          <h6>
+            Boletim de Ocorrência registrado com sucesso com número:{" "}
+            <strong style={{ color: "red", fontSize: "20px" }}>
+              {idOcorrenciaSalva ?? ""}
+            </strong>
+          </h6>
+          <h6>Entraremos em contato pelo telefone ou E-mail informado.</h6>
+        </Modal.Body>
         <Modal.Footer>
           <ButtonIconSmall
             text={"Fechar"}
