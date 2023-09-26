@@ -12,7 +12,10 @@ const Navbar = ({ isAuthenticated }) => {
     <>
       <nav className="navbar navbar-dark bg-dark">
         <div className="container-fluid">
-          <Link to={"/goc"} className="nav-logo-text">
+          <Link
+            to={isAuthenticated ? "/goc/admin" : "/goc"}
+            className="nav-logo-text"
+          >
             <div style={{ display: "flex" }}>
               <img src={pjcBrasao} style={{ height: "50px" }}></img>
               {is1000pxOrLesser ? (
