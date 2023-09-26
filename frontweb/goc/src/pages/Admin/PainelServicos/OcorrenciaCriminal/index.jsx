@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EtapaDadosGeraisForm from "./EtapaDadosGerais";
 import EtapaDadosVitimaForm from "./EtapaDadosVitima";
 import EtapaCrimesEnvolvidosForm from "./EtapaCrimesEnvolvidos";
@@ -10,6 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const OcorrenciaCriminalForm = () => {
+  const [idUsuario, setIdUsuario] = useState(null);
   const navigate = useNavigate();
   let location = useLocation();
   const [vitimaFormObj, setVitimaFormObj] = useState({
@@ -53,6 +54,13 @@ const OcorrenciaCriminalForm = () => {
       };
     }
   };
+
+  useEffect(() => {
+    serviceOcorrenciaPromise({ urlParam: "/me" }).then((response) => {
+      setIdUsuario(response.data.idUser);
+    });
+  }, []);
+
   const serviceOcorrenciaPromise = ({
     pageNumberParam,
     methodParam = "GET",
@@ -111,7 +119,7 @@ const OcorrenciaCriminalForm = () => {
         telefone1: vitimaFormObj.telefone1,
         telefone2: vitimaFormObj.telefone2,
       },
-      idOperador: 1,
+      idOperador: idUsuario ?? 1,
       pessoasEnvolvidas: suspeitosEnvolvidosObj.map(
         (suspeitosEnvolvidoElemento) => ({
           descricao: suspeitosEnvolvidoElemento.descricaoSuspeito,
