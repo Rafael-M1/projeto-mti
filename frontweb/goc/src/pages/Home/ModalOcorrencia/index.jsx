@@ -9,6 +9,11 @@ import { requestBackend } from "../../../util/requests";
 import ButtonIconSmall from "../../../components/ButtonIconSmall";
 
 const ModalOcorrenciaPublic = ({ isModalVisible, closeModal, ocorrencia }) => {
+  const [isVisibleOcorrenciaModal, setVisibleOcorrenciaModal] = useState(false);
+  const closeModalBoletimOcorrencia = () => {
+    setVisibleOcorrenciaModal(false);
+    closeModal();
+  };
   const [vitimaFormObj, setVitimaFormObj] = useState({
     nome: "",
     cpf: "",
@@ -166,43 +171,53 @@ const ModalOcorrenciaPublic = ({ isModalVisible, closeModal, ocorrencia }) => {
       })
         .then((response) => {
           toast.success("Cadastrado com sucesso!");
+          setVisibleOcorrenciaModal(true);
         })
         .catch((error) => console.log(error));
     }
   };
   return (
-    <Modal
-      show={isModalVisible}
-      onHide={() => closeModal()}
-      dialogClassName="modal-90w"
-      aria-labelledby="example-custom-modal-styling-title"
-      centered
-      size="xl"
-      scrollable
-      keyboard={false}
-      backdrop="static"
-    >
-      <Modal.Header closeButton>
-        <Modal.Title>
-          <h6>Novo Boletim de Ocorrência Online</h6>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Toaster position="top-right" />
-        <EtapaDadosVitimaForm
-          modoPublico={true}
-          atualizarVitimaObj={atualizarVitimaObj}
-        />
-        <EtapaDadosGeraisForm
-          atualizarDadosGeraisObj={atualizarDadosGeraisObj}
-        />
-        <EtapaCrimesEnvolvidosForm
-          atualizarCrimesEnvolvidosObj={atualizarCrimesEnvolvidosObj}
-        />
-        <EtapaSuspeitosEnvolvidosForm
-          atualizarSuspeitosEnvolvidosObj={atualizarSuspeitosEnvolvidosObj}
-        />
-        <div className="d-flex justify-content-end mt-5">
+    <>
+      <Modal
+        show={isModalVisible}
+        onHide={() => closeModal()}
+        dialogClassName="modal-90w"
+        aria-labelledby="example-custom-modal-styling-title"
+        centered
+        size="xl"
+        scrollable
+        keyboard={false}
+        backdrop="static"
+      >
+        <Modal.Header>
+          <Modal.Title>
+            <h6>Novo Boletim de Ocorrência Online</h6>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Toaster position="top-right" />
+          <EtapaDadosVitimaForm
+            modoPublico={true}
+            atualizarVitimaObj={atualizarVitimaObj}
+          />
+          <EtapaDadosGeraisForm
+            atualizarDadosGeraisObj={atualizarDadosGeraisObj}
+          />
+          <EtapaCrimesEnvolvidosForm
+            atualizarCrimesEnvolvidosObj={atualizarCrimesEnvolvidosObj}
+          />
+          <EtapaSuspeitosEnvolvidosForm
+            atualizarSuspeitosEnvolvidosObj={atualizarSuspeitosEnvolvidosObj}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <ButtonIconSmall
+            text={"Cancelar"}
+            widthPixels={210}
+            heightPixels={50}
+            icon={false}
+            onClick={() => closeModal()}
+          />
           <ButtonIconSmall
             text={"Finalizar"}
             widthPixels={210}
@@ -210,9 +225,38 @@ const ModalOcorrenciaPublic = ({ isModalVisible, closeModal, ocorrencia }) => {
             icon={true}
             onClick={() => salvarOcorrencia()}
           />
-        </div>
-      </Modal.Body>
-    </Modal>
+        </Modal.Footer>
+      </Modal>
+      <Modal
+        show={isVisibleOcorrenciaModal}
+        onHide={() => closeModalBoletimOcorrencia()}
+        dialogClassName="modal-90w"
+        aria-labelledby="example-custom-modal-styling-title"
+        centered
+        size="lg"
+        keyboard={false}
+        backdrop="static"
+      >
+        <Modal.Header>
+          <Modal.Title>
+            <div style={{ display: "flex" }}>
+              {/* <h6>Boletim de Ocorrência Online</h6> */}
+              <h6>Boletim de ocorrencia criado com sucesso!</h6>
+            </div>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body></Modal.Body>
+        <Modal.Footer>
+          <ButtonIconSmall
+            text={"Fechar"}
+            widthPixels={210}
+            heightPixels={50}
+            icon={false}
+            onClick={() => closeModalBoletimOcorrencia()}
+          />
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 
