@@ -6,11 +6,11 @@ import EtapaCrimesEnvolvidosForm from "../../../PainelServicos/OcorrenciaCrimina
 import uuid from "react-uuid";
 import EtapaSuspeitosEnvolvidosForm from "../../../PainelServicos/OcorrenciaCriminal/EtapaSuspeitosEnvolvidos";
 import { requestBackend } from "../../../../../util/requests";
+import toast, { Toaster } from "react-hot-toast";
 
 const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
   const onClickValidar = () => {
     servicePromise({ urlParam: "/me" }).then((response) => {
-      console.log(response);
       let idUsuarioLogado = response.data.idUser;
       servicePromise({
         urlParam: "/ocorrencia/validar",
@@ -19,7 +19,9 @@ const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
           idOperador: idUsuarioLogado,
         },
         methodParam: "POST",
-      }).then((response) => console.log(response));
+      }).then((response) => {
+        toast.success(response.data.message);
+      });
     });
   };
 
@@ -63,8 +65,7 @@ const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {/* <p>{`Código Ocorrência: ${ocorrencia?.idOcorrencia}`}</p>
-        <p>{`Vítima: ${ocorrencia?.vitima.nome}`}</p> */}
+        {/* <Toaster position="top-right" /> */}
         <EtapaDadosVitimaForm
           modoVisualizar={true}
           vitimaParamObj={{
