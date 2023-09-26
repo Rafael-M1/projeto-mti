@@ -72,9 +72,9 @@ public class OcorrenciaResource {
 	}
 	
 	@PostMapping(value = "/validar")
-	public ResponseEntity<Map<String, String>> validarOcorrencia(@RequestBody ValidarOcorrenciaDTO validarOcorrenciaDTO) {
+	public ResponseEntity<Map<String, Object>> validarOcorrencia(@RequestBody ValidarOcorrenciaDTO validarOcorrenciaDTO) {
 		String stringResponse = service.validarOcorrencia(validarOcorrenciaDTO);
-		Map<String, String> response = new HashMap<>();
+		Map<String, Object> response = new HashMap<>();
 		response.put("message", stringResponse);
 		return ResponseEntity.ok().body(response);
 	}

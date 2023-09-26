@@ -207,8 +207,14 @@ public class OcorrenciaService {
 
 	public String validarOcorrencia(ValidarOcorrenciaDTO validarOcorrenciaDTO) {
 		Ocorrencia ocorrencia = repository.findById(validarOcorrenciaDTO.getIdOcorrencia()).get();
-		
-		return null;
+		if (ocorrencia.getOperador() == null) {
+			Usuario operador = userService.findUsuarioById(validarOcorrenciaDTO.getIdOperador());
+			ocorrencia.setOperador(operador);
+			repository.save(ocorrencia);
+			return "Ocorrência validada.";
+		} else {
+			return "Ocorrência já validada.";
+		}
 	}
 
 }

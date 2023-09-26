@@ -12,7 +12,14 @@ const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
     servicePromise({ urlParam: "/me" }).then((response) => {
       console.log(response);
       let idUsuarioLogado = response.data.idUser;
-      servicePromise();
+      servicePromise({
+        urlParam: "/ocorrencia/validar",
+        dataParam: {
+          idOcorrencia: ocorrencia.idOcorrencia,
+          idOperador: idUsuarioLogado,
+        },
+        methodParam: "POST",
+      }).then((response) => console.log(response));
     });
   };
 
