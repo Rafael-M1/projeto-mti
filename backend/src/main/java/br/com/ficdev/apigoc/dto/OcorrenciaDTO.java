@@ -44,7 +44,7 @@ public class OcorrenciaDTO implements Serializable {
 		this.dataOcorrencia = ocorrencia.getDataOcorrencia();
 		this.descricaoGeral = ocorrencia.getDescricaoGeral();
 		this.status = ocorrencia.isStatus();
-		this.operador = new UsuarioDTO(ocorrencia.getOperador());
+		this.operador = ocorrencia.getOperador() != null ? new UsuarioDTO(ocorrencia.getOperador()) : null;
 		this.vitima = ocorrencia.getVitima();
 		this.pessoasEnvolvidas = ocorrencia.getListaEnvolvidos() != null ? ocorrencia.getListaEnvolvidos().stream()
 				.map(envolvido -> new EnvolvidoDTO(envolvido)).collect(Collectors.toSet()) : null;

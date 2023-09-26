@@ -45,14 +45,7 @@ const EtapaCrimesEnvolvidosForm = ({
         let params = {
           url: urlParam,
           method: methodParam,
-          withCredentials: true,
         };
-        if (methodParam == "GET" || methodParam != "POST") {
-          params.params = {
-            page: pageNumberParam ?? 0,
-            size: 12,
-          };
-        }
         if (dataParam) {
           params.data = dataParam;
         }

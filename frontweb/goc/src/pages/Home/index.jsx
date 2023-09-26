@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { ReactComponent as MainImage } from "./../../assets/images/main-image.svg";
 import ButtonIcon from "../../components/ButtonIcon";
 import "./styles.css";
+import ModalOcorrenciaPublic from "./ModalOcorrencia";
 
 const Home = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const onClickFunction = () => {};
+  const [isModalVisible, setModalVisible] = useState(false);
+  const onClickFunction = () => {
+    setModalVisible(true);
+  };
 
+  const handleClose = () => {
+    setModalVisible(false);
+  };
   // useEffect(() => {
 
   // }, []);
@@ -109,12 +114,16 @@ const Home = () => {
                   <div className="mt-5">
                     <ButtonIcon
                       text="Registrar Boletim de Ocorrência"
-                      onClick={onClickFunction}
+                      onClick={() => onClickFunction()}
                     />
                   </div>
                 </div>
               </div>
             </div>
+            <ModalOcorrenciaPublic
+              isModalVisible={isModalVisible}
+              closeModal={handleClose}
+            />
           </div>
         </div>
       </div>

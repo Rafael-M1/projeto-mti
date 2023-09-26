@@ -9,6 +9,7 @@ const EtapaDadosVitimaForm = ({
   atualizarVitimaObj,
   vitimaParamObj,
   modoVisualizar = false,
+  modoPublico = false,
 }) => {
   const [isVitimaExistente, setIsVitimaExistente] = useState(false);
   const [vitimaExistenteTexto, setVitimaExistenteTexto] = useState("");
@@ -81,7 +82,7 @@ const EtapaDadosVitimaForm = ({
       <Toaster position="top-right" />
       <h4>Dados da Vítima</h4>
       <div className="row">
-        {!modoVisualizar && (
+        {!modoPublico && !modoVisualizar && (
           <>
             <p>Pessoa já existente?</p>
             <div className="col-3 col-md-2 col-lg-1">

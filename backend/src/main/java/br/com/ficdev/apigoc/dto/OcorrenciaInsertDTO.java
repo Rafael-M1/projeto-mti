@@ -27,7 +27,6 @@ public class OcorrenciaInsertDTO implements Serializable {
 	private boolean status;
 	@NotNull
 	private Pessoa vitima;
-	@NotNull
 	private Long idOperador;
 	private Set<EnvolvidoDTO> pessoasEnvolvidas = new HashSet<>();
 	@NotEmpty

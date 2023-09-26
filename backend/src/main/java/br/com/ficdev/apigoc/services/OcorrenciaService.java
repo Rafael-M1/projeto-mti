@@ -93,8 +93,12 @@ public class OcorrenciaService {
 		ocorrencia.setDescricaoGeral(ocorrenciaInsertDTO.getDescricaoGeral());
 		ocorrencia.setEndereco(ocorrenciaInsertDTO.getEndereco());
 		ocorrencia.setNumero(ocorrenciaInsertDTO.getNumero());
-		Usuario operador = userService.findUsuarioById(ocorrenciaInsertDTO.getIdOperador());
-		ocorrencia.setOperador(operador);
+		if (ocorrenciaInsertDTO.getIdOperador() == null) {
+			ocorrencia.setOperador(null);
+		} else {
+			Usuario operador = userService.findUsuarioById(ocorrenciaInsertDTO.getIdOperador());			
+			ocorrencia.setOperador(operador);
+		}
 		ocorrencia.setStatus(true);
 
 		// Verifica se Pessoa vitima ja existe no DB
