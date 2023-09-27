@@ -103,7 +103,7 @@ const OcorrenciaAdministracao = () => {
       }}
     >
       <div className="card-body">
-        <h2 className="card-title text-center">Administração - Ocorrências</h2>
+        <h2 className="card-title text-center">Cadastro - Ocorrências</h2>
         <Toaster position="top-right" />
         <div className="container mt-5">
           <div className="row">

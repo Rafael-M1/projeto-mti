@@ -127,7 +127,7 @@ const PessoaAdministracao = () => {
       }}
     >
       <div className="card-body">
-        <h2 className="card-title text-center">Administração - Pessoas</h2>
+        <h2 className="card-title text-center">Cadastro - Pessoas</h2>
         <Toaster position="top-right" />
         <div className="container mt-5">
           {!is1000pxOrLesser ? (

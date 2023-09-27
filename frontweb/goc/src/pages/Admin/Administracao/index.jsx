@@ -17,7 +17,7 @@ const AdministracaoPage = () => {
         <h2 className="card-title text-center">Administração</h2>
         <ServicoCard
           tituloImagem={"Tipo Crime"}
-          subTitulo={"Gestão dos Tipos de Crime"}
+          subTitulo={"Cadastro dos Tipos de Crime"}
           descricaoServico={
             "Descrição: Tipos de crimes que estão envolvidos em uma ocorrência criminal."
           }
@@ -25,7 +25,7 @@ const AdministracaoPage = () => {
         />
         <ServicoCard
           tituloImagem={"Ocorrências Criminais"}
-          subTitulo={"Gestão das Ocorrências Criminais"}
+          subTitulo={"Cadastro das Ocorrências Criminais"}
           descricaoServico={
             "Descrição: Ocorrências criminais que podem ser registradas pelo cidadão ou operadores."
           }
@@ -33,7 +33,7 @@ const AdministracaoPage = () => {
         />
         <ServicoCard
           tituloImagem={"Pessoas"}
-          subTitulo={"Gestão de Pessoas"}
+          subTitulo={"Cadastro de Pessoas"}
           descricaoServico={
             "Descrição: Pessoas que estão envolvidas em ocorrências criminais, podendo ser vítimas ou envolvidos."
           }

@@ -118,9 +118,7 @@ const TipoCrime = () => {
       }}
     >
       <div className="card-body">
-        <h2 className="card-title text-center">
-          Administração - Tipos de Crimes
-        </h2>
+        <h2 className="card-title text-center">Cadastro - Tipos de Crimes</h2>
         <Toaster position="top-right" />
         <div className="container mt-5">
           {!is1000pxOrLesser ? (
