@@ -317,7 +317,18 @@ const TipoCrime = () => {
             )}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>{`Nome: ${tipoCrimeSelecionado?.descricao}`}</Modal.Body>
+        <Modal.Body>
+          {`Nome: ${tipoCrimeSelecionado?.descricao}`}
+          {tipoCrimeSelecionado?.status == false && (
+            <>
+              <div className="mt-2"></div>
+              <>
+                Observação: Tipos de Crime habilitados ficam disponíveis nos
+                formulários de ocorrências criminais.
+              </>
+            </>
+          )}
+        </Modal.Body>
         <Modal.Footer>
           <ButtonIconSmall
             text="Cancelar"

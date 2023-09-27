@@ -37,7 +37,7 @@ public class CrimeService {
 
 	@Transactional
 	public Crime insert(Crime crime) {
-		crime.setStatus(true);
+		crime.setStatus(false);
 		crime = repository.save(crime);
 		return crime;
 	}
