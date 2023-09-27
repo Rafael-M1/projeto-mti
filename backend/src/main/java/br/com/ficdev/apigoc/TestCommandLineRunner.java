@@ -47,10 +47,10 @@ public class TestCommandLineRunner implements CommandLineRunner {
 
 	@Autowired
 	private OcorrenciaRepository ocorrenciaRepository;
-	
+
 	@Autowired
 	private EnvolvidoRepository envolvidoRepository;
-	
+
 	@Autowired
 	private OcorrenciaCrimeRepository ocorrenciaCrimeRepository;
 
@@ -66,7 +66,7 @@ public class TestCommandLineRunner implements CommandLineRunner {
 		crimeRepository.save(new Crime(null, "Calúnia", true));
 		crimeRepository.save(new Crime(null, "Latrocínio", true));
 		crimeRepository.save(new Crime(null, "Femicídio", true));
-		
+
 		Pessoa pessoa = new Pessoa();
 		pessoa.setCpf("01234567891");
 		pessoa.setEmail("rafael@gmail.com");
@@ -75,7 +75,7 @@ public class TestCommandLineRunner implements CommandLineRunner {
 		pessoa.setTelefone1("(65)99999-1234");
 		pessoa.setDataNascimento(LocalDate.of(1997, Month.JUNE, 2));
 		pessoaRepository.save(pessoa);
-		
+
 		Pessoa vitima = new Pessoa();
 		vitima.setCpf("11122233344");
 		vitima.setEmail("joao@gmail.com");
@@ -84,29 +84,29 @@ public class TestCommandLineRunner implements CommandLineRunner {
 		vitima.setTelefone1("(65)88888-1234");
 		vitima.setDataNascimento(LocalDate.of(2000, Month.FEBRUARY, 20));
 		pessoaRepository.save(vitima);
-		
+
 		Role operator = new Role(null, "ROLE_OPERATOR");
 		Role admin = new Role(null, "ROLE_ADMIN");
 		roleRepository.save(operator);
 		roleRepository.save(admin);
-		
+
 		Usuario usuario1 = new Usuario();
 		usuario1.setPessoa(pessoa);
 		usuario1.setSenha("$2a$10$nOHnbXajbtcbyd5L/1A.s.tfvxO3ntfNQQJ2SQT3/Xw5DmssqPWfm");
 		usuario1.getRoles().add(operator);
 		usuario1.getRoles().add(admin);
 		usuarioRepository.save(usuario1);
-		
-		Ocorrencia ocorrencia1 = new Ocorrencia(null, "Cuiabá", "Jardim Petropólis",
-				"Rua 1", "dois", "Próximo a uma praça", LocalDateTime.now(),
-				LocalDateTime.now().minusDays(1), "Furto de um celular",
+
+		// Ocorrencia Validada
+		Ocorrencia ocorrencia1 = new Ocorrencia(null, "Cuiabá", "Jardim Petropólis", "Rua 1", "dois",
+				"Próximo a uma praça", LocalDateTime.now(), LocalDateTime.now().minusDays(1), "Furto de um celular",
 				true, vitima, usuario1);
 		ocorrenciaRepository.save(ocorrencia1);
-		//Associando um envolvido a uma ocorrencia;
-		Envolvido envolvido1 = new Envolvido(null, "Homem de cabelo longo, "
-				+ "alto, vestia chinelo, jeans e uma regata verde", null, ocorrencia1);
+		// Associando um envolvido a uma ocorrencia;
+		Envolvido envolvido1 = new Envolvido(null,
+				"Homem de cabelo longo, " + "alto, vestia chinelo, jeans e uma regata verde", null, ocorrencia1);
 		envolvidoRepository.save(envolvido1);
-		//Associando OcorrenciaCrime a uma Ocorrencia;
+		// Associando OcorrenciaCrime a uma Ocorrencia;
 		OcorrenciaCrime oc1 = new OcorrenciaCrime();
 		OcorrenciaCrimeId oci1 = new OcorrenciaCrimeId(ocorrencia1.getIdOcorrencia(),
 				crimeRepository.findById(2l).get().getIdCrime());
@@ -115,7 +115,26 @@ public class TestCommandLineRunner implements CommandLineRunner {
 		oc1.setOcorrencia(ocorrencia1);
 		oc1.setDescricaoCrimeOcorrencia("descrição adicional");
 		ocorrenciaCrimeRepository.save(oc1);
-		
+
+		// Ocorrencia Validada
+		Ocorrencia ocorrencia2 = new Ocorrencia(null, "Cuiabá", "Jardim Petropólis", "Rua 1", "dois",
+				"Próximo a uma praça", LocalDateTime.now(), LocalDateTime.now().minusDays(1), "Furto de um celular",
+				true, vitima, null);
+		ocorrenciaRepository.save(ocorrencia2);
+		// Associando um envolvido a uma ocorrencia;
+		Envolvido envolvido2 = new Envolvido(null,
+				"Mulher de cabelo longo, " + "alta, vestia chinelo, jeans e uma regata verde", null, ocorrencia2);
+		envolvidoRepository.save(envolvido2);
+		// Associando OcorrenciaCrime a uma Ocorrencia;
+		OcorrenciaCrime oc2 = new OcorrenciaCrime();
+		OcorrenciaCrimeId oci2 = new OcorrenciaCrimeId(ocorrencia2.getIdOcorrencia(),
+				crimeRepository.findById(2l).get().getIdCrime());
+		oc2.setIdOcorrenciaCrime(oci2);
+		oc2.setCrime(crimeRepository.findById(2l).get());
+		oc2.setOcorrencia(ocorrencia2);
+		oc2.setDescricaoCrimeOcorrencia("descrição adicional");
+		ocorrenciaCrimeRepository.save(oc2);
+
 	}
 
 }
