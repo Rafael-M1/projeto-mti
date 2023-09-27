@@ -215,7 +215,7 @@ const OcorrenciaAdministracao = () => {
                                   )}
                                 </div>
                               </OverlayTrigger>
-                              <div
+                              {/* <div
                                 style={{
                                   width: "10px",
                                 }}
@@ -238,7 +238,7 @@ const OcorrenciaAdministracao = () => {
                                 >
                                   <DeleteIcon />
                                 </div>
-                              </OverlayTrigger>
+                              </OverlayTrigger> */}
                             </div>
                           </td>
                         </tr>
