@@ -10,6 +10,7 @@ import Pagination from "../../../../components/Pagination";
 import CardLoader from "../../../../components/CardLoader";
 import { VisibilityIcon } from "../../../../assets/images/icon-visibility";
 import ModalVisualizar from "./ModalVisualizar";
+import { OrderApproveIcon } from "../../../../assets/images/icon-order-approve";
 
 const OcorrenciaAdministracao = () => {
   const [page, setPage] = useState();
@@ -199,17 +200,10 @@ const OcorrenciaAdministracao = () => {
                                   }}
                                   onClick={() => {
                                     onClickVisualizar(ocorrencia);
-                                    // if (ocorrencia.operador == null) {
-                                    //   console.log(
-                                    //     "chama service validar ocorrencia"
-                                    //   );
-                                    // } else {
-                                    //   onClickVisualizar(ocorrencia);
-                                    // }
                                   }}
                                 >
                                   {ocorrencia.operador == null ? (
-                                    <EditIcon size={24} />
+                                    <OrderApproveIcon size={24} />
                                   ) : (
                                     <VisibilityIcon size={24} />
                                   )}
