@@ -84,7 +84,7 @@ const EtapaDadosVitimaForm = ({
       <div className="row">
         {!modoPublico && !modoVisualizar && (
           <>
-            <p>Pessoa já existente?</p>
+            <p>Vítima já cadastrada no sistema?</p>
             <div className="col-3 col-md-2 col-lg-1">
               <div className="form-check">
                 <input
