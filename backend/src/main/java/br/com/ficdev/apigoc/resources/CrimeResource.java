@@ -66,7 +66,7 @@ public class CrimeResource {
 	}
 
 	@DeleteMapping(value = "/{idCrime}")
-	public ResponseEntity<Void> delete(@PathVariable Long idCrime) {
+	public ResponseEntity<Void> desabilitar(@PathVariable Long idCrime) {
 		service.delete(idCrime);
 		return ResponseEntity.noContent().build();
 	}

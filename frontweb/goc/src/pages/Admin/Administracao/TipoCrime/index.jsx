@@ -9,6 +9,8 @@ import { OverlayTrigger, Tooltip, Modal } from "react-bootstrap";
 import Pagination from "../../../../components/Pagination";
 import CardLoader from "../../../../components/CardLoader";
 import { useMediaQuery } from "react-responsive";
+import { VisibilityOffIcon } from "../../../../assets/images/icon-visibility-off";
+import { VisibilityIcon } from "../../../../assets/images/icon-visibility";
 
 const TipoCrime = () => {
   const [page, setPage] = useState();
@@ -225,25 +227,51 @@ const TipoCrime = () => {
                                   width: "10px",
                                 }}
                               ></div>
-                              <OverlayTrigger
-                                placement="top"
-                                delay={{ show: 250, hide: 100 }}
-                                overlay={
-                                  <Tooltip id="tooltip-top">Excluir</Tooltip>
-                                }
-                              >
-                                <div
-                                  style={{
-                                    cursor: "pointer",
-                                    borderStyle: "hidden",
-                                    margin: "4px",
-                                    padding: "4px",
-                                  }}
-                                  onClick={() => onClickExcluir(tipoCrime)}
+                              {tipoCrime.status == true ? (
+                                <OverlayTrigger
+                                  placement="top"
+                                  delay={{ show: 250, hide: 100 }}
+                                  overlay={
+                                    <Tooltip id="tooltip-top">
+                                      Desabilitar
+                                    </Tooltip>
+                                  }
                                 >
-                                  <DeleteIcon />
-                                </div>
-                              </OverlayTrigger>
+                                  <div
+                                    style={{
+                                      cursor: "pointer",
+                                      borderStyle: "hidden",
+                                      margin: "4px",
+                                      padding: "4px",
+                                    }}
+                                    onClick={() => onClickExcluir(tipoCrime)}
+                                  >
+                                    <VisibilityOffIcon size={24} />
+                                  </div>
+                                </OverlayTrigger>
+                              ) : (
+                                <OverlayTrigger
+                                  placement="top"
+                                  delay={{ show: 250, hide: 100 }}
+                                  overlay={
+                                    <Tooltip id="tooltip-top">
+                                      Habilitar
+                                    </Tooltip>
+                                  }
+                                >
+                                  <div
+                                    style={{
+                                      cursor: "pointer",
+                                      borderStyle: "hidden",
+                                      margin: "4px",
+                                      padding: "4px",
+                                    }}
+                                    onClick={() => onClickExcluir(tipoCrime)}
+                                  >
+                                    <VisibilityIcon size={24} />
+                                  </div>
+                                </OverlayTrigger>
+                              )}
                             </div>
                           </td>
                         </tr>
@@ -282,7 +310,11 @@ const TipoCrime = () => {
       <Modal show={showModalExcluir} onHide={handleClose} centered>
         <Modal.Header>
           <Modal.Title>
-            <h6>Deseja realmente excluir o Tipo de Crime?</h6>
+            {tipoCrimeSelecionado?.status == true ? (
+              <h6>Deseja realmente desabilitar o Tipo de Crime?</h6>
+            ) : (
+              <h6>Deseja realmente habilitar o Tipo de Crime?</h6>
+            )}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>{`Nome: ${tipoCrimeSelecionado?.descricao}`}</Modal.Body>

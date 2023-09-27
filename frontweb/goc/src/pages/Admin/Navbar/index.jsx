@@ -77,7 +77,10 @@ const Navbar = ({ toggleAuth }) => {
               <p>Dashboard</p>
             </NavLink>
             {hasAnyRoles(["ROLE_ADMIN"]) && (
-              <NavLink to="/goc/admin/administracao" className="admin-nav-item my-1">
+              <NavLink
+                to="/goc/admin/administracao"
+                className="admin-nav-item my-1"
+              >
                 <p>Administração</p>
               </NavLink>
             )}

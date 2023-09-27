@@ -59,7 +59,7 @@ public class CrimeService {
 	public void delete(Long idCrime) {
 		try {
 			Crime crime = repository.findById(idCrime).get();
-			crime.setStatus(false);
+			crime.setStatus(!crime.isStatus());
 			repository.save(crime);
 		}
 		catch (EmptyResultDataAccessException e) {
