@@ -5,27 +5,29 @@ const DashboardCard = ({
   valor,
   texto,
   textoStyle = {
-    fontSize: "24px",
+    fontSize: "16px",
     fontWeight: "normal",
     marginBottom: "0px",
+    marginLeft: "10px",
   },
 }) => {
   const is1000pxOrLesser = useMediaQuery({ maxWidth: 1000 });
+  const is1400pxOrLesser = useMediaQuery({ maxWidth: 1400 });
   return (
     <>
       <div
-        className="col-12 col-md-6 col-lg-6 mx-2 my-1"
+        className="mx-1 my-1"
         style={{
           background: "#DCDCDC",
           paddingTop: "15px",
           paddingBottom: "15px",
           borderRadius: "10px",
-          width: !is1000pxOrLesser ? "45%" : "99%",
+          width: is1000pxOrLesser ? "99%" : is1400pxOrLesser ? "45%" : "30%",
         }}
       >
         <div className="d-flex">
           <MonitoringIcon
-            size={110}
+            size={90}
             styleComponent={{
               background: "#fff",
               padding: "3px",
@@ -40,6 +42,9 @@ const DashboardCard = ({
               borderRadius: "10px",
               width: "80%",
               padding: "0 10px",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
             }}
           >
             <p
