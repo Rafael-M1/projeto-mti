@@ -127,6 +127,17 @@ const PessoaAdministracao = () => {
       }}
     >
       <div className="card-body">
+        <div className="container">
+          <ButtonIconSmall
+            text="Voltar"
+            widthPixels={220}
+            heightPixels={40}
+            onClick={() => {
+              navigate("/goc/admin/administracao");
+            }}
+            icon={false}
+          />
+        </div>
         <h2 className="card-title text-center">Cadastro - Pessoas</h2>
         <Toaster position="top-right" />
         <div className="container mt-5">
