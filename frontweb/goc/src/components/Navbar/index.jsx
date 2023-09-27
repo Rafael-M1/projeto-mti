@@ -13,8 +13,9 @@ const Navbar = ({ isAuthenticated }) => {
       <nav className="navbar navbar-dark bg-dark">
         <div className="container-fluid">
           <Link
-            to={isAuthenticated ? "/goc/admin" : "/goc"}
+            to={"https://www.pjc.mt.gov.br/"}
             className="nav-logo-text"
+            target="_blank"
           >
             <div style={{ display: "flex" }}>
               <img src={pjcBrasao} style={{ height: "50px" }}></img>
@@ -45,13 +46,13 @@ const Navbar = ({ isAuthenticated }) => {
             is1100pxOrLesser ? (
               <>
                 <div style={{ display: "flex", color: "#fff" }}>
-                  <h5>Sistema GOC</h5>
+                  <h5>Delegacia Virtual</h5>
                 </div>
               </>
             ) : (
               <>
                 <div style={{ display: "flex", color: "#fff" }}>
-                  <h5>Sistema de Gestão de Ocorrências Criminais</h5>
+                  <h5>Delegacia Virtual</h5>
                 </div>
               </>
             )
