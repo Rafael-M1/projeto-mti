@@ -21,6 +21,7 @@ const ModalVisualizar = ({ showModalVisualizar, onHide, ocorrencia }) => {
         methodParam: "POST",
       }).then((response) => {
         toast.success(response.data.message);
+        onHide();
       });
     });
   };

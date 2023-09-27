@@ -27,6 +27,9 @@ const OcorrenciaAdministracao = () => {
     setOcorrenciaSelecionada(null);
     setShowModalExcluir(false);
     setShowModalVisualizar(false);
+    serviceOcorrenciaPromise({ urlParam: "/ocorrencia?sort=dataCriado,desc" })
+      .then((response) => setPage(response.data))
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
