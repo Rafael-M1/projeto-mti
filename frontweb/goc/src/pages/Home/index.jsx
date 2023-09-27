@@ -23,6 +23,11 @@ const Home = () => {
         <div className="base-card home-card">
           <div className="container">
             <div className="row">
+              <div className="col-lg-12 mb-5">
+                <h1 style={{ textAlign: "center" }}>
+                  <strong>Delegacia Virtual</strong>
+                </h1>
+              </div>
               <div className="col-lg-6">
                 <div>
                   <h4>Telefones de Contato</h4>
