@@ -12,7 +12,7 @@ const DashboardCard = ({
   },
 }) => {
   const is1000pxOrLesser = useMediaQuery({ maxWidth: 1000 });
-  const is1400pxOrLesser = useMediaQuery({ maxWidth: 1400 });
+  const is1400pxOrLesser = useMediaQuery({ maxWidth: 1480 });
   return (
     <>
       <div

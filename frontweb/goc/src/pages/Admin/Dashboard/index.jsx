@@ -142,6 +142,10 @@ const DashboardPage = () => {
         <div className="container mt-5">
           <div className="row">
             <DashboardCard
+              texto={"Ocorrências totais"}
+              valor={dashboardInfo?.qtdOcorrenciasTotais}
+            />
+            <DashboardCard
               texto={"Ocorrências no período"}
               valor={dashboardInfo?.qtdOcorrenciasPorPeriodo}
             />

@@ -118,7 +118,7 @@ public class TestCommandLineRunner implements CommandLineRunner {
 
 		// Ocorrencia Validada
 		Ocorrencia ocorrencia2 = new Ocorrencia(null, "Cuiabá", "Jardim Petropólis", "Rua 1", "dois",
-				"Próximo a uma praça", LocalDateTime.now(), LocalDateTime.now().minusDays(1), "Furto de um celular",
+				"Próximo a uma praça", LocalDateTime.now(), LocalDateTime.now().minusDays(1), "Roubo de um celular",
 				true, vitima, null);
 		ocorrenciaRepository.save(ocorrencia2);
 		// Associando um envolvido a uma ocorrencia;
@@ -128,9 +128,9 @@ public class TestCommandLineRunner implements CommandLineRunner {
 		// Associando OcorrenciaCrime a uma Ocorrencia;
 		OcorrenciaCrime oc2 = new OcorrenciaCrime();
 		OcorrenciaCrimeId oci2 = new OcorrenciaCrimeId(ocorrencia2.getIdOcorrencia(),
-				crimeRepository.findById(2l).get().getIdCrime());
+				crimeRepository.findById(1l).get().getIdCrime());
 		oc2.setIdOcorrenciaCrime(oci2);
-		oc2.setCrime(crimeRepository.findById(2l).get());
+		oc2.setCrime(crimeRepository.findById(1l).get());
 		oc2.setOcorrencia(ocorrencia2);
 		oc2.setDescricaoCrimeOcorrencia("descrição adicional");
 		ocorrenciaCrimeRepository.save(oc2);
