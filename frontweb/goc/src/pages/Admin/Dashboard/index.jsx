@@ -48,20 +48,30 @@ const DashboardPage = () => {
     serviceDashboardPromise({
       urlParam: `/ocorrencia/dashboard`,
     }).then((response) => {
-      // console.log(response.data);
       setDashboardInfo(response.data);
-      let tipoCrimeArray = [" "];
-      response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.forEach((element) => {
-        tipoCrimeArray.push(element.key);
-      });
-      let numeroOcorrenciaPorTipoCrimeArray = [" "];
-      response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.forEach((element) => {
-        numeroOcorrenciaPorTipoCrimeArray.push(element.value);
-      });
-      setDataOcorrenciaPorTipoCime([
-        tipoCrimeArray,
-        numeroOcorrenciaPorTipoCrimeArray,
-      ]);
+      if (response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.length == 0) {
+        setDataOcorrenciaPorTipoCime([
+          [" ", "Não há dados"],
+          [" ", " "],
+        ]);
+      } else {
+        let tipoCrimeArray = [" "];
+        response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.forEach(
+          (element) => {
+            tipoCrimeArray.push(element.key);
+          }
+        );
+        let numeroOcorrenciaPorTipoCrimeArray = [" "];
+        response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.forEach(
+          (element) => {
+            numeroOcorrenciaPorTipoCrimeArray.push(element.value);
+          }
+        );
+        setDataOcorrenciaPorTipoCime([
+          tipoCrimeArray,
+          numeroOcorrenciaPorTipoCrimeArray,
+        ]);
+      }
     });
   }, []);
 
@@ -92,20 +102,30 @@ const DashboardPage = () => {
     serviceDashboardPromise({
       urlParam: `/ocorrencia/dashboard?dataInicio=${dataInicioFiltro}&dataFim=${dataFimFiltro}`,
     }).then((response) => {
-      // console.log(response.data);
       setDashboardInfo(response.data);
-      let tipoCrimeArray = [" "];
-      response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.forEach((element) => {
-        tipoCrimeArray.push(element.key);
-      });
-      let numeroOcorrenciaPorTipoCrimeArray = [" "];
-      response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.forEach((element) => {
-        numeroOcorrenciaPorTipoCrimeArray.push(element.value);
-      });
-      setDataOcorrenciaPorTipoCime([
-        tipoCrimeArray,
-        numeroOcorrenciaPorTipoCrimeArray,
-      ]);
+      if (response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.length == 0) {
+        setDataOcorrenciaPorTipoCime([
+          [" ", "Não há dados"],
+          [" ", " "],
+        ]);
+      } else {
+        let tipoCrimeArray = [" "];
+        response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.forEach(
+          (element) => {
+            tipoCrimeArray.push(element.key);
+          }
+        );
+        let numeroOcorrenciaPorTipoCrimeArray = [" "];
+        response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.forEach(
+          (element) => {
+            numeroOcorrenciaPorTipoCrimeArray.push(element.value);
+          }
+        );
+        setDataOcorrenciaPorTipoCime([
+          tipoCrimeArray,
+          numeroOcorrenciaPorTipoCrimeArray,
+        ]);
+      }
     });
   };
 
