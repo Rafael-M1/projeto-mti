@@ -22,7 +22,10 @@ const Home = () => {
       <div className="home-container">
         <div className="base-card home-card">
           <div className="container">
-            <div className="row">
+            <div
+              className="row"
+              style={{ display: "flex", justifyContent: "space-around" }}
+            >
               <div className="col-lg-12 mb-5">
                 <h1 style={{ textAlign: "center" }}>
                   <strong>Delegacia Virtual</strong>
@@ -82,7 +85,6 @@ const Home = () => {
                   </ul>
                 </div>
               </div>
-              <div className="col-lg-1"></div>
               <div
                 className="col-lg-5"
                 style={{
