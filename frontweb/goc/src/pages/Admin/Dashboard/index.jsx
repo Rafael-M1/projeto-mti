@@ -42,12 +42,27 @@ const DashboardPage = () => {
       };
     }
   };
+  const is1000pxOrLesser = useMediaQuery({ maxWidth: 1000 });
 
   useEffect(() => {
-    // serviceDashboardPromise({
-    //   urlParam:
-    //     "/ocorrencia/dashboard?dataInicio=01/01/2023 00:00:00&dataFim=01/12/2023 00:00:00",
-    // }).then((response) => console.log(response));
+    serviceDashboardPromise({
+      urlParam: `/ocorrencia/dashboard`,
+    }).then((response) => {
+      // console.log(response.data);
+      setDashboardInfo(response.data);
+      let tipoCrimeArray = [" "];
+      response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.forEach((element) => {
+        tipoCrimeArray.push(element.key);
+      });
+      let numeroOcorrenciaPorTipoCrimeArray = [" "];
+      response.data.qtdOcorrenciasPorTipoCrimePorPeriodo.forEach((element) => {
+        numeroOcorrenciaPorTipoCrimeArray.push(element.value);
+      });
+      setDataOcorrenciaPorTipoCime([
+        tipoCrimeArray,
+        numeroOcorrenciaPorTipoCrimeArray,
+      ]);
+    });
   }, []);
 
   const serviceDashboardPromise = ({
@@ -141,27 +156,27 @@ const DashboardPage = () => {
         </div>
         <div className="container mt-5">
           <div className="row">
-            <DashboardCard
+            {/* <DashboardCard
               texto={"Ocorrências totais"}
               valor={dashboardInfo?.qtdOcorrenciasTotais}
-            />
+            /> */}
             <DashboardCard
-              texto={"Ocorrências no período"}
+              texto={"Ocorrências totais"}
               valor={dashboardInfo?.qtdOcorrenciasPorPeriodo}
             />
             <DashboardCard
-              texto={"Ocorrências no período envolvendo homens como vítima."}
+              texto={"Ocorrências envolvendo homens como vítima."}
               valor={dashboardInfo?.qtdOcorrenciasHomensPorPeriodo}
             />
             <DashboardCard
-              texto={"Ocorrências no período envolvendo mulheres como vítima."}
+              texto={"Ocorrências envolvendo mulheres como vítima."}
               valor={dashboardInfo?.qtdOcorrenciasMulheresPorPeriodo}
             />
           </div>
           <div className="mt-5">
             <Chart
               chartType="Bar"
-              width="80%"
+              width={is1000pxOrLesser ? "100%" : "80%"}
               height="300px"
               data={dataOcorrenciaPorTipoCrime}
               options={options}

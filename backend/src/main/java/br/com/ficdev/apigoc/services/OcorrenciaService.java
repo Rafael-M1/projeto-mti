@@ -194,8 +194,7 @@ public class OcorrenciaService {
 				+ "	INNER JOIN OcorrenciaCrime oc ON o.idOcorrencia = oc.ocorrencia.idOcorrencia "
 				+ "	INNER JOIN Crime c ON oc.crime.idCrime = c.idCrime "
 				+ "	where o.status = true "
-				+ "	and o.dataOcorrencia < :dataFim "
-				+ "	and o.dataOcorrencia > :dataInicio "
+				+ " and ((o.dataOcorrencia < :dataFim and o.dataOcorrencia > :dataInicio) or (:dataInicio IS NULL and :dataFim IS NULL) ) "
 				+ "	GROUP BY c.descricao ";
 		TypedQuery<MapDTO> query = entityManager.createQuery(jpqlQuery, MapDTO.class);
 		query.setParameter("dataFim", dataFim);

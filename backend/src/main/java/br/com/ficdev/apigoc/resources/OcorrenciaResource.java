@@ -42,11 +42,13 @@ public class OcorrenciaResource {
 	public ResponseEntity<DashboardDTO> findDashboardValues(
 			@PathParam(value = "dataInicio") @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss") LocalDateTime dataInicio,
 			@PathParam(value = "dataFim") @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss") LocalDateTime dataFim) {
-		if (dataInicio == null || dataFim == null) {
+		/*if (dataInicio == null || dataFim == null) {
 			throw new IllegalArgumentException("Data Início ou Data Fim não podem ser vazias.");
-		}
-		if (dataInicio.isAfter(dataFim)) {
-			throw new IllegalArgumentException("Data Início deve ser antes de Data Fim");
+		}*/
+		if (dataInicio != null && dataFim != null) {			
+			if (dataInicio.isAfter(dataFim)) {
+				throw new IllegalArgumentException("Data Início deve ser antes de Data Fim");
+			}
 		}
 		DashboardDTO dashboardDTO = service.findDashboardValues(dataInicio, dataFim);
 		return ResponseEntity.ok().body(dashboardDTO);
