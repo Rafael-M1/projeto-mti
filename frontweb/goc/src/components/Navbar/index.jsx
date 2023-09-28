@@ -1,13 +1,14 @@
 import "./styles.css";
 import "bootstrap/js/src/collapse.js";
 import { useMediaQuery } from "react-responsive";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import pjcBrasao from "./../../assets/images/brasao-pjc-mt.png";
 
 const Navbar = ({ isAuthenticated }) => {
   const is768pxOrLesser = useMediaQuery({ maxWidth: 767 });
   const is1000pxOrLesser = useMediaQuery({ maxWidth: 1000 });
   const is1100pxOrLesser = useMediaQuery({ maxWidth: 1100 });
+  const location = useLocation();
   return (
     <>
       <nav className="navbar navbar-dark bg-dark">
@@ -43,10 +44,16 @@ const Navbar = ({ isAuthenticated }) => {
             </div>
           </Link>
           {isAuthenticated ? (
-            is1100pxOrLesser ? (
+            location &&
+            (location.pathname == "/goc" || location.pathname == "/goc/") ? (
               <>
-                <div style={{ display: "flex", color: "#fff" }}>
-                  <h5>Delegacia Virtual</h5>
+                <div style={{ display: "flex" }}>
+                  <Link to={"/goc"} className="nav-logo-text">
+                    <h5>Página Inicial</h5>
+                  </Link>
+                  <Link to={"/goc/admin/"} className="nav-logo-text mx-4">
+                    <h5>Administração</h5>
+                  </Link>
                 </div>
               </>
             ) : (
