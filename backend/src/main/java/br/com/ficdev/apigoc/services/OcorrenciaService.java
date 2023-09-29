@@ -41,7 +41,7 @@ public class OcorrenciaService {
 
 	@Autowired
 	private EntityManager entityManager;
-	
+
 	@Autowired
 	private OcorrenciaRepository repository;
 
@@ -97,7 +97,7 @@ public class OcorrenciaService {
 		if (ocorrenciaInsertDTO.getIdOperador() == null) {
 			ocorrencia.setOperador(null);
 		} else {
-			Usuario operador = userService.findUsuarioById(ocorrenciaInsertDTO.getIdOperador());			
+			Usuario operador = userService.findUsuarioById(ocorrenciaInsertDTO.getIdOperador());
 			ocorrencia.setOperador(operador);
 		}
 		ocorrencia.setStatus(true);
@@ -140,7 +140,6 @@ public class OcorrenciaService {
 	public Ocorrencia update(Long idOcorrencia, Ocorrencia ocorrencia) {
 		try {
 			Ocorrencia ocorrenciaSaved = repository.getOne(idOcorrencia);
-			// TODO acrescentar todos atributos para ser atualizados;
 			ocorrenciaSaved.setBairro(ocorrencia.getBairro());
 			ocorrenciaSaved.setStatus(ocorrencia.isStatus());
 			ocorrenciaSaved = repository.save(ocorrenciaSaved);
@@ -183,26 +182,24 @@ public class OcorrenciaService {
 		Long qtdOcorrenciasPeriodo = repository.findOcorrenciasPorPeriodo(dataInicio, dataFim);
 		Long qtdOcorrenciasMulheresPorPeriodo = repository.findOcorrenciasMulheresPorPeriodo(dataInicio, dataFim);
 		Long qtdOcorrenciasHomensPorPeriodo = repository.findOcorrenciasHomensPorPeriodo(dataInicio, dataFim);
-		
+
 		DashboardDTO dashboardDTO = new DashboardDTO();
 		dashboardDTO.setQtdOcorrenciasTotais(qtdOcorrenciasTotal);
 		dashboardDTO.setQtdOcorrenciasPorPeriodo(qtdOcorrenciasPeriodo);
 		dashboardDTO.setQtdOcorrenciasHomensPorPeriodo(qtdOcorrenciasHomensPorPeriodo);
 		dashboardDTO.setQtdOcorrenciasMulheresPorPeriodo(qtdOcorrenciasMulheresPorPeriodo);
-		
+
 		String jpqlQuery = "select new br.com.ficdev.apigoc.dto.MapDTO(c.descricao, COUNT(*)) from Ocorrencia o "
 				+ "	INNER JOIN OcorrenciaCrime oc ON o.idOcorrencia = oc.ocorrencia.idOcorrencia "
 				+ "	INNER JOIN Crime c ON oc.crime.idCrime = c.idCrime "
 				+ "	where o.status = true "
-				+ " and ((o.dataOcorrencia < :dataFim and o.dataOcorrencia > :dataInicio) or (:dataInicio IS NULL and :dataFim IS NULL) ) "
+				+ " and ((o.dataOcorrencia < :dataFim and o.dataOcorrencia > :dataInicio) or (cast(:dataInicio as date) IS NULL and cast(:dataFim as date) IS NULL) ) "
 				+ "	GROUP BY c.descricao ";
 		TypedQuery<MapDTO> query = entityManager.createQuery(jpqlQuery, MapDTO.class);
 		query.setParameter("dataFim", dataFim);
 		query.setParameter("dataInicio", dataInicio);
 		dashboardDTO.setQtdOcorrenciasPorTipoCrimePorPeriodo(query.getResultList());
-		//[MapDTO [key=Calúnia, value=2], MapDTO [key=Furto, value=1], MapDTO [key=Homicídio, value=8], MapDTO [key=Roubo, value=2], MapDTO [key=Tráfico de Drogas, value=3]]
 
-		
 		return dashboardDTO;
 	}
 

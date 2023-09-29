@@ -26,18 +26,18 @@ public interface OcorrenciaRepository extends JpaRepository<Ocorrencia, Long> {
 	//Consultas Dashboard
 	@Query("select COUNT(*) from Ocorrencia o "
 			+ "where o.status = true "
-			+ "and ((o.dataOcorrencia < :dataFim and o.dataOcorrencia > :dataInicio) or (:dataInicio IS NULL and :dataFim IS NULL)  )")
+			+ "and ((o.dataOcorrencia < :dataFim and o.dataOcorrencia > :dataInicio) or (cast(:dataInicio as date) IS NULL and cast(:dataFim as date) IS NULL)  )")
 	Long findOcorrenciasPorPeriodo(LocalDateTime dataInicio, LocalDateTime dataFim);
 
 	@Query("select COUNT(*) from Ocorrencia o "
 			+ "where o.status = true "
-			+ "and ((o.dataOcorrencia < :dataFim and o.dataOcorrencia > :dataInicio) or (:dataInicio IS NULL and :dataFim IS NULL)  )"
+			+ "and ((o.dataOcorrencia < :dataFim and o.dataOcorrencia > :dataInicio) or (cast(:dataInicio as date) IS NULL and cast(:dataFim as date) IS NULL)  )"
 			+ "and o.vitima.sexo = 'F' ")
 	Long findOcorrenciasMulheresPorPeriodo(LocalDateTime dataInicio, LocalDateTime dataFim);
 
 	@Query("select COUNT(*) from Ocorrencia o "
 			+ "where o.status = true "
-			+ "and ((o.dataOcorrencia < :dataFim and o.dataOcorrencia > :dataInicio) or (:dataInicio IS NULL and :dataFim IS NULL)  )"
+			+ "and ((o.dataOcorrencia < :dataFim and o.dataOcorrencia > :dataInicio) or (cast(:dataInicio as date) IS NULL and cast(:dataFim as date) IS NULL)  )"
 			+ "and o.vitima.sexo = 'M' ") //
 	Long findOcorrenciasHomensPorPeriodo(LocalDateTime dataInicio, LocalDateTime dataFim);
 }
