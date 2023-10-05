@@ -163,7 +163,7 @@ const OcorrenciaCriminalForm = () => {
       )
     ) {
       toast.error(
-        "Digite o telefone de contato da vítima. Formato Válido (XX) XXXXX-XXXX"
+        "Digite o telefone 1 de contato da vítima. Formato Válido (XX) XXXXX-XXXX"
       );
     } else if (!validaTelefone2(vitimaFormObj.telefone2.trim())) {
       toast.error(
