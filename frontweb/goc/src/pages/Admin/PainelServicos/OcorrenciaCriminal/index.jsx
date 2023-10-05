@@ -101,6 +101,22 @@ const OcorrenciaCriminalForm = () => {
   const atualizarSuspeitosEnvolvidosObj = (novoEstado) => {
     setSuspeitosEnvolvidosObj(novoEstado);
   };
+
+  const validaTelefone2 = (numrTelefone2) => {
+    //return true, telefone é válido
+    if (numrTelefone2 == null || numrTelefone2.trim() == "") {
+      return true;
+    }
+    if (
+      /^\([1-9]{2}\)[0-9]{5}\-[0-9]{4}$|^\([1-9]{2}\) [0-9]{5}\-[0-9]{4}$/.test(
+        numrTelefone2.trim()
+      )
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   const salvarOcorrencia = () => {
     let ocorrenciaObj = {
       cidade: dadosGeraisFormObj.municipio,
@@ -142,9 +158,17 @@ const OcorrenciaCriminalForm = () => {
       toast.error("Digite o nome da vítima.");
     } else if (
       vitimaFormObj.telefone1 == null ||
-      vitimaFormObj.telefone1.trim().length < 10
+      !/^\([1-9]{2}\)[0-9]{5}\-[0-9]{4}$|^\([1-9]{2}\) [0-9]{5}\-[0-9]{4}$/.test(
+        vitimaFormObj.telefone1.trim()
+      )
     ) {
-      toast.error("Digite o telefone de contato da vítima.");
+      toast.error(
+        "Digite o telefone de contato da vítima. Formato Válido (XX) XXXXX-XXXX"
+      );
+    } else if (!validaTelefone2(vitimaFormObj.telefone2.trim())) {
+      toast.error(
+        "Digite o telefone 2 de contato da vítima. Formato Válido (XX) XXXXX-XXXX"
+      );
     } else if (
       vitimaFormObj.sexo == null ||
       !(vitimaFormObj.sexo == "M" || vitimaFormObj.sexo == "F")
