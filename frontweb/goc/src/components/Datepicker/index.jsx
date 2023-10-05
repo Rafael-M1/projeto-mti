@@ -14,6 +14,8 @@ const DatePickerComponent = forwardRef(
         onChange={(date) => onChangeDate(date)}
         disabled={disabled}
         maxDate={new Date()}
+        showYearDropdown
+        showMonthDropdown
         ref={ref}
         customInput={
           <div style={{ width: "100%", display: "flex" }}>

@@ -4,12 +4,28 @@ import { requestBackend } from "../../../../../util/requests";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import DatePickerComponent from "../../../../../components/Datepicker";
+import toast, { Toaster } from "react-hot-toast";
 
 const PessoaForm = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [isEditMode, setIsEditMode] = useState(false);
   const [dataNascimentoForm, setDataNascimentoForm] = useState(null);
+
+  const validaTelefone2 = (numrTelefone2) => {
+    //return true, telefone é válido
+    if (numrTelefone2 == null || numrTelefone2.trim() == "") {
+      return true;
+    }
+    if (
+      /^\([1-9]{2}\)[0-9]{5}\-[0-9]{4}$|^\([1-9]{2}\) [0-9]{5}\-[0-9]{4}$/.test(
+        numrTelefone2.trim()
+      )
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   const {
     register,
@@ -35,7 +51,32 @@ const PessoaForm = () => {
   };
 
   const onSubmit = (data, event) => {
-    if (isEditMode) {
+    if (data.nome == null || data.nome.trim().length < 4) {
+      toast.error("Digite o nome da Pessoa.");
+    } else if (data.dataNascimento == null) {
+      toast.error("Selecione a data de nascimento da Pessoa.");
+    } else if (data.cpf == null || data.cpf.length != 11) {
+      toast.error("CPF deve ter somente 11 números.");
+    } else if (
+      data.email == null ||
+      data.email.trim().length < 4 ||
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+        data.email.trim()
+      )
+    ) {
+      toast.error("E-mail inválido.");
+    } else if (data.sexo == null || !(data.sexo == "M" || data.sexo == "F")) {
+      toast.error("Selecione o sexo da Pessoa.");
+    } else if (
+      data.telefone1 == null ||
+      !/^\([1-9]{2}\)[0-9]{5}\-[0-9]{4}$|^\([1-9]{2}\) [0-9]{5}\-[0-9]{4}$/.test(
+        data.telefone1.trim()
+      )
+    ) {
+      toast.error("Telefone 1 inválido. Formato Válido (XX) XXXXX-XXXX");
+    } else if (!validaTelefone2(data.telefone2.trim())) {
+      toast.error("Telefone 2 inválido. Formato Válido (XX) XXXXX-XXXX");
+    } else if (isEditMode) {
       const params = {
         method: "PUT",
         url: `/pessoa/${data.idPessoa}`,
@@ -102,6 +143,7 @@ const PessoaForm = () => {
       }}
     >
       <div className="card-body">
+        <Toaster position="top-right" />
         <h2 className="card-title text-center">Cadastro - Pessoa</h2>
         <div className="container mt-5">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -235,6 +277,7 @@ const PessoaForm = () => {
                       message: "Telefone inválido",
                     },
                   })}
+                  placeholder="(XX) XXXXX-XXXX"
                   type="text"
                   className={`form-control base-input ${
                     errors.telefone1 ? "is-invalid" : ""
@@ -257,6 +300,7 @@ const PessoaForm = () => {
                       message: "Telefone inválido",
                     },
                   })}
+                  placeholder="(XX) XXXXX-XXXX"
                   type="text"
                   className={`form-control base-input ${
                     errors.telefone2 ? "is-invalid" : ""
